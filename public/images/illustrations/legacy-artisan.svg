@@ -1,0 +1,32 @@
+<svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="450" fill="#FBF3E5"/>
+  <rect y="330" width="600" height="120" fill="#E3D6AC"/>
+  <ellipse cx="300" cy="400" rx="220" ry="18" fill="#D9C68F" opacity="0.6"/>
+
+  <!-- kadhai / wok stand -->
+  <rect x="230" y="330" width="20" height="70" fill="#7A5A2E"/>
+  <rect x="350" y="330" width="20" height="70" fill="#7A5A2E"/>
+  <ellipse cx="300" cy="330" rx="120" ry="26" fill="#3B3B3B"/>
+  <ellipse cx="300" cy="322" rx="112" ry="20" fill="#E8C878"/>
+
+  <!-- steam -->
+  <g stroke="#B8892E" stroke-width="5" fill="none" opacity="0.55" stroke-linecap="round">
+    <path d="M260 300 q-10 -30 4 -50 q14 -20 2 -46"/>
+    <path d="M300 290 q-10 -30 4 -50 q14 -20 2 -46"/>
+    <path d="M340 300 q-10 -30 4 -50 q14 -20 2 -46"/>
+  </g>
+
+  <!-- artisan silhouette (generic, faceless, teal kurta) -->
+  <g>
+    <circle cx="300" cy="150" r="34" fill="#3A2A1C"/>
+    <path d="M300 116 q-24 0 -30 26" stroke="#FBF3E5" stroke-width="0" fill="none"/>
+    <path d="M255 340 Q250 200 300 184 Q350 200 345 340 Z" fill="#6E1E2B"/>
+    <path d="M270 340 Q268 260 300 250 Q332 260 330 340 Z" fill="#511420"/>
+    <!-- arm holding ladle -->
+    <path d="M330 220 Q380 240 380 290" stroke="#6E1E2B" stroke-width="22" fill="none" stroke-linecap="round"/>
+    <path d="M378 288 l24 -8" stroke="#7A5A2E" stroke-width="8" stroke-linecap="round"/>
+    <path d="M270 220 Q225 240 220 285" stroke="#6E1E2B" stroke-width="22" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <text x="300" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#7A5A2E" opacity="0.7">Since 1975</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="250" cy="250" r="232" fill="#FBF3E5"/>
+  <circle cx="250" cy="250" r="232" fill="none" stroke="#B8892E" stroke-width="5"/>
+  <rect x="150" y="220" width="200" height="120" rx="6" fill="#DB8A1F"/>
+  <rect x="150" y="220" width="200" height="34" rx="6" fill="#8F2B21"/>
+  <g fill="#E8C878">
+    <circle cx="190" cy="300" r="18"/>
+    <circle cx="230" cy="300" r="18"/>
+    <circle cx="270" cy="300" r="18"/>
+    <circle cx="310" cy="300" r="18"/>
+  </g>
+  <path d="M150 220 l100 -30 l100 30" fill="none" stroke="#B8892E" stroke-width="4"/>
+  <circle cx="250" cy="190" r="14" fill="#B8892E"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#6E1E2B">Special Assorted Box</text>
+</svg>

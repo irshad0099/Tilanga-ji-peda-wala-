@@ -1,0 +1,53 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#DCE7E0"/>
+  <rect y="300" width="600" height="100" fill="#B9AE8C"/>
+  <rect y="296" width="600" height="8" fill="#8F8560"/>
+
+  <!-- shop structure -->
+  <rect x="90" y="150" width="420" height="150" fill="#FBF3E5" stroke="#B8892E" stroke-width="3"/>
+  <rect x="90" y="120" width="420" height="34" fill="#DB8A1F"/>
+  <rect x="90" y="120" width="420" height="34" fill="none" stroke="#8F2B21" stroke-width="2"/>
+
+  <!-- awning scallops -->
+  <g fill="#6E1E2B">
+    <path d="M90 154 h40 l-20 24 z"/>
+    <path d="M170 154 h40 l-20 24 z"/>
+    <path d="M250 154 h40 l-20 24 z"/>
+    <path d="M330 154 h40 l-20 24 z"/>
+    <path d="M410 154 h40 l-20 24 z"/>
+    <path d="M470 154 h40 l-20 24 z"/>
+  </g>
+
+  <!-- counter with sweets -->
+  <rect x="120" y="230" width="360" height="70" fill="#E3D6AC" stroke="#B8892E" stroke-width="2"/>
+  <g fill="#E8C878" stroke="#B8892E" stroke-width="1.5">
+    <circle cx="170" cy="230" r="14"/>
+    <circle cx="195" cy="230" r="14"/>
+    <circle cx="220" cy="230" r="14"/>
+    <circle cx="280" cy="230" r="14"/>
+    <circle cx="305" cy="230" r="14"/>
+    <circle cx="330" cy="230" r="14"/>
+    <circle cx="390" cy="230" r="14"/>
+    <circle cx="415" cy="230" r="14"/>
+    <circle cx="440" cy="230" r="14"/>
+  </g>
+
+  <!-- windows -->
+  <rect x="120" y="170" width="60" height="50" fill="#DCE7E0" stroke="#6E1E2B" stroke-width="2"/>
+  <rect x="420" y="170" width="60" height="50" fill="#DCE7E0" stroke="#6E1E2B" stroke-width="2"/>
+
+  <!-- sign -->
+  <rect x="200" y="90" width="200" height="40" rx="4" fill="#6E1E2B" stroke="#B8892E" stroke-width="2"/>
+
+  <!-- road -->
+  <rect y="360" width="600" height="40" fill="#5C5850"/>
+  <g fill="#FBF3E5">
+    <rect x="20" y="378" width="40" height="6"/>
+    <rect x="100" y="378" width="40" height="6"/>
+    <rect x="180" y="378" width="40" height="6"/>
+    <rect x="260" y="378" width="40" height="6"/>
+    <rect x="340" y="378" width="40" height="6"/>
+    <rect x="420" y="378" width="40" height="6"/>
+    <rect x="500" y="378" width="40" height="6"/>
+  </g>
+</svg>

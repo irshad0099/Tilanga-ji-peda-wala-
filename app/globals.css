@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #EAD9B0;
+  --cream-dark: #DCC084;
+  --teal: #6E1E2B;
+  --teal-dark: #511420;
+  --maroon: #DB8A1F;
+  --gold: #B8892E;
+  --ink: #3A2A1C;
+
+  --font-display: "Yatra One", "Georgia", serif;
+  --font-body: "Hind", "Segoe UI", sans-serif;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-maroon: var(--maroon);
+  --color-gold: var(--gold);
+  --color-ink: var(--ink);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.arch-top {
+  position: relative;
+}
+
+.arch-top::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 28px;
+  background: var(--gold);
+  clip-path: path("M0,28 C0,10 16,0 32,0 C48,0 64,10 64,28 Z");
+}
+
+.divider-motif {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.divider-motif::before,
+.divider-motif::after {
+  content: "";
+  height: 1.5px;
+  flex: 1;
+  background: var(--gold);
+}
