@@ -21,8 +21,13 @@ champagne-sand / maroon / saffron palette.
 - **WhatsApp order relay** — after placing an order the customer taps
   "Send order on WhatsApp" and the full order lands in the shop's chat, so
   orders are received even without a backend.
-- **Bulk orders** — order peda/barfi by the kilo at per-kg rates, minimum
+- **Bulk orders** — order peda by the kilo at per-kg rates, minimum
   3 kg, home delivery, 25% advance online + balance on delivery.
+- **Menu is split** — peda and peda gift boxes are deliverable (cart +
+  checkout + shipping). Litti-chokha, fresh sweets (mawa barfi, rasgulla,
+  milk cake) and kulhad chai are `deliverable: false` in `lib/products.js`
+  → shown on the menu with an "At the shop only" badge, no Add-to-cart.
+  Flip the flag to change what ships.
 - Cart and orders are saved in the browser's **localStorage** (no database
   yet). Track Order / Invoice only work on the device the order was placed.
 
@@ -46,8 +51,11 @@ but UPI apps will reject the payment.
 Drop the shop's own photos into `public/images/photos/` using these names:
 
 - Products: `peda-platter.jpg`, `kesar-golden.jpg`, `besan-laddu.jpg`,
-  `til-box.jpg`, `barfi.jpg`, `rasgulla.jpg`, `shop-display.jpg`,
-  `festive-thali.jpg` (mapping is in `lib/products.js`)
+  `til-box.jpg`, `gur-peda.jpg`, `barfi.jpg`, `milk-cake.jpg`,
+  `rasgulla.jpg`, `litti-chokha.jpg`, `kulhad-chai.jpg`,
+  `shop-display.jpg`, `festive-thali.jpg` (mapping is in `lib/products.js`).
+  `gur-peda.jpg`, `milk-cake.jpg`, `litti-chokha.jpg`, `kulhad-chai.jpg`
+  are the shop's own photos; the rest are stock placeholders.
 - Gallery / home: `shop-counter.jpg`, `halwai-packing.jpg`, `laddu.jpg`
   (mapping is in `components/GalleryGrid.js` and `app/page.js`)
 
