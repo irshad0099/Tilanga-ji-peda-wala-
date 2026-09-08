@@ -59,11 +59,11 @@ export default function HomePage() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="arch-top overflow-hidden rounded-3xl border-2 border-gold/50">
               <Image
-                src="/images/illustrations/hero-peda.svg"
-                alt="A plate of fresh khoya peda"
-                width={600}
-                height={500}
-                className="h-auto w-full object-cover"
+                src="/images/photos/peda-platter.jpg"
+                alt="A plate of fresh khoya peda garnished with pistachio"
+                width={900}
+                height={1000}
+                className="aspect-4/5 w-full object-cover"
                 priority
               />
             </div>
@@ -124,6 +124,38 @@ export default function HomePage() {
             >
               View full menu
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Bulk orders */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="grid items-center gap-8 rounded-3xl border-2 border-gold/40 bg-cream-dark/40 p-8 sm:p-10 lg:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold text-maroon">Bulk &amp; Wholesale</p>
+            <h2 className="mt-1 font-display text-3xl text-teal">
+              Ordering For A Wedding Or Festival?
+            </h2>
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink/80">
+              Order peda and barfi by the kilo at wholesale rates. Choose your mix and date,
+              pay a small advance online, and we deliver it fresh to your home or venue across
+              Bihar.
+            </p>
+            <Link
+              href="/bulk-order"
+              className="mt-6 inline-block rounded-lg bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90"
+            >
+              Start a bulk order
+            </Link>
+          </div>
+          <div className="overflow-hidden rounded-2xl border-2 border-gold/40">
+            <Image
+              src="/images/photos/laddu.jpg"
+              alt="Trays of sweets prepared for a large order"
+              width={900}
+              height={700}
+              className="aspect-4/3 w-full object-cover"
+            />
           </div>
         </div>
       </section>

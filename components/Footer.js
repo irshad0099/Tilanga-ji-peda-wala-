@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LogoBadge from "@/components/LogoBadge";
+import { shop, phones, whatsapp } from "@/lib/config";
 
 export default function Footer() {
   return (
@@ -14,15 +15,14 @@ export default function Footer() {
             Bihar's mashahur peda since 1975 — pure khoya, hand-shaped daily,
             shipped fresh across India.
           </p>
-          <p className="mt-3 text-sm text-cream/70">
-            Sakaddi Bazaar, Ara–Patna Highway, Bhojpur, Bihar 802160
-          </p>
+          <p className="mt-3 text-sm text-cream/70">{shop.address}</p>
         </div>
 
         <div>
           <h3 className="font-display text-base">Shop</h3>
           <ul className="mt-3 space-y-2 text-sm text-cream/80">
             <li><Link href="/menu" className="hover:text-gold">Menu</Link></li>
+            <li><Link href="/bulk-order" className="hover:text-gold">Bulk / Wholesale</Link></li>
             <li><Link href="/gallery" className="hover:text-gold">Gallery</Link></li>
             <li><Link href="/cart" className="hover:text-gold">Cart</Link></li>
             <li><Link href="/track-order" className="hover:text-gold">Track Order</Link></li>
@@ -41,10 +41,13 @@ export default function Footer() {
         <div>
           <h3 className="font-display text-base">Contact</h3>
           <ul className="mt-3 space-y-2 text-sm text-cream/80">
-            <li><a href="tel:+919431055263" className="hover:text-gold">+91 94310 55263</a></li>
-            <li><a href="tel:+919576456473" className="hover:text-gold">+91 95764 56473</a></li>
+            {phones.map((p) => (
+              <li key={p}>
+                <a href={`tel:${p.replace(/[^\d+]/g, "")}`} className="hover:text-gold">{p}</a>
+              </li>
+            ))}
             <li>
-              <a href="https://wa.me/919431055263" className="hover:text-gold" target="_blank" rel="noreferrer">
+              <a href={`https://wa.me/${whatsapp.number}`} className="hover:text-gold" target="_blank" rel="noreferrer">
                 WhatsApp
               </a>
             </li>

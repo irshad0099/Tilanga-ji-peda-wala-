@@ -9,6 +9,7 @@ import LogoBadge from "@/components/LogoBadge";
 const links = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
+  { href: "/bulk-order", label: "Bulk Order" },
   { href: "/gallery", label: "Gallery" },
   { href: "/track-order", label: "Track Order" },
 ];

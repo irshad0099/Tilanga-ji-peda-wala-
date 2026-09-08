@@ -30,7 +30,7 @@ export default function CartPage() {
       <div className="mt-8 space-y-4">
         {items.map((item) => (
           <div key={item.slug} className="flex items-center gap-4 rounded-xl border border-gold/30 bg-cream-dark/30 p-4">
-            <Image src={item.image} alt={item.name} width={80} height={80} className="h-16 w-16 shrink-0 object-contain sm:h-20 sm:w-20" />
+            <Image src={item.image} alt={item.name} width={160} height={160} className="h-16 w-16 shrink-0 rounded-lg object-cover sm:h-20 sm:w-20" />
             <div className="flex-1">
               <Link href={`/product/${item.slug}`} className="font-display text-teal hover:text-maroon">
                 {item.name}

@@ -6,22 +6,27 @@ import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
 import { estimateDelivery } from "@/lib/shipping";
 import { generateOrderId, saveOrder } from "@/lib/orders";
+import { retail } from "@/lib/config";
+import { retailOrderWhatsappLink } from "@/lib/whatsapp";
+import UpiQrPayment from "@/components/UpiQrPayment";
+import InvoicePreview from "@/components/InvoicePreview";
 
 const paymentOptions = [
-  { id: "cod", label: "Cash on Delivery" },
-  { id: "upi", label: "UPI QR" },
-  { id: "razorpay", label: "Pay Online (Razorpay)" },
+  { id: "upi", label: "Pay now by UPI", hint: "GPay / PhonePe / Paytm / any bank app — scan a QR" },
+  { id: "cod", label: "Cash on Delivery", hint: "Pay when your order arrives" },
 ];
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
 
   const [form, setForm] = useState({ name: "", phone: "", address: "", pincode: "" });
-  const [payment, setPayment] = useState("cod");
+  const [payment, setPayment] = useState("upi");
   const [errors, setErrors] = useState({});
-  const [orderPlaced, setOrderPlaced] = useState(null);
+  const [step, setStep] = useState("form"); // form | pay | done
+  const [draft, setDraft] = useState(null); // built order, not yet placed
+  const [placed, setPlaced] = useState(null);
 
-  const deliveryFee = subtotal > 0 && subtotal < 599 ? 79 : 0;
+  const deliveryFee = subtotal > 0 && subtotal < retail.freeShippingAbove ? retail.flatShippingFee : 0;
   const total = subtotal + deliveryFee;
   const estimate = form.pincode.length === 6 ? estimateDelivery(form.pincode) : null;
 
@@ -40,54 +45,98 @@ export default function CheckoutPage() {
     return Object.keys(next).length === 0;
   }
 
-  function handlePlaceOrder(e) {
-    e.preventDefault();
-    if (!validate()) return;
-
-    const order = {
+  function buildOrder() {
+    return {
       id: generateOrderId(),
+      type: "retail",
       items,
       subtotal,
       deliveryFee,
       total,
       payment,
+      paymentStatus: payment === "cod" ? "cod" : "pending",
+      txnRef: "",
       status: "Placed",
       date: new Date().toISOString(),
       customer: { ...form },
     };
-    saveOrder(order);
-    clearCart();
-    setOrderPlaced(order);
   }
 
-  if (orderPlaced) {
+  function finalise(order) {
+    saveOrder(order);
+    clearCart();
+    setPlaced(order);
+    setStep("done");
+  }
+
+  function handleContinue(e) {
+    e.preventDefault();
+    if (!validate()) return;
+    const order = buildOrder();
+    if (payment === "cod") {
+      finalise(order);
+    } else {
+      setDraft(order);
+      setStep("pay");
+    }
+  }
+
+  function handlePaid(ref) {
+    finalise({ ...draft, paymentStatus: "pending_verification", txnRef: ref });
+  }
+
+  // ---- Confirmation ----------------------------------------------------------
+  if (step === "done" && placed) {
     return (
-      <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
-        <h1 className="font-display text-3xl text-teal">Order placed!</h1>
-        <p className="mt-3 text-[15px] text-ink/75">
-          Your order has been recorded with the ID below. This is a design
-          preview, so no payment has actually been charged.
-        </p>
-        <p className="mt-6 inline-block rounded-lg border border-gold/40 bg-cream-dark/40 px-6 py-3 font-display text-xl text-teal">
-          {orderPlaced.id}
-        </p>
-        <p className="mt-4 text-sm text-ink/60">
-          Total: {formatRupees(orderPlaced.total)} · Paying via{" "}
-          {paymentOptions.find((p) => p.id === orderPlaced.payment)?.label}
-        </p>
-        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link href="/track-order" className="rounded-lg bg-teal px-6 py-3 text-[15px] font-semibold text-cream hover:bg-teal-dark">
+      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+        <div className="text-center">
+          <h1 className="font-display text-3xl text-teal">Order placed!</h1>
+          <p className="mt-2 text-[15px] text-ink/70">
+            {placed.paymentStatus === "pending_verification"
+              ? "We've recorded your UPI payment and will confirm it shortly."
+              : "Pay the delivery person in cash when your order arrives."}
+          </p>
+          <p className="mt-5 inline-block rounded-lg border border-gold/40 bg-cream-dark/40 px-6 py-3 font-display text-xl text-teal">
+            {placed.id}
+          </p>
+          <p className="mt-3 text-sm text-ink/60">
+            Total {formatRupees(placed.total)}
+            {placed.txnRef ? ` · UPI ref ${placed.txnRef}` : ""}
+          </p>
+        </div>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <a
+            href={retailOrderWhatsappLink(placed)}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark"
+          >
+            Send order on WhatsApp
+          </a>
+          <Link
+            href="/track-order"
+            className="rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+          >
             Track this order
           </Link>
-          <Link href="/menu" className="rounded-lg border-2 border-teal px-6 py-3 text-[15px] font-semibold text-teal hover:bg-teal hover:text-cream">
+          <Link
+            href="/menu"
+            className="rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+          >
             Continue shopping
           </Link>
+        </div>
+
+        <div className="mt-12">
+          <InvoicePreview order={placed} />
         </div>
       </div>
     );
   }
 
-  if (hydrated && items.length === 0) {
+  // ---- Empty cart guard -----------------------------------------------------
+  if (hydrated && items.length === 0 && step === "form") {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
         <h1 className="font-display text-3xl text-teal">Nothing to check out</h1>
@@ -99,12 +148,34 @@ export default function CheckoutPage() {
     );
   }
 
+  // ---- Payment step -------------------------------------------------------
+  if (step === "pay" && draft) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-12 sm:px-6">
+        <button onClick={() => setStep("form")} className="text-sm text-ink/60 hover:text-maroon">
+          ← Back to details
+        </button>
+        <h1 className="mt-3 font-display text-3xl text-teal">Pay {formatRupees(draft.total)}</h1>
+        <p className="mt-2 text-[15px] text-ink/70">Order for {draft.customer.name}. Nothing is placed until you confirm payment.</p>
+        <div className="mt-6">
+          <UpiQrPayment
+            amount={draft.total}
+            note={`Tilanga Ji order ${draft.id}`}
+            heading="Scan to pay"
+            onConfirmed={handlePaid}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ---- Address + payment form -------------------------------------------
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
       <h1 className="font-display text-3xl text-teal">Checkout</h1>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1.3fr_1fr]">
-        <form onSubmit={handlePlaceOrder} className="space-y-5">
+        <form onSubmit={handleContinue} className="space-y-5">
           <div>
             <label className="text-sm font-medium text-ink/80">Full name</label>
             <input
@@ -163,24 +234,32 @@ export default function CheckoutPage() {
             <legend className="text-sm font-medium text-ink/80">Payment method</legend>
             <div className="mt-2 space-y-2">
               {paymentOptions.map((option) => (
-                <label key={option.id} className="flex items-center gap-3 rounded-lg border border-teal/20 px-4 py-2.5">
+                <label
+                  key={option.id}
+                  className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 ${
+                    payment === option.id ? "border-teal bg-cream-dark/40" : "border-teal/20"
+                  }`}
+                >
                   <input
                     type="radio"
                     name="payment"
                     value={option.id}
                     checked={payment === option.id}
                     onChange={() => setPayment(option.id)}
+                    className="mt-1"
                   />
-                  <span className="text-[15px]">{option.label}</span>
+                  <span>
+                    <span className="block text-[15px] font-medium text-ink">{option.label}</span>
+                    <span className="block text-xs text-ink/55">{option.hint}</span>
+                  </span>
                 </label>
               ))}
             </div>
           </fieldset>
 
           <button type="submit" className="w-full rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90">
-            Place order · {formatRupees(total)}
+            {payment === "cod" ? `Place order · ${formatRupees(total)}` : `Continue to payment · ${formatRupees(total)}`}
           </button>
-          <p className="text-center text-xs text-ink/50">Preview checkout — no real payment is processed yet.</p>
         </form>
 
         <div className="h-fit rounded-xl border border-gold/30 bg-cream-dark/30 p-6">
@@ -188,7 +267,9 @@ export default function CheckoutPage() {
           <ul className="mt-4 space-y-3">
             {items.map((item) => (
               <li key={item.slug} className="flex justify-between text-sm">
-                <span>{item.name} × {item.qty}</span>
+                <span>
+                  {item.name} × {item.qty}
+                </span>
                 <span>{formatRupees(item.price * item.qty)}</span>
               </li>
             ))}

@@ -18,13 +18,13 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border-2 border-teal/15 bg-cream-dark/40">
-      <Link href={`/product/${product.slug}`} className="block bg-cream p-6">
+      <Link href={`/product/${product.slug}`} className="block overflow-hidden">
         <Image
           src={product.image}
           alt={product.name}
-          width={400}
-          height={400}
-          className="mx-auto h-40 w-40 object-contain sm:h-48 sm:w-48"
+          width={800}
+          height={800}
+          className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105"
         />
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-5">

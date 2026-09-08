@@ -9,8 +9,9 @@ export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const product = getProductBySlug(params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} - Tilanga Ji Ka Mashahur Peda Dukan`,
@@ -18,8 +19,9 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ProductPage({ params }) {
-  const product = getProductBySlug(params.slug);
+export default async function ProductPage({ params }) {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
   if (!product) notFound();
 
   return (
@@ -31,13 +33,13 @@ export default function ProductPage({ params }) {
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className="rounded-3xl border-2 border-gold/40 bg-cream-dark/40 p-8">
+        <div className="overflow-hidden rounded-3xl border-2 border-gold/40">
           <Image
             src={product.image}
             alt={product.name}
-            width={420}
-            height={420}
-            className="mx-auto h-72 w-72 object-contain"
+            width={900}
+            height={900}
+            className="aspect-square w-full object-cover"
             priority
           />
         </div>

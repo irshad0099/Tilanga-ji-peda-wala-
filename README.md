@@ -2,41 +2,63 @@
 
 Fully responsive Next.js website for Tilanga Ji Ka Mashahur Peda Dukan
 (Sakaddi, Ara-Patna highway, Bhojpur, Bihar — famous for pure khoya peda
-since 1975). Built with Next.js App Router + Tailwind CSS v4, same font
-and colour system as the Swad-e-Bihar project (Yatra One + Hind,
-cream/teal/maroon/gold).
+since 1975). Next.js App Router + Tailwind CSS v4, Yatra One + Hind fonts,
+champagne-sand / maroon / saffron palette.
 
 ## Ismein kya hai (What's included)
 
-- Home (hero, legacy stats, menu preview, "how it's made" process, why
-  choose us, gallery preview, delivery estimate, location, testimonials,
-  FAQ), Menu (search + category filter), Product detail, Cart, Checkout,
-  Track Order, Gallery, Login, Privacy/Terms/Refund policy pages
-- **17 original AI-illustrated graphics** — real customer/shop photos were
-  NOT used (privacy + copyright); instead custom SVG illustrations were
-  made for the hero, legacy/artisan scene, shop stall, 4 process steps,
-  2 gallery scenes, and all 8 product cards
-- Cart aur orders **localStorage** mein save hote hain (koi database
-  nahi hai abhi)
-- Checkout mein **pan-India shipping** — pincode ke basis par delivery
-  estimate dikhta hai (`lib/shipping.js`), koi hard block nahi (jaise
-  Swad-e-Bihar mein local-only tha, ye ek "famous shop" hai isliye
-  nationwide shipping model rakha hai)
-- Payment abhi **mock/UI-only** hai (COD / UPI / Razorpay options
-  dikhte hain, par asli payment charge nahi hota)
-- Product catalog `lib/products.js` mein hai — naam, price, weight,
-  description sab yahin se edit hoga
-- Original monogram logo (`app/icon.svg`, `components/LogoBadge.js`) —
-  agar real logo design karwana ho to isse replace kar sakte ho
+- Home, Menu (search + category filter), Product detail, Cart, Checkout,
+  **Bulk / Wholesale order**, Track Order, **Invoice**, Gallery, Login,
+  Privacy/Terms/Refund pages
+- **Real HD photos** in `public/images/photos/` (Indian-mithai stock
+  photography). Swap any file — keep the filename — with the shop's own
+  photo and it updates everywhere.
+- **UPI payment** — checkout and bulk-order advance are paid by scanning a
+  UPI QR (or "Open in UPI app"). Customer enters the UPI reference number;
+  the shop confirms it manually. No payment gateway account needed.
+- **Invoice** — every order gets an on-screen invoice preview and a
+  downloadable PDF (`/invoice/<order-id>`, also linked from Track Order).
+- **WhatsApp order relay** — after placing an order the customer taps
+  "Send order on WhatsApp" and the full order lands in the shop's chat, so
+  orders are received even without a backend.
+- **Bulk orders** — order peda/barfi by the kilo at per-kg rates, minimum
+  3 kg, home delivery, 25% advance online + balance on delivery.
+- Cart and orders are saved in the browser's **localStorage** (no database
+  yet). Track Order / Invoice only work on the device the order was placed.
 
-## Local mein chalane ke liye (Run locally)
+## Set it up for the real shop — edit ONE file
+
+Open [`lib/config.js`](lib/config.js) and set:
+
+| Field | What to put |
+|---|---|
+| `upi.vpa` | The shop's real UPI ID / VPA, e.g. `tilangaji@okhdfcbank` |
+| `upi.payeeName` | Name registered on that UPI ID |
+| `whatsapp.number` | WhatsApp business number, digits only with country code, e.g. `919431055263` |
+| `shop.gstin` | GSTIN (optional — printed on invoices when set) |
+
+Per-kg bulk prices, advance %, delivery fees and retail shipping rules are
+all in the same file. Until `upi.vpa` is a real VPA the QR still renders
+but UPI apps will reject the payment.
+
+## Swap in real photos
+
+Drop the shop's own photos into `public/images/photos/` using these names:
+
+- Products: `peda-platter.jpg`, `kesar-golden.jpg`, `besan-laddu.jpg`,
+  `til-box.jpg`, `barfi.jpg`, `rasgulla.jpg`, `shop-display.jpg`,
+  `festive-thali.jpg` (mapping is in `lib/products.js`)
+- Gallery / home: `shop-counter.jpg`, `halwai-packing.jpg`, `laddu.jpg`
+  (mapping is in `components/GalleryGrid.js` and `app/page.js`)
+
+Roughly square or portrait, ideally 1200px+ on the short side.
+
+## Run locally
 
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:3000
 ```
-
-Browser mein http://localhost:3000 kholo.
 
 ## Production build
 
@@ -45,15 +67,14 @@ npm run build
 npm run start
 ```
 
-## Aage kya karna hai (Next steps before going live)
+## Aage kya karna hai (Next steps before going fully live)
 
-1. Real product photos daalo (`public/images/products/`) agar illustrations
-   ki jagah asli photos chahiye
-2. Real Razorpay/UPI integration wire karo (`app/checkout/page.js`)
-3. Ek real backend/database lagao taaki orders sirf browser tak limited
-   na rahe
-4. Contact numbers, address, hours verify/update karo
-   (`components/Footer.js`, `components/LocationSection.js`)
-5. Privacy/Terms/Refund policy pages ka placeholder text finalize karo
-6. Chaho to real logo design karwa ke `LogoBadge.js` aur `app/icon.svg`
-   replace kar dena
+1. Set the real UPI ID, payee name and WhatsApp number in `lib/config.js`
+2. Replace the stock photos in `public/images/photos/` with real ones
+3. Add a real backend/database so orders and payment confirmation aren't
+   limited to one browser (and so payments can be auto-verified via a
+   gateway webhook instead of manually)
+4. Verify contact numbers, address, opening hours (`lib/config.js`,
+   `components/LocationSection.js`)
+5. Finalise the Privacy / Terms / Refund policy placeholder text
+6. Optionally get a real logo and replace `LogoBadge.js` + `app/icon.svg`
