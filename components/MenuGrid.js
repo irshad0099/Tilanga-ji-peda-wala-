@@ -1,26 +1,34 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 
 export default function MenuGrid({ products, categories }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const [deliveryOnly, setDeliveryOnly] = useState(false);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("deliver") === "1") {
+      setDeliveryOnly(true);
+    }
+  }, []);
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
       const matchesCategory = category === "All" || p.category === category;
       const matchesQuery = p.name.toLowerCase().includes(query.toLowerCase());
-      return matchesCategory && matchesQuery;
+      const matchesDelivery = !deliveryOnly || p.deliverable;
+      return matchesCategory && matchesQuery && matchesDelivery;
     });
-  }, [products, query, category]);
+  }, [products, query, category, deliveryOnly]);
 
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <input
           type="text"
-          placeholder="Search sweets..."
+          placeholder="Search the menu..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal sm:max-w-xs"
@@ -42,9 +50,19 @@ export default function MenuGrid({ products, categories }) {
         </div>
       </div>
 
+      <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 rounded-full border border-maroon/30 px-4 py-1.5 text-sm font-medium text-maroon">
+        <input
+          type="checkbox"
+          checked={deliveryOnly}
+          onChange={(e) => setDeliveryOnly(e.target.checked)}
+          className="accent-maroon"
+        />
+        Delivery available only
+      </label>
+
       {filtered.length === 0 ? (
         <p className="mt-12 text-center text-ink/60">
-          Nothing matches that search. Try a different name or category.
+          Nothing matches that. Try a different name, category or clear the delivery filter.
         </p>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

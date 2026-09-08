@@ -10,12 +10,12 @@ import SectionDivider from "@/components/SectionDivider";
 import LegacyStats from "@/components/LegacyStats";
 import LocationSection from "@/components/LocationSection";
 import GalleryGrid from "@/components/GalleryGrid";
-import { products, getFeaturedProduct } from "@/lib/products";
+import { getFeaturedProduct, getDeliverableProducts } from "@/lib/products";
 import { formatRupees } from "@/lib/format";
 
 export default function HomePage() {
   const featured = getFeaturedProduct();
-  const menuPreview = products.slice(0, 6);
+  const menuPreview = getDeliverableProducts().slice(0, 6);
 
   return (
     <div>
@@ -109,8 +109,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center">
             <p className="text-sm font-semibold text-maroon">Our Menu</p>
-            <h2 className="mt-1 font-display text-3xl text-teal">Peda, Barfi &amp; Gift Boxes</h2>
+            <h2 className="mt-1 font-display text-3xl text-teal">Peda We Ship Across India</h2>
             <SectionDivider />
+            <p className="mx-auto mt-2 max-w-lg text-sm text-ink/70">
+              Litti-chokha, fresh sweets and kulhad chai are served at the shop — see the full menu.
+            </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {menuPreview.map((product) => (
