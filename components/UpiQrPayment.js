@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { buildUpiLink, buildAppUpiLink, upiApps } from "@/lib/upi";
 import { useSettings } from "@/lib/useSettings";
 import { formatRupees } from "@/lib/format";
+import PaymentAppIcon from "@/components/PaymentAppIcon";
+
+const OTHER_UPI = { id: "upi", label: "Other UPI app" };
 
 /**
  * UPI payment step — PhonePe / Google Pay / Paytm / any-UPI-app buttons,
@@ -71,16 +74,18 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
           <a
             key={app.id}
             href={buildAppUpiLink(app.id, { amount, note }, upi)}
-            className="rounded-lg border-2 border-teal/30 bg-cream py-2.5 text-center text-sm font-semibold text-teal hover:border-teal hover:bg-teal hover:text-cream"
+            className="flex flex-col items-center gap-1.5 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
           >
-            {app.label}
+            <PaymentAppIcon app={app} size={32} />
+            <span className="text-xs font-semibold text-ink">{app.label}</span>
           </a>
         ))}
         <a
           href={genericLink}
-          className="rounded-lg border-2 border-teal/30 bg-cream py-2.5 text-center text-sm font-semibold text-teal hover:border-teal hover:bg-teal hover:text-cream"
+          className="flex flex-col items-center gap-1.5 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
         >
-          Other UPI app
+          <PaymentAppIcon app={OTHER_UPI} size={32} />
+          <span className="text-xs font-semibold text-ink">{OTHER_UPI.label}</span>
         </a>
       </div>
       <p className="mt-1.5 text-xs text-ink/45">
