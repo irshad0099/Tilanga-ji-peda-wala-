@@ -2,19 +2,19 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { getBulkItems } from "@/lib/products";
 import { quoteBulkOrder, earliestBulkDate } from "@/lib/bulk";
-import { bulk } from "@/lib/config";
+import { useSettings } from "@/lib/useSettings";
 import { formatRupees } from "@/lib/format";
 import { generateOrderId, saveOrder } from "@/lib/orders";
 import { bulkOrderWhatsappLink } from "@/lib/whatsapp";
 import UpiQrPayment from "@/components/UpiQrPayment";
 import InvoicePreview from "@/components/InvoicePreview";
 
-const items = getBulkItems();
-const minDate = earliestBulkDate();
+export default function BulkOrderForm({ items = [] }) {
+  const { settings } = useSettings();
+  const { bulk, whatsapp } = settings;
+  const minDate = earliestBulkDate(bulk);
 
-export default function BulkOrderForm() {
   const [kg, setKg] = useState({});
   const [form, setForm] = useState({
     name: "",
@@ -31,7 +31,7 @@ export default function BulkOrderForm() {
   const [draft, setDraft] = useState(null);
   const [placed, setPlaced] = useState(null);
 
-  const quote = useMemo(() => quoteBulkOrder(kg), [kg]);
+  const quote = useMemo(() => quoteBulkOrder(kg, items, bulk), [kg, items, bulk]);
 
   function setField(name, value) {
     setForm((f) => ({ ...f, [name]: value }));
@@ -115,7 +115,7 @@ export default function BulkOrderForm() {
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
-              href={bulkOrderWhatsappLink(placed)}
+              href={bulkOrderWhatsappLink(placed, whatsapp)}
               target="_blank"
               rel="noreferrer"
               className="rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark"

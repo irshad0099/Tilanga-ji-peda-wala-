@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { shop, upi } from "@/lib/config";
+import { useSettings } from "@/lib/useSettings";
 import { formatRupees } from "@/lib/format";
 import { toInvoice, downloadInvoicePdf } from "@/lib/invoice";
 
 export default function InvoicePreview({ order }) {
   const [busy, setBusy] = useState(false);
+  const { settings } = useSettings();
+  const { shop, upi } = settings;
   const inv = toInvoice(order);
 
   async function handleDownload() {
     setBusy(true);
     try {
-      await downloadInvoicePdf(inv);
+      await downloadInvoicePdf(inv, { shop, upi });
     } finally {
       setBusy(false);
     }

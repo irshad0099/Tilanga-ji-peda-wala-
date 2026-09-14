@@ -4,6 +4,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
 
+// Footer (and several pages) read live product/settings data from MongoDB
+// on every render. Force the whole app to render per-request rather than
+// being statically prerendered at build time, so /admin edits (price,
+// stock, UPI ID, WhatsApp number, ...) show up immediately everywhere
+// instead of only after the next deploy.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
   description:

@@ -29,8 +29,9 @@ export function CartProvider({ children }) {
   }, [items, hydrated]);
 
   function addItem(product, qty = 1) {
-    // Dine-in only items (litti-chokha, fresh sweets, chai) can't be shipped.
-    if (product.deliverable === false) return;
+    // Dine-in only items (litti-chokha, fresh sweets, chai) can't be shipped,
+    // and a sold-out item can't be added even if it's normally deliverable.
+    if (product.deliverable === false || product.inStock === false) return;
     setItems((prev) => {
       const existing = prev.find((i) => i.slug === product.slug);
       if (existing) {

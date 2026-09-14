@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
 import { estimateDelivery } from "@/lib/shipping";
 import { generateOrderId, saveOrder } from "@/lib/orders";
-import { retail } from "@/lib/config";
+import { useSettings } from "@/lib/useSettings";
 import { retailOrderWhatsappLink } from "@/lib/whatsapp";
 import UpiQrPayment from "@/components/UpiQrPayment";
 import InvoicePreview from "@/components/InvoicePreview";
@@ -18,6 +18,8 @@ const paymentOptions = [
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
+  const { settings } = useSettings();
+  const { retail, whatsapp } = settings;
 
   const [form, setForm] = useState({ name: "", phone: "", address: "", pincode: "" });
   const [payment, setPayment] = useState("upi");
@@ -110,7 +112,7 @@ export default function CheckoutPage() {
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <a
-            href={retailOrderWhatsappLink(placed)}
+            href={retailOrderWhatsappLink(placed, whatsapp)}
             target="_blank"
             rel="noreferrer"
             className="rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark"

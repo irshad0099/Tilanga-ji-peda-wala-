@@ -1,8 +1,9 @@
 import Link from "next/link";
 import LogoBadge from "@/components/LogoBadge";
-import { shop, phones, whatsapp } from "@/lib/config";
+import { getSettings } from "@/lib/db/settings.server";
 
-export default function Footer() {
+export default async function Footer() {
+  const { shop, phones, whatsapp } = await getSettings();
   return (
     <footer className="border-t border-gold/40 bg-teal text-cream">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
@@ -51,7 +52,7 @@ export default function Footer() {
                 WhatsApp
               </a>
             </li>
-            <li>Open daily, 7 AM – 9:30 PM</li>
+            <li>{shop.hours}</li>
           </ul>
         </div>
       </div>

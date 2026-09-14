@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { buildUpiLink, buildAppUpiLink, upiApps } from "@/lib/upi";
-import { upi } from "@/lib/config";
+import { useSettings } from "@/lib/useSettings";
 import { formatRupees } from "@/lib/format";
 
 /**
@@ -20,8 +20,10 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
   const [ref, setRef] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const { settings } = useSettings();
+  const { upi } = settings;
 
-  const genericLink = buildUpiLink({ amount, note });
+  const genericLink = buildUpiLink({ amount, note }, upi);
 
   useEffect(() => {
     let alive = true;
@@ -68,7 +70,7 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
         {upiApps.map((app) => (
           <a
             key={app.id}
-            href={buildAppUpiLink(app.id, { amount, note })}
+            href={buildAppUpiLink(app.id, { amount, note }, upi)}
             className="rounded-lg border-2 border-teal/30 bg-cream py-2.5 text-center text-sm font-semibold text-teal hover:border-teal hover:bg-teal hover:text-cream"
           >
             {app.label}

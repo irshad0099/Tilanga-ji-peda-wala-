@@ -1,18 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products, getProductBySlug } from "@/lib/products";
+import { products as defaultProducts } from "@/lib/products";
+import { getProductBySlug } from "@/lib/db/products.server";
+import { getSettings } from "@/lib/db/settings.server";
 import { formatRupees } from "@/lib/format";
-import { shop } from "@/lib/config";
 import AddToCartPanel from "@/components/AddToCartPanel";
 
+// Pre-render the default menu's slugs at build time; any DB-only product
+// (created later from /admin) still renders fine on first request.
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return defaultProducts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} - Tilanga Ji Ka Mashahur Peda Dukan`,
@@ -22,8 +25,9 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const [product, settings] = await Promise.all([getProductBySlug(slug), getSettings()]);
   if (!product) notFound();
+  const { shop } = settings;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
@@ -64,7 +68,15 @@ export default async function ProductPage({ params }) {
 
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink/80">{product.description}</p>
 
-          {product.deliverable ? (
+          {product.deliverable && product.inStock === false ? (
+            <div className="mt-7 rounded-2xl border border-maroon/30 bg-maroon/5 p-5">
+              <p className="font-display text-lg text-maroon">Sold out today</p>
+              <p className="mt-1.5 text-[15px] text-ink/75">
+                We&apos;ve run out for today — check back tomorrow, or call the shop to ask when
+                the next batch is ready.
+              </p>
+            </div>
+          ) : product.deliverable ? (
             <>
               <div className="mt-7">
                 <AddToCartPanel product={product} />

@@ -10,12 +10,14 @@ import SectionDivider from "@/components/SectionDivider";
 import LegacyStats from "@/components/LegacyStats";
 import LocationSection from "@/components/LocationSection";
 import GalleryGrid from "@/components/GalleryGrid";
-import { getFeaturedProduct, getDeliverableProducts } from "@/lib/products";
+import { getAllProducts } from "@/lib/db/products.server";
 import { formatRupees } from "@/lib/format";
 
-export default function HomePage() {
-  const featured = getFeaturedProduct();
-  const [deliveryItem] = getDeliverableProducts();
+export default async function HomePage() {
+  const products = await getAllProducts();
+  const deliverable = products.filter((p) => p.deliverable && p.inStock !== false);
+  const featured = products.find((p) => p.featured) || products[0];
+  const [deliveryItem] = deliverable;
 
   return (
     <div>

@@ -1,14 +1,13 @@
-export default function LocationSection() {
+import { getSettings } from "@/lib/db/settings.server";
+
+export default async function LocationSection() {
+  const { shop } = await getSettings();
   return (
     <div className="grid gap-8 rounded-2xl border border-gold/30 bg-cream p-6 sm:p-8 lg:grid-cols-2">
       <div>
         <h3 className="font-display text-xl text-teal">Visit the original shop</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
-          Sakaddi Bazaar, Ara–Patna Highway
-          <br />
-          Bhojpur District, Bihar 802160
-        </p>
-        <p className="mt-4 text-[15px] text-ink/80">Open daily: 7:00 AM – 9:30 PM</p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/80">{shop.address}</p>
+        <p className="mt-4 text-[15px] text-ink/80">{shop.hours}</p>
         <a
           href="https://www.google.com/maps/search/?api=1&query=Tilanga+Ji+Ka+Mashahur+Peda+Dukan+Sakaddi"
           target="_blank"

@@ -10,6 +10,7 @@ export default function ProductCard({ product }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
   const dineIn = product.deliverable === false;
+  const soldOut = product.inStock === false;
 
   function handleAdd() {
     addItem(product, 1);
@@ -27,10 +28,16 @@ export default function ProductCard({ product }) {
           height={800}
           className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105"
         />
-        {dineIn && (
-          <span className="absolute left-3 top-3 rounded-full bg-teal/90 px-2.5 py-1 text-xs font-semibold text-cream">
-            At the shop only
+        {soldOut ? (
+          <span className="absolute left-3 top-3 rounded-full bg-maroon/90 px-2.5 py-1 text-xs font-semibold text-cream">
+            Sold out today
           </span>
+        ) : (
+          dineIn && (
+            <span className="absolute left-3 top-3 rounded-full bg-teal/90 px-2.5 py-1 text-xs font-semibold text-cream">
+              At the shop only
+            </span>
+          )
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-5">
@@ -50,7 +57,11 @@ export default function ProductCard({ product }) {
             <span className="text-sm text-ink/40 line-through">{formatRupees(product.mrp)}</span>
           )}
         </div>
-        {dineIn ? (
+        {soldOut ? (
+          <p className="mt-3 rounded-lg border border-maroon/30 bg-maroon/5 py-2.5 text-center text-sm font-medium text-maroon">
+            Sold out today
+          </p>
+        ) : dineIn ? (
           <p className="mt-3 rounded-lg border border-teal/25 bg-cream/60 py-2.5 text-center text-sm font-medium text-teal">
             Dine-in · no delivery
           </p>

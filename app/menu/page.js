@@ -1,12 +1,15 @@
 import MenuGrid from "@/components/MenuGrid";
-import { products, getCategories } from "@/lib/products";
+import { getAllProducts } from "@/lib/db/products.server";
 
 export const metadata = {
   title: "Menu - Tilanga Ji Ka Mashahur Peda Dukan",
   description: "Classic Khoya Peda ships pan-India. Every other peda, our gift boxes, litti-chokha, fresh sweets and kulhad chai are served at the shop.",
 };
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const products = await getAllProducts();
+  const categories = Array.from(new Set(products.map((p) => p.category)));
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <div className="text-center">
@@ -20,7 +23,7 @@ export default function MenuPage() {
         </p>
       </div>
       <div className="mt-10">
-        <MenuGrid products={products} categories={getCategories()} />
+        <MenuGrid products={products} categories={categories} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import BulkOrderForm from "@/components/BulkOrderForm";
 import SectionDivider from "@/components/SectionDivider";
-import { bulk } from "@/lib/config";
+import { getAllProducts } from "@/lib/db/products.server";
+import { getSettings } from "@/lib/db/settings.server";
 
 export const metadata = {
   title: "Bulk & Wholesale Orders - Tilanga Ji Ka Mashahur Peda Dukan",
@@ -8,28 +9,34 @@ export const metadata = {
     "Order Classic Khoya Peda by the kilo for weddings, festivals, offices and resale. Home delivery across Bihar, pay a small advance online.",
 };
 
-const points = [
-  {
-    title: "Order by the kilo",
-    body: `Classic Khoya Peda, wholesale per-kg rate, minimum ${bulk.minKg} kg — not box prices.`,
-  },
-  {
-    title: "Home / venue delivery",
-    body: `Delivered to your address or event venue. Free above ${new Intl.NumberFormat("en-IN").format(
-      bulk.freeDeliveryAbove
-    )} rupees.`,
-  },
-  {
-    title: `${Math.round(bulk.advanceFraction * 100)}% advance, rest on delivery`,
-    body: "Pay a small advance by UPI to lock the order. Balance is collected in cash or UPI when it arrives.",
-  },
-  {
-    title: `${bulk.leadTimeDays}-day lead time`,
-    body: "Everything is made fresh for your date — please order at least two days ahead.",
-  },
-];
+export default async function BulkOrderPage() {
+  const [products, settings] = await Promise.all([getAllProducts(), getSettings()]);
+  const items = products.filter(
+    (p) => p.deliverable && p.inStock !== false && typeof p.pricePerKg === "number"
+  );
+  const { bulk } = settings;
 
-export default function BulkOrderPage() {
+  const points = [
+    {
+      title: "Order by the kilo",
+      body: `Classic Khoya Peda, wholesale per-kg rate, minimum ${bulk.minKg} kg — not box prices.`,
+    },
+    {
+      title: "Home / venue delivery",
+      body: `Delivered to your address or event venue. Free above ${new Intl.NumberFormat("en-IN").format(
+        bulk.freeDeliveryAbove
+      )} rupees.`,
+    },
+    {
+      title: `${Math.round(bulk.advanceFraction * 100)}% advance, rest on delivery`,
+      body: "Pay a small advance by UPI to lock the order. Balance is collected in cash or UPI when it arrives.",
+    },
+    {
+      title: `${bulk.leadTimeDays}-day lead time`,
+      body: "Everything is made fresh for your date — please order at least two days ahead.",
+    },
+  ];
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <div className="text-center">
@@ -52,7 +59,13 @@ export default function BulkOrderPage() {
       </div>
 
       <div className="mt-12">
-        <BulkOrderForm />
+        {items.length === 0 ? (
+          <p className="text-center text-ink/60">
+            Nothing is available for bulk order right now — check back soon.
+          </p>
+        ) : (
+          <BulkOrderForm items={items} />
+        )}
       </div>
     </div>
   );
