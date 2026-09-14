@@ -13,21 +13,27 @@ champagne-sand / maroon / saffron palette.
 - **Real HD photos** in `public/images/photos/` (Indian-mithai stock
   photography). Swap any file — keep the filename — with the shop's own
   photo and it updates everywhere.
-- **UPI payment** — checkout and bulk-order advance are paid by scanning a
-  UPI QR (or "Open in UPI app"). Customer enters the UPI reference number;
+- **UPI payment** — checkout and bulk-order advance show named buttons for
+  **PhonePe, Google Pay, Paytm** (each opens that app directly with the
+  amount filled in) plus a generic "Other UPI app" button, a scannable QR,
+  and the bank UPI ID for manual entry (`lib/upi.js`,
+  `components/UpiQrPayment.js`). Customer enters the UPI reference number;
   the shop confirms it manually. No payment gateway account needed.
 - **Invoice** — every order gets an on-screen invoice preview and a
   downloadable PDF (`/invoice/<order-id>`, also linked from Track Order).
 - **WhatsApp order relay** — after placing an order the customer taps
   "Send order on WhatsApp" and the full order lands in the shop's chat, so
   orders are received even without a backend.
-- **Bulk orders** — order peda by the kilo at per-kg rates, minimum
-  3 kg, home delivery, 25% advance online + balance on delivery.
-- **Menu is split** — peda and peda gift boxes are deliverable (cart +
-  checkout + shipping). Litti-chokha, fresh sweets (mawa barfi, rasgulla,
-  milk cake) and kulhad chai are `deliverable: false` in `lib/products.js`
-  → shown on the menu with an "At the shop only" badge, no Add-to-cart.
-  Flip the flag to change what ships.
+- **Bulk orders** — order the Classic Khoya Peda by the kilo at a wholesale
+  rate, minimum 3 kg, home delivery, 25% advance online + balance on
+  delivery.
+- **Menu is split — only ONE item ships pan-India.** Every product carries a
+  `deliverable` flag in `lib/products.js`; only `classic-khoya-peda` is
+  `true`. Everything else (other peda flavours, both gift boxes, mawa barfi,
+  rasgulla, milk cake, litti-chokha, kulhad chai) is `deliverable: false` →
+  shown on the menu with an "At the shop only" badge, no Add-to-cart —
+  customers must visit the restaurant for those. Flip a product's flag to
+  change what ships.
 - Cart and orders are saved in the browser's **localStorage** (no database
   yet). Track Order / Invoice only work on the device the order was placed.
 

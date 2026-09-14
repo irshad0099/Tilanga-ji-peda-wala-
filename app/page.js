@@ -15,7 +15,7 @@ import { formatRupees } from "@/lib/format";
 
 export default function HomePage() {
   const featured = getFeaturedProduct();
-  const menuPreview = getDeliverableProducts().slice(0, 6);
+  const [deliveryItem] = getDeliverableProducts();
 
   return (
     <div>
@@ -104,28 +104,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Menu preview */}
+      {/* Delivery item */}
       <section className="py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center">
-            <p className="text-sm font-semibold text-maroon">Our Menu</p>
-            <h2 className="mt-1 font-display text-3xl text-teal">Peda We Ship Across India</h2>
+            <p className="text-sm font-semibold text-maroon">The One Thing We Ship</p>
+            <h2 className="mt-1 font-display text-3xl text-teal">Order Online, Pan-India</h2>
             <SectionDivider />
             <p className="mx-auto mt-2 max-w-lg text-sm text-ink/70">
-              Litti-chokha, fresh sweets and kulhad chai are served at the shop — see the full menu.
+              We keep delivery to one item so it always arrives fresh. Everything else — other
+              peda flavours, gift boxes, litti-chokha, sweets and chai — is on the menu to enjoy at
+              the shop.
             </p>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {menuPreview.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-          <div className="mt-10 text-center">
+          {deliveryItem && (
+            <div className="mx-auto mt-10 max-w-sm">
+              <ProductCard product={deliveryItem} />
+            </div>
+          )}
+          <div className="mt-8 text-center">
             <Link
               href="/menu"
               className="rounded-lg border-2 border-teal px-6 py-3 text-[15px] font-semibold text-teal hover:bg-teal hover:text-cream"
             >
-              View full menu
+              See the full menu
             </Link>
           </div>
         </div>
@@ -140,9 +142,9 @@ export default function HomePage() {
               Ordering For A Wedding Or Festival?
             </h2>
             <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink/80">
-              Order peda and barfi by the kilo at wholesale rates. Choose your mix and date,
-              pay a small advance online, and we deliver it fresh to your home or venue across
-              Bihar.
+              Order our Classic Khoya Peda by the kilo at wholesale rates. Choose the weight and
+              date, pay a small advance online, and we deliver it fresh to your home or venue
+              across Bihar.
             </p>
             <Link
               href="/bulk-order"

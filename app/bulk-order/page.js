@@ -5,19 +5,19 @@ import { bulk } from "@/lib/config";
 export const metadata = {
   title: "Bulk & Wholesale Orders - Tilanga Ji Ka Mashahur Peda Dukan",
   description:
-    "Order peda and barfi by the kilo for weddings, festivals, offices and resale. Home delivery across Bihar, pay a small advance online.",
+    "Order Classic Khoya Peda by the kilo for weddings, festivals, offices and resale. Home delivery across Bihar, pay a small advance online.",
 };
 
 const points = [
   {
     title: "Order by the kilo",
-    body: `Pick any mix of sweets, minimum ${bulk.minKg} kg total. Wholesale per-kg rates, not box prices.`,
+    body: `Classic Khoya Peda, wholesale per-kg rate, minimum ${bulk.minKg} kg — not box prices.`,
   },
   {
     title: "Home / venue delivery",
     body: `Delivered to your address or event venue. Free above ${new Intl.NumberFormat("en-IN").format(
       bulk.freeDeliveryAbove
-    )} rupees of sweets.`,
+    )} rupees.`,
   },
   {
     title: `${Math.round(bulk.advanceFraction * 100)}% advance, rest on delivery`,

@@ -169,9 +169,10 @@ export default function BulkOrderForm() {
       <div className="space-y-8">
         {/* quantities */}
         <div>
-          <h2 className="font-display text-lg text-teal">1. Choose sweets &amp; weight</h2>
+          <h2 className="font-display text-lg text-teal">1. Choose the weight</h2>
           <p className="mt-1 text-sm text-ink/60">
-            Enter kilograms. Minimum {bulk.minKg} kg total. Loose packing in food-grade boxes.
+            Enter kilograms of Classic Khoya Peda. Minimum {bulk.minKg} kg. Loose packing in
+            food-grade boxes.
           </p>
           <div className="mt-4 space-y-2">
             {items.map((p) => (

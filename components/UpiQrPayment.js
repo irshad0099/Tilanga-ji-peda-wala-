@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { buildUpiLink } from "@/lib/upi";
+import { buildUpiLink, buildAppUpiLink, upiApps } from "@/lib/upi";
 import { upi } from "@/lib/config";
 import { formatRupees } from "@/lib/format";
 
 /**
- * UPI QR + manual-verification payment step.
+ * UPI payment step — PhonePe / Google Pay / Paytm / any-UPI-app buttons,
+ * a scannable QR, the bank UPI ID, and manual reference-number verification.
  *
  * props:
  *   amount      number   — amount to collect
@@ -20,20 +21,20 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
 
-  const link = buildUpiLink({ amount, note });
+  const genericLink = buildUpiLink({ amount, note });
 
   useEffect(() => {
     let alive = true;
     import("qrcode").then((mod) => {
       const QRCode = mod.default || mod;
-      QRCode.toDataURL(link, { width: 520, margin: 1, errorCorrectionLevel: "M" })
+      QRCode.toDataURL(genericLink, { width: 520, margin: 1, errorCorrectionLevel: "M" })
         .then((url) => alive && setQr(url))
         .catch(() => alive && setQr(""));
     });
     return () => {
       alive = false;
     };
-  }, [link]);
+  }, [genericLink]);
 
   function copyVpa() {
     navigator.clipboard?.writeText(upi.vpa).then(() => {
@@ -56,12 +57,37 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
   return (
     <div className="rounded-2xl border border-gold/40 bg-cream-dark/30 p-6">
       <h3 className="font-display text-lg text-teal">{heading}</h3>
-      <p className="mt-1 text-sm text-ink/70">
-        Scan the QR with any UPI app, or pay to the ID below. Amount is pre-filled.
+      <div className="mt-2 flex items-baseline justify-between rounded-lg bg-cream px-4 py-3">
+        <span className="text-sm text-ink/60">Amount to pay</span>
+        <span className="text-xl font-semibold text-maroon">{formatRupees(amount)}</span>
+      </div>
+
+      {/* App buttons — tap your own UPI app, amount is pre-filled */}
+      <p className="mt-5 text-sm font-medium text-ink/80">Pay with</p>
+      <div className="mt-2 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+        {upiApps.map((app) => (
+          <a
+            key={app.id}
+            href={buildAppUpiLink(app.id, { amount, note })}
+            className="rounded-lg border-2 border-teal/30 bg-cream py-2.5 text-center text-sm font-semibold text-teal hover:border-teal hover:bg-teal hover:text-cream"
+          >
+            {app.label}
+          </a>
+        ))}
+        <a
+          href={genericLink}
+          className="rounded-lg border-2 border-teal/30 bg-cream py-2.5 text-center text-sm font-semibold text-teal hover:border-teal hover:bg-teal hover:text-cream"
+        >
+          Other UPI app
+        </a>
+      </div>
+      <p className="mt-1.5 text-xs text-ink/45">
+        Opens your app on this phone with the amount filled in. On a computer, scan the QR below
+        with your phone instead.
       </p>
 
-      <div className="mt-5 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
-        <div className="mx-auto w-44 shrink-0 rounded-xl border border-gold/40 bg-cream p-3 sm:mx-0">
+      <div className="mt-6 grid gap-6 border-t border-gold/30 pt-5 sm:grid-cols-[auto_1fr] sm:items-center">
+        <div className="mx-auto w-40 shrink-0 rounded-xl border border-gold/40 bg-cream p-3 sm:mx-0">
           {qr ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={qr} alt="UPI payment QR code" width={520} height={520} className="h-auto w-full" />
@@ -75,15 +101,11 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
         <div className="text-sm">
           <dl className="space-y-1.5">
             <div className="flex justify-between gap-4">
-              <dt className="text-ink/60">Amount</dt>
-              <dd className="font-semibold text-maroon">{formatRupees(amount)}</dd>
-            </div>
-            <div className="flex justify-between gap-4">
               <dt className="text-ink/60">Pay to</dt>
               <dd className="font-medium text-ink">{upi.payeeName}</dd>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <dt className="text-ink/60">UPI ID</dt>
+              <dt className="text-ink/60">Bank UPI ID</dt>
               <dd className="flex items-center gap-2">
                 <span className="font-mono text-[13px] text-ink">{upi.vpa}</span>
                 <button
@@ -96,14 +118,10 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
               </dd>
             </div>
           </dl>
-
-          <a
-            href={link}
-            className="mt-4 inline-block rounded-lg bg-teal px-4 py-2 text-sm font-semibold text-cream hover:bg-teal-dark"
-          >
-            Open in UPI app
-          </a>
-          <p className="mt-1 text-xs text-ink/45">Works on phones with a UPI app installed.</p>
+          <p className="mt-2 text-xs text-ink/45">
+            Or open any UPI app yourself, choose &quot;Pay to UPI ID / bank&quot; and enter the ID
+            above with the amount {formatRupees(amount)}.
+          </p>
         </div>
       </div>
 
