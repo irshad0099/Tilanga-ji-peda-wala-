@@ -25,6 +25,7 @@ export default function CheckoutPage() {
   const [step, setStep] = useState("form"); // form | pay | done
   const [draft, setDraft] = useState(null); // built order, not yet placed
   const [placed, setPlaced] = useState(null);
+  const [placing, setPlacing] = useState(false);
 
   const deliveryFee = subtotal > 0 && subtotal < retail.freeShippingAbove ? retail.flatShippingFee : 0;
   const total = subtotal + deliveryFee;
@@ -62,27 +63,29 @@ export default function CheckoutPage() {
     };
   }
 
-  function finalise(order) {
-    saveOrder(order);
+  async function finalise(order) {
+    setPlacing(true);
+    await saveOrder(order);
     clearCart();
     setPlaced(order);
     setStep("done");
+    setPlacing(false);
   }
 
-  function handleContinue(e) {
+  async function handleContinue(e) {
     e.preventDefault();
     if (!validate()) return;
     const order = buildOrder();
     if (payment === "cod") {
-      finalise(order);
+      await finalise(order);
     } else {
       setDraft(order);
       setStep("pay");
     }
   }
 
-  function handlePaid(ref) {
-    finalise({ ...draft, paymentStatus: "pending_verification", txnRef: ref });
+  async function handlePaid(ref) {
+    await finalise({ ...draft, paymentStatus: "pending_verification", txnRef: ref });
   }
 
   // ---- Confirmation ----------------------------------------------------------
@@ -257,8 +260,16 @@ export default function CheckoutPage() {
             </div>
           </fieldset>
 
-          <button type="submit" className="w-full rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90">
-            {payment === "cod" ? `Place order · ${formatRupees(total)}` : `Continue to payment · ${formatRupees(total)}`}
+          <button
+            type="submit"
+            disabled={placing}
+            className="w-full rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90 disabled:opacity-60"
+          >
+            {placing
+              ? "Placing order…"
+              : payment === "cod"
+                ? `Place order · ${formatRupees(total)}`
+                : `Continue to payment · ${formatRupees(total)}`}
           </button>
         </form>
 

@@ -9,12 +9,15 @@ export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [searching, setSearching] = useState(false);
 
-  function handleSearch(e) {
+  async function handleSearch(e) {
     e.preventDefault();
-    const found = findOrder(orderId);
+    setSearching(true);
+    const found = await findOrder(orderId);
     setOrder(found || null);
     setSearched(true);
+    setSearching(false);
   }
 
   const currentStageIndex = order ? orderStages.indexOf(order.status) : -1;
@@ -42,15 +45,18 @@ export default function TrackOrderPage() {
           placeholder="TJ-XXXXXX"
           className="w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
         />
-        <button type="submit" className="shrink-0 rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark">
-          Track
+        <button
+          type="submit"
+          disabled={searching}
+          className="shrink-0 rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark disabled:opacity-60"
+        >
+          {searching ? "Searching…" : "Track"}
         </button>
       </form>
 
-      {searched && !order && (
+      {searched && !order && !searching && (
         <p className="mt-6 text-center text-[15px] text-maroon">
-          No order found with that ID on this device. Orders placed on another device or browser
-          won&apos;t show up here yet.
+          No order found with that ID.
         </p>
       )}
 
@@ -91,7 +97,10 @@ export default function TrackOrderPage() {
           <dl className="mt-4 space-y-1 text-sm text-ink/70">
             <div className="flex justify-between gap-4">
               <dt>Payment</dt>
-              <dd className="text-right">{paymentStatusLabels[order.paymentStatus] || order.paymentStatus}</dd>
+              <dd className="text-right">
+                {paymentStatusLabels[order.paymentStatus] || order.paymentStatus}
+                {order.paymentVerified && <span className="ml-1.5 text-teal">✓ verified by shop</span>}
+              </dd>
             </div>
             {order.txnRef && (
               <div className="flex justify-between gap-4">

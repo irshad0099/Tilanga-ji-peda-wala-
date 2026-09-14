@@ -10,7 +10,13 @@ export default function InvoicePage({ params }) {
   const [order, setOrder] = useState(undefined); // undefined = loading
 
   useEffect(() => {
-    setOrder(findOrder(orderId) || null);
+    let alive = true;
+    findOrder(orderId).then((found) => {
+      if (alive) setOrder(found || null);
+    });
+    return () => {
+      alive = false;
+    };
   }, [orderId]);
 
   if (order === undefined) {
@@ -22,8 +28,8 @@ export default function InvoicePage({ params }) {
       <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
         <h1 className="font-display text-3xl text-teal">Invoice not found</h1>
         <p className="mt-3 text-[15px] text-ink/70">
-          No order with ID <span className="font-mono">{orderId}</span> exists on this device.
-          Invoices are only available on the device the order was placed from.
+          No order with ID <span className="font-mono">{orderId}</span> was found. Double-check the
+          ID, or note that it may only be available on the device the order was placed from.
         </p>
         <Link href="/menu" className="mt-6 inline-block rounded-lg bg-teal px-6 py-3 text-[15px] font-semibold text-cream hover:bg-teal-dark">
           Back to menu

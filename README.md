@@ -34,8 +34,13 @@ champagne-sand / maroon / saffron palette.
   shown on the menu with an "At the shop only" badge, no Add-to-cart —
   customers must visit the restaurant for those. Flip a product's flag to
   change what ships.
-- Cart and orders are saved in the browser's **localStorage** (no database
-  yet). Track Order / Invoice only work on the device the order was placed.
+- **Database: MongoDB Atlas.** Orders (retail + bulk) are saved to Atlas via
+  `/api/orders` (`lib/mongodb.js`, `lib/db/orders.server.js`) — set
+  `MONGODB_URI` and Track Order / Invoice work from *any* device, and orders
+  show up in a shop dashboard at **`/admin`** (password = `ADMIN_KEY`). Cart
+  and a local copy of orders still live in the browser's localStorage too, as
+  an instant/offline fallback — the site keeps working even before Atlas is
+  configured, it just won't sync across devices yet.
 
 ## Set it up for the real shop — edit ONE file
 
@@ -67,6 +72,33 @@ Drop the shop's own photos into `public/images/photos/` using these names:
 
 Roughly square or portrait, ideally 1200px+ on the short side.
 
+## Set up MongoDB Atlas (so orders sync across devices + `/admin` works)
+
+1. **Create a free cluster** — [mongodb.com/cloud/atlas/register](https://www.mongodb.com/cloud/atlas/register) →
+   create a project → "Build a Database" → the free **M0** tier → pick any
+   region close to India (e.g. Mumbai) → Create.
+2. **Create a database user** — Atlas prompts for this during setup (or
+   Database Access → Add New Database User). Save the username + password.
+3. **Allow network access** — Network Access → Add IP Address → "Allow
+   Access from Anywhere" (`0.0.0.0/0`). Vercel's servers use rotating IPs, so
+   this is the simplest option for a small site like this.
+4. **Get the connection string** — Database → Connect → Drivers → Node.js.
+   Copy the `mongodb+srv://...` string and put your database user's
+   username/password into it.
+5. **Set the environment variables**:
+   - Locally: copy [`.env.local.example`](.env.local.example) to `.env.local`
+     and fill in `MONGODB_URI` (and pick your own `ADMIN_KEY` password).
+   - On Vercel: Project → Settings → Environment Variables → add `MONGODB_URI`
+     and `ADMIN_KEY` (Production + Preview + Development) → redeploy.
+
+Until this is done, the site still works fully — orders just stay in each
+browser's localStorage instead of syncing to Atlas, and `/admin` shows an
+"admin access isn't configured" message.
+
+Once it's set, visit **`/admin`** and log in with your `ADMIN_KEY` to see
+every order, mark UPI payments as verified, and move orders through
+Placed → Preparing → Out for Delivery → Delivered.
+
 ## Run locally
 
 ```bash
@@ -84,11 +116,12 @@ npm run start
 ## Aage kya karna hai (Next steps before going fully live)
 
 1. Set the real UPI ID, payee name and WhatsApp number in `lib/config.js`
-2. Replace the stock photos in `public/images/photos/` with real ones
-3. Add a real backend/database so orders and payment confirmation aren't
-   limited to one browser (and so payments can be auto-verified via a
-   gateway webhook instead of manually)
+2. Set up MongoDB Atlas (above) so orders sync across devices and `/admin` works
+3. Replace the stock photos in `public/images/photos/` with real ones
 4. Verify contact numbers, address, opening hours (`lib/config.js`,
    `components/LocationSection.js`)
 5. Finalise the Privacy / Terms / Refund policy placeholder text
 6. Optionally get a real logo and replace `LogoBadge.js` + `app/icon.svg`
+7. For fully automatic payment verification (no manual UPI-reference check),
+   a Razorpay/Cashfree gateway integration would replace the current
+   scan-and-confirm flow — a bigger, separate piece of work

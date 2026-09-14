@@ -85,9 +85,9 @@ export default function BulkOrderForm() {
     setStep("pay");
   }
 
-  function handlePaid(ref) {
+  async function handlePaid(ref) {
     const order = { ...draft, paymentStatus: "advance_paid", txnRef: ref };
-    saveOrder(order);
+    await saveOrder(order);
     setPlaced(order);
     setStep("done");
   }
