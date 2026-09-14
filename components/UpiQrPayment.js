@@ -74,17 +74,21 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
           <a
             key={app.id}
             href={buildAppUpiLink(app.id, { amount, note }, upi)}
-            className="flex flex-col items-center gap-1.5 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
+            className="flex flex-col items-center gap-2 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
           >
-            <PaymentAppIcon app={app} size={32} />
+            <span className="flex h-8 items-center justify-center">
+              <PaymentAppIcon app={app} height={32} />
+            </span>
             <span className="text-xs font-semibold text-ink">{app.label}</span>
           </a>
         ))}
         <a
           href={genericLink}
-          className="flex flex-col items-center gap-1.5 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
+          className="flex flex-col items-center gap-2 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
         >
-          <PaymentAppIcon app={OTHER_UPI} size={32} />
+          <span className="flex h-8 items-center justify-center">
+            <PaymentAppIcon app={OTHER_UPI} height={32} />
+          </span>
           <span className="text-xs font-semibold text-ink">{OTHER_UPI.label}</span>
         </a>
       </div>
