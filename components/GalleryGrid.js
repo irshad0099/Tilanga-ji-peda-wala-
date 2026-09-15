@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Photos live in /public/images/photos/. Swap any file (keep the name) to
 // use the shop's own pictures.
@@ -16,7 +16,7 @@ export default function GalleryGrid() {
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {galleryImages.map((img) => (
         <figure key={img.src} className="overflow-hidden rounded-xl border border-gold/30 bg-cream-dark/40">
-          <Image
+          <ZoomableImage
             src={img.src}
             alt={img.caption}
             width={800}

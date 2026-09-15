@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products as defaultProducts } from "@/lib/products";
@@ -6,6 +5,7 @@ import { getProductBySlug } from "@/lib/db/products.server";
 import { getSettings } from "@/lib/db/settings.server";
 import { formatRupees } from "@/lib/format";
 import AddToCartPanel from "@/components/AddToCartPanel";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Pre-render the default menu's slugs at build time; any DB-only product
 // (created later from /admin) still renders fine on first request.
@@ -39,7 +39,7 @@ export default async function ProductPage({ params }) {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="overflow-hidden rounded-3xl border-2 border-gold/40">
-          <Image
+          <ZoomableImage
             src={product.image}
             alt={product.name}
             width={900}

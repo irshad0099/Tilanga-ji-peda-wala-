@@ -3,6 +3,8 @@ import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
+import MobileOrderBar from "@/components/MobileOrderBar";
 
 // Footer (and several pages) read live product/settings data from MongoDB
 // on every render. Force the whole app to render per-request rather than
@@ -22,6 +24,15 @@ export const metadata = {
     siteName: "Tilanga Ji Ka Mashahur Peda Dukan",
     type: "website",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Tilanga Ji",
+  },
+};
+
+export const viewport = {
+  themeColor: "#6E1E2B",
 };
 
 export default function RootLayout({ children }) {
@@ -41,6 +52,8 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <WhatsAppFloatButton />
+          <MobileOrderBar />
         </CartProvider>
       </body>
     </html>
