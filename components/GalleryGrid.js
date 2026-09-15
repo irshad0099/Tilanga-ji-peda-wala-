@@ -3,7 +3,6 @@ import ZoomableImage from "@/components/ZoomableImage";
 // Photos live in /public/images/photos/. Swap any file (keep the name) to
 // use the shop's own pictures.
 const galleryImages = [
-  { src: "/images/photos/shop-counter.jpg", caption: "Our counter on the Ara–Patna highway" },
   { src: "/images/photos/kulhad-chai.jpg", caption: "Kulhad chai — where the shop began in 1975" },
   { src: "/images/photos/litti-chokha.jpg", caption: "Litti-chokha with ghugni, straight off the coals" },
   { src: "/images/photos/shop-display.jpg", caption: "Fresh peda, milk cake and mithai every morning" },
