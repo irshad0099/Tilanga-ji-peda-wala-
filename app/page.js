@@ -62,7 +62,7 @@ export default async function HomePage() {
             <div className="arch-top overflow-hidden rounded-3xl border-2 border-gold/50">
               <Image
                 src="/images/photos/peda-platter.jpg"
-                alt="A plate of fresh khoya peda garnished with pistachio"
+                alt="A brass bowl of fresh Classic Khoya Peda"
                 width={900}
                 height={1000}
                 className="aspect-4/5 w-full object-cover"

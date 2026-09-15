@@ -7,7 +7,7 @@ const galleryImages = [
   { src: "/images/photos/kulhad-chai.jpg", caption: "Kulhad chai — where the shop began in 1975" },
   { src: "/images/photos/litti-chokha.jpg", caption: "Litti-chokha with ghugni, straight off the coals" },
   { src: "/images/photos/shop-display.jpg", caption: "Fresh peda, milk cake and mithai every morning" },
-  { src: "/images/photos/peda-platter.jpg", caption: "Hand-shaped khoya peda, plated for gifting" },
+  { src: "/images/photos/peda-platter.jpg", caption: "Classic Khoya Peda, ready to ship" },
   { src: "/images/photos/halwai-packing.jpg", caption: "Peda packed fresh before it ships" },
 ];
 
