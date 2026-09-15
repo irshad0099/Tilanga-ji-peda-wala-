@@ -61,6 +61,12 @@ export default function SettingsTab({ adminKey }) {
         <Field label="Opening hours" value={settings.shop.hours} onChange={(v) => set("shop", "hours", v)} />
         <Field label="GSTIN (optional)" value={settings.shop.gstin} onChange={(v) => set("shop", "gstin", v)} />
         <Field label="Email" value={settings.shop.email} onChange={(v) => set("shop", "email", v)} />
+        <Field
+          label="Google Maps listing URL (for the reviews button)"
+          value={settings.shop.googleMapsUrl}
+          onChange={(v) => set("shop", "googleMapsUrl", v)}
+          full
+        />
       </Section>
 
       <Section title="UPI payment">
