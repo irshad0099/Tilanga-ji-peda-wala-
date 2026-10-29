@@ -17,32 +17,40 @@ const reviews = [
 
 export default async function Testimonials() {
   const { shop } = await getSettings();
+  const [lead, ...rest] = reviews;
 
   return (
-    <div>
-      <div className="grid gap-6 md:grid-cols-3">
-        {reviews.map((review) => (
-          <figure key={review.name} className="rounded-xl border border-gold/30 bg-cream p-6">
-            <blockquote className="text-[15px] leading-relaxed text-ink/85">&quot;{review.text}&quot;</blockquote>
-            <figcaption className="mt-4 font-display text-teal">{review.name}</figcaption>
-          </figure>
-        ))}
-      </div>
-      {shop.googleMapsUrl && (
-        <div className="mt-8 text-center">
+    <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+      <figure>
+        <span aria-hidden="true" className="block font-display text-7xl leading-none text-saffron/60">“</span>
+        <blockquote className="-mt-4 font-display text-2xl leading-snug text-maroon sm:text-3xl">
+          {lead.text}
+        </blockquote>
+        <figcaption className="mt-5 text-[15px] font-semibold text-ink/75">— {lead.name}</figcaption>
+
+        {shop.googleMapsUrl && (
           <a
             href={shop.googleMapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+            className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-maroon underline decoration-gold decoration-2 underline-offset-4 hover:decoration-saffron"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-saffron">
               <path d="M12 2l2.9 6.26L21.5 9l-4.9 4.4L17.8 21 12 17.4 6.2 21l1.2-7.6L2.5 9l6.6-.74L12 2z" />
             </svg>
-            Read our reviews on Google
+            Google par 3,100+ reviews padhein
           </a>
-        </div>
-      )}
+        )}
+      </figure>
+
+      <div className="divide-y divide-gold/40 border-y border-gold/40">
+        {rest.map((review) => (
+          <figure key={review.name} className="py-6">
+            <blockquote className="text-[16px] leading-relaxed text-ink/85">{review.text}</blockquote>
+            <figcaption className="mt-3 text-sm font-semibold text-ink/65">— {review.name}</figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   );
 }

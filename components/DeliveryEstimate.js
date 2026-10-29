@@ -30,16 +30,16 @@ export default function DeliveryEstimate() {
           placeholder="Enter your pincode"
           value={pin}
           onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
-          className="w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal sm:w-56"
+          className="w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon sm:w-56"
         />
-        <button type="submit" className="rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon/90">
+        <button type="submit" className="rounded-lg bg-saffron px-5 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90">
           Check delivery time
         </button>
       </form>
 
-      {error && <p className="mt-3 text-[15px] font-medium text-maroon">{error}</p>}
+      {error && <p className="mt-3 text-[15px] font-medium text-saffron">{error}</p>}
       {result && (
-        <p className="mt-3 text-[15px] font-medium text-teal">
+        <p className="mt-3 text-[15px] font-medium text-maroon">
           {result.zone}: estimated delivery in {result.days}.
         </p>
       )}

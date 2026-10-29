@@ -6,6 +6,7 @@ import { getSettings } from "@/lib/db/settings.server";
 import { formatRupees } from "@/lib/format";
 import AddToCartPanel from "@/components/AddToCartPanel";
 import ZoomableImage from "@/components/ZoomableImage";
+import FAQAccordion from "@/components/FAQAccordion";
 
 // Pre-render the default menu's slugs at build time; any DB-only product
 // (created later from /admin) still renders fine on first request.
@@ -32,13 +33,13 @@ export default async function ProductPage({ params }) {
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <nav className="mb-6 text-sm text-ink/60">
-        <Link href="/menu" className="hover:text-maroon">Menu</Link>
+        <Link href="/menu" className="hover:text-saffron">Menu</Link>
         <span className="mx-2">/</span>
         <span className="text-ink">{product.name}</span>
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-3xl border-2 border-gold/40">
+        <div className="overflow-hidden rounded-sm shadow-[0_10px_30px_rgba(58,42,28,0.12)]">
           <ZoomableImage
             src={product.image}
             alt={product.name}
@@ -51,16 +52,16 @@ export default async function ProductPage({ params }) {
 
         <div>
           {product.badge && (
-            <span className="w-fit rounded-full bg-maroon/10 px-2.5 py-0.5 text-xs font-semibold text-maroon">
+            <span className="w-fit rounded-full bg-saffron/10 px-2.5 py-0.5 text-xs font-semibold text-saffron">
               {product.badge}
             </span>
           )}
-          <h1 className="mt-2 font-display text-3xl text-teal">{product.name}</h1>
+          <h1 className="mt-2 font-display text-3xl text-maroon">{product.name}</h1>
           <p className="text-base text-ink/60">{product.hindiName}</p>
           <p className="mt-3 text-[15px] text-ink/60">{product.weight}</p>
 
           <div className="mt-4 flex items-baseline gap-3">
-            <span className="text-2xl font-semibold text-maroon">{formatRupees(product.price)}</span>
+            <span className="text-2xl font-semibold text-saffron">{formatRupees(product.price)}</span>
             {product.mrp > product.price && (
               <span className="text-base text-ink/40 line-through">{formatRupees(product.mrp)}</span>
             )}
@@ -69,8 +70,8 @@ export default async function ProductPage({ params }) {
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink/80">{product.description}</p>
 
           {product.deliverable && product.inStock === false ? (
-            <div className="mt-7 rounded-2xl border border-maroon/30 bg-maroon/5 p-5">
-              <p className="font-display text-lg text-maroon">Sold out today</p>
+            <div className="mt-7 rounded-2xl border border-saffron/30 bg-saffron/5 p-5">
+              <p className="font-display text-lg text-saffron">Sold out today</p>
               <p className="mt-1.5 text-[15px] text-ink/75">
                 We&apos;ve run out for today — check back tomorrow, or call the shop to ask when
                 the next batch is ready.
@@ -89,7 +90,7 @@ export default async function ProductPage({ params }) {
             </>
           ) : (
             <div className="mt-7 rounded-2xl border border-gold/40 bg-cream-dark/40 p-5">
-              <p className="font-display text-lg text-teal">Served fresh at the shop</p>
+              <p className="font-display text-lg text-maroon">Served fresh at the shop</p>
               <p className="mt-1.5 text-[15px] text-ink/75">
                 This one is made through the day and eaten hot at the counter — we don&apos;t pack
                 or deliver it. Come by and try it with a kulhad of chai.
@@ -97,7 +98,7 @@ export default async function ProductPage({ params }) {
               <p className="mt-3 text-sm text-ink/60">{shop.address}</p>
               <Link
                 href="/menu?deliver=1"
-                className="mt-4 inline-block rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+                className="mt-4 inline-block rounded-lg border-2 border-maroon px-5 py-2.5 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream"
               >
                 See what we deliver
               </Link>
@@ -105,6 +106,16 @@ export default async function ProductPage({ params }) {
           )}
         </div>
       </div>
+
+      {product.deliverable && (
+        <section className="mt-20">
+          <h2 className="font-display text-3xl text-maroon sm:text-4xl">ऑर्डर से पहले</h2>
+          <p className="mt-2 text-[15px] text-ink/70">Common questions about delivery, payment and freshness.</p>
+          <div className="mt-8">
+            <FAQAccordion />
+          </div>
+        </section>
+      )}
     </div>
   );
 }

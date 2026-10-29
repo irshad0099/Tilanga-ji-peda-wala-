@@ -61,10 +61,10 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
 
   return (
     <div className="rounded-2xl border border-gold/40 bg-cream-dark/30 p-6">
-      <h3 className="font-display text-lg text-teal">{heading}</h3>
+      <h3 className="font-display text-lg text-maroon">{heading}</h3>
       <div className="mt-2 flex items-baseline justify-between rounded-lg bg-cream px-4 py-3">
         <span className="text-sm text-ink/60">Amount to pay</span>
-        <span className="text-xl font-semibold text-maroon">{formatRupees(amount)}</span>
+        <span className="text-xl font-semibold text-saffron">{formatRupees(amount)}</span>
       </div>
 
       {/* App buttons — tap your own UPI app, amount is pre-filled */}
@@ -74,7 +74,7 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
           <a
             key={app.id}
             href={buildAppUpiLink(app.id, { amount, note }, upi)}
-            className="flex flex-col items-center gap-2 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
+            className="flex flex-col items-center gap-2 rounded-lg border-2 border-maroon/20 bg-cream py-3 text-center transition-colors hover:border-maroon hover:bg-cream-dark"
           >
             <span className="flex h-8 items-center justify-center">
               <PaymentAppIcon app={app} height={32} />
@@ -84,7 +84,7 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
         ))}
         <a
           href={genericLink}
-          className="flex flex-col items-center gap-2 rounded-lg border-2 border-teal/20 bg-cream py-3 text-center transition-colors hover:border-teal hover:bg-cream-dark"
+          className="flex flex-col items-center gap-2 rounded-lg border-2 border-maroon/20 bg-cream py-3 text-center transition-colors hover:border-maroon hover:bg-cream-dark"
         >
           <span className="flex h-8 items-center justify-center">
             <PaymentAppIcon app={OTHER_UPI} height={32} />
@@ -122,7 +122,7 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
                 <button
                   type="button"
                   onClick={copyVpa}
-                  className="rounded border border-teal/30 px-2 py-0.5 text-xs text-teal hover:bg-cream-dark"
+                  className="rounded border border-maroon/30 px-2 py-0.5 text-xs text-maroon hover:bg-cream-dark"
                 >
                   {copied ? "Copied" : "Copy"}
                 </button>
@@ -145,16 +145,16 @@ export default function UpiQrPayment({ amount, note, heading = "Pay by UPI", onC
             value={ref}
             onChange={(e) => setRef(e.target.value)}
             placeholder="e.g. 4193 2210 8845"
-            className="w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+            className="w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
           />
           <button
             type="submit"
-            className="shrink-0 rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon/90"
+            className="shrink-0 rounded-lg bg-saffron px-5 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90"
           >
             I&apos;ve paid
           </button>
         </div>
-        {error && <p className="mt-2 text-sm text-maroon">{error}</p>}
+        {error && <p className="mt-2 text-sm text-saffron">{error}</p>}
         <p className="mt-2 text-xs text-ink/45">
           Your payment is confirmed manually by the shop, usually within a few hours during
           working hours. You&apos;ll get the order ID and invoice right away.

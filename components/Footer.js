@@ -5,7 +5,7 @@ import { getSettings } from "@/lib/db/settings.server";
 export default async function Footer() {
   const { shop, phones, whatsapp } = await getSettings();
   return (
-    <footer className="border-t border-gold/40 bg-teal text-cream">
+    <footer className="border-t border-gold/40 bg-maroon text-cream">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">

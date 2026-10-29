@@ -26,12 +26,12 @@ export default function InvoicePage({ params }) {
   if (!order) {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
-        <h1 className="font-display text-3xl text-teal">Invoice not found</h1>
+        <h1 className="font-display text-3xl text-maroon">Invoice not found</h1>
         <p className="mt-3 text-[15px] text-ink/70">
           No order with ID <span className="font-mono">{orderId}</span> was found. Double-check the
           ID, or note that it may only be available on the device the order was placed from.
         </p>
-        <Link href="/menu" className="mt-6 inline-block rounded-lg bg-teal px-6 py-3 text-[15px] font-semibold text-cream hover:bg-teal-dark">
+        <Link href="/menu" className="mt-6 inline-block rounded-lg bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark">
           Back to menu
         </Link>
       </div>
@@ -41,7 +41,7 @@ export default function InvoicePage({ params }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
       <nav className="mb-6 text-sm text-ink/60">
-        <Link href="/track-order" className="hover:text-maroon">Track order</Link>
+        <Link href="/track-order" className="hover:text-saffron">Track order</Link>
         <span className="mx-2">/</span>
         <span className="text-ink">Invoice {order.id}</span>
       </nav>

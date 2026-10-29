@@ -48,7 +48,7 @@ export default function MobileOrderBar() {
     <>
       {show && <div aria-hidden className="h-[68px] sm:hidden" />}
       {show && (
-        <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-gold/40 bg-teal px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.15)] sm:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-gold/40 bg-maroon px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.15)] sm:hidden">
           <div className="min-w-0 text-cream">
             <p className="truncate text-xs text-cream/70">{product.name}</p>
             <p className="font-display text-lg leading-none">{formatRupees(product.price)}</p>
@@ -56,7 +56,7 @@ export default function MobileOrderBar() {
           <button
             onClick={handleOrder}
             disabled={adding}
-            className="shrink-0 rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon/90 disabled:opacity-60"
+            className="shrink-0 rounded-lg bg-saffron px-5 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
           >
             {adding ? "Adding…" : "Order Now"}
           </button>

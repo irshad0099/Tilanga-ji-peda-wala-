@@ -24,12 +24,12 @@ export default function AddToCartPanel({ product }) {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <div className="flex items-center rounded-lg border border-teal/30">
-          <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-3 py-2 text-lg text-teal" aria-label="Decrease quantity">
+        <div className="flex items-center rounded-lg border border-maroon/30">
+          <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-3 py-2 text-lg text-maroon" aria-label="Decrease quantity">
             −
           </button>
           <span className="w-8 text-center text-[15px] font-medium">{qty}</span>
-          <button onClick={() => setQty((q) => q + 1)} className="px-3 py-2 text-lg text-teal" aria-label="Increase quantity">
+          <button onClick={() => setQty((q) => q + 1)} className="px-3 py-2 text-lg text-maroon" aria-label="Increase quantity">
             +
           </button>
         </div>
@@ -37,10 +37,10 @@ export default function AddToCartPanel({ product }) {
       </div>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-        <button onClick={handleAdd} className="flex-1 rounded-lg bg-teal py-3 text-[15px] font-semibold text-cream hover:bg-teal-dark">
+        <button onClick={handleAdd} className="flex-1 rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark">
           {added ? "Added to cart" : "Add to cart"}
         </button>
-        <button onClick={handleBuyNow} className="flex-1 rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90">
+        <button onClick={handleBuyNow} className="flex-1 rounded-lg bg-saffron py-3 text-[15px] font-semibold text-cream hover:bg-saffron/90">
           Buy now
         </button>
       </div>

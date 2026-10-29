@@ -26,11 +26,11 @@ export default function InvoicePreview({ order }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-xl text-teal">Invoice preview</h2>
+        <h2 className="font-display text-xl text-maroon">Invoice preview</h2>
         <button
           onClick={handleDownload}
           disabled={busy}
-          className="rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon/90 disabled:opacity-60"
+          className="rounded-lg bg-saffron px-5 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
         >
           {busy ? "Preparing…" : "Download PDF"}
         </button>
@@ -40,7 +40,7 @@ export default function InvoicePreview({ order }) {
         {/* header */}
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-gold/30 bg-cream-dark/40 p-6">
           <div>
-            <p className="font-display text-xl text-maroon">{shop.shortName}</p>
+            <p className="font-display text-xl text-saffron">{shop.shortName}</p>
             <p className="mt-1 text-xs text-ink/60">{shop.legalName}</p>
             <p className="max-w-[16rem] text-xs text-ink/60">{shop.address}</p>
             {shop.gstin && <p className="text-xs text-ink/60">GSTIN: {shop.gstin}</p>}
@@ -70,7 +70,7 @@ export default function InvoicePreview({ order }) {
           <div className="mt-5 overflow-x-auto">
             <table className="w-full min-w-[30rem] text-sm">
               <thead>
-                <tr className="bg-teal text-left text-cream">
+                <tr className="bg-maroon text-left text-cream">
                   <th className="px-3 py-2 font-semibold">Description</th>
                   <th className="px-3 py-2 text-right font-semibold">Qty</th>
                   <th className="px-3 py-2 text-right font-semibold">Rate</th>
@@ -122,7 +122,7 @@ export default function InvoicePreview({ order }) {
 
 function Row({ label, value, bold }) {
   return (
-    <div className={`flex justify-between ${bold ? "border-t border-gold/30 pt-1 font-semibold text-teal" : "text-ink/70"}`}>
+    <div className={`flex justify-between ${bold ? "border-t border-gold/30 pt-1 font-semibold text-maroon" : "text-ink/70"}`}>
       <span>{label}</span>
       <span>{value}</span>
     </div>

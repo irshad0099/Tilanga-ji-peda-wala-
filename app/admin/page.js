@@ -56,7 +56,7 @@ export default function AdminPage() {
   if (!authedKey) {
     return (
       <div className="mx-auto max-w-sm px-4 py-24 sm:px-6">
-        <h1 className="font-display text-2xl text-teal">Shop Admin</h1>
+        <h1 className="font-display text-2xl text-maroon">Shop Admin</h1>
         <p className="mt-2 text-sm text-ink/70">Enter the admin key to view and manage the shop.</p>
         <form
           onSubmit={(e) => {
@@ -70,17 +70,17 @@ export default function AdminPage() {
             value={key}
             onChange={(e) => setKey(e.target.value)}
             placeholder="Admin key"
-            className="w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+            className="w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
           />
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-teal py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark disabled:opacity-60"
+            className="w-full rounded-lg bg-maroon py-2.5 text-sm font-semibold text-cream hover:bg-maroon-dark disabled:opacity-60"
           >
             {loading ? "Checking…" : "Enter"}
           </button>
         </form>
-        {error && <p className="mt-3 text-sm text-maroon">{error}</p>}
+        {error && <p className="mt-3 text-sm text-saffron">{error}</p>}
       </div>
     );
   }
@@ -94,7 +94,7 @@ export default function AdminPage() {
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
-                tab === t.id ? "bg-teal text-cream" : "text-teal hover:bg-cream-dark"
+                tab === t.id ? "bg-maroon text-cream" : "text-maroon hover:bg-cream-dark"
               }`}
             >
               {t.label}
@@ -103,7 +103,7 @@ export default function AdminPage() {
         </nav>
         <button
           onClick={logout}
-          className="rounded-lg border-2 border-maroon/50 px-4 py-2 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream"
+          className="rounded-lg border-2 border-saffron/50 px-4 py-2 text-sm font-semibold text-saffron hover:bg-saffron hover:text-cream"
         >
           Log out
         </button>

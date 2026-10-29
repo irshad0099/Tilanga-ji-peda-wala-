@@ -95,13 +95,13 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
         <div className="text-center">
-          <h1 className="font-display text-3xl text-teal">Order placed!</h1>
+          <h1 className="font-display text-3xl text-maroon">Order placed!</h1>
           <p className="mt-2 text-[15px] text-ink/70">
             {placed.paymentStatus === "pending_verification"
               ? "We've recorded your UPI payment and will confirm it shortly."
               : "Pay the delivery person in cash when your order arrives."}
           </p>
-          <p className="mt-5 inline-block rounded-lg border border-gold/40 bg-cream-dark/40 px-6 py-3 font-display text-xl text-teal">
+          <p className="mt-5 inline-block rounded-lg border border-gold/40 bg-cream-dark/40 px-6 py-3 font-display text-xl text-maroon">
             {placed.id}
           </p>
           <p className="mt-3 text-sm text-ink/60">
@@ -115,19 +115,19 @@ export default function CheckoutPage() {
             href={retailOrderWhatsappLink(placed, whatsapp)}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark"
+            className="rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon-dark"
           >
             Send order on WhatsApp
           </a>
           <Link
             href="/track-order"
-            className="rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+            className="rounded-lg border-2 border-maroon px-5 py-2.5 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream"
           >
             Track this order
           </Link>
           <Link
             href="/menu"
-            className="rounded-lg border-2 border-teal px-5 py-2.5 text-sm font-semibold text-teal hover:bg-teal hover:text-cream"
+            className="rounded-lg border-2 border-maroon px-5 py-2.5 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream"
           >
             Continue shopping
           </Link>
@@ -144,9 +144,9 @@ export default function CheckoutPage() {
   if (hydrated && items.length === 0 && step === "form") {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
-        <h1 className="font-display text-3xl text-teal">Nothing to check out</h1>
+        <h1 className="font-display text-3xl text-maroon">Nothing to check out</h1>
         <p className="mt-3 text-[15px] text-ink/70">Your cart is empty right now.</p>
-        <Link href="/menu" className="mt-6 inline-block rounded-lg bg-teal px-6 py-3 text-[15px] font-semibold text-cream hover:bg-teal-dark">
+        <Link href="/menu" className="mt-6 inline-block rounded-lg bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark">
           Browse the menu
         </Link>
       </div>
@@ -157,10 +157,10 @@ export default function CheckoutPage() {
   if (step === "pay" && draft) {
     return (
       <div className="mx-auto max-w-xl px-4 py-12 sm:px-6">
-        <button onClick={() => setStep("form")} className="text-sm text-ink/60 hover:text-maroon">
+        <button onClick={() => setStep("form")} className="text-sm text-ink/60 hover:text-saffron">
           ← Back to details
         </button>
-        <h1 className="mt-3 font-display text-3xl text-teal">Pay {formatRupees(draft.total)}</h1>
+        <h1 className="mt-3 font-display text-3xl text-maroon">Pay {formatRupees(draft.total)}</h1>
         <p className="mt-2 text-[15px] text-ink/70">Order for {draft.customer.name}. Nothing is placed until you confirm payment.</p>
         <div className="mt-6">
           <UpiQrPayment
@@ -177,7 +177,7 @@ export default function CheckoutPage() {
   // ---- Address + payment form -------------------------------------------
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl text-teal">Checkout</h1>
+      <h1 className="font-display text-3xl text-maroon">Checkout</h1>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1.3fr_1fr]">
         <form onSubmit={handleContinue} className="space-y-5">
@@ -187,9 +187,9 @@ export default function CheckoutPage() {
               name="name"
               value={form.name}
               onChange={handleChange}
-              className="mt-1 w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+              className="mt-1 w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
             />
-            {errors.name && <p className="mt-1 text-sm text-maroon">{errors.name}</p>}
+            {errors.name && <p className="mt-1 text-sm text-saffron">{errors.name}</p>}
           </div>
 
           <div>
@@ -200,9 +200,9 @@ export default function CheckoutPage() {
               maxLength={10}
               value={form.phone}
               onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, "") }))}
-              className="mt-1 w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+              className="mt-1 w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
             />
-            {errors.phone && <p className="mt-1 text-sm text-maroon">{errors.phone}</p>}
+            {errors.phone && <p className="mt-1 text-sm text-saffron">{errors.phone}</p>}
           </div>
 
           <div>
@@ -212,9 +212,9 @@ export default function CheckoutPage() {
               rows={3}
               value={form.address}
               onChange={handleChange}
-              className="mt-1 w-full rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+              className="mt-1 w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
             />
-            {errors.address && <p className="mt-1 text-sm text-maroon">{errors.address}</p>}
+            {errors.address && <p className="mt-1 text-sm text-saffron">{errors.address}</p>}
           </div>
 
           <div>
@@ -225,11 +225,11 @@ export default function CheckoutPage() {
               maxLength={6}
               value={form.pincode}
               onChange={handleChange}
-              className="mt-1 w-full max-w-[10rem] rounded-lg border border-teal/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-teal"
+              className="mt-1 w-full max-w-[10rem] rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
             />
-            {errors.pincode && <p className="mt-1 text-sm text-maroon">{errors.pincode}</p>}
+            {errors.pincode && <p className="mt-1 text-sm text-saffron">{errors.pincode}</p>}
             {!errors.pincode && estimate && (
-              <p className="mt-1 text-sm text-teal">
+              <p className="mt-1 text-sm text-maroon">
                 {estimate.zone}: estimated delivery in {estimate.days}.
               </p>
             )}
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
                 <label
                   key={option.id}
                   className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 ${
-                    payment === option.id ? "border-teal bg-cream-dark/40" : "border-teal/20"
+                    payment === option.id ? "border-maroon bg-cream-dark/40" : "border-maroon/20"
                   }`}
                 >
                   <input
@@ -265,7 +265,7 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={placing}
-            className="w-full rounded-lg bg-maroon py-3 text-[15px] font-semibold text-cream hover:bg-maroon/90 disabled:opacity-60"
+            className="w-full rounded-lg bg-saffron py-3 text-[15px] font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
           >
             {placing
               ? "Placing order…"
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
         </form>
 
         <div className="h-fit rounded-xl border border-gold/30 bg-cream-dark/30 p-6">
-          <h2 className="font-display text-lg text-teal">Order summary</h2>
+          <h2 className="font-display text-lg text-maroon">Order summary</h2>
           <ul className="mt-4 space-y-3">
             {items.map((item) => (
               <li key={item.slug} className="flex justify-between text-sm">
@@ -296,7 +296,7 @@ export default function CheckoutPage() {
               <span className="text-ink/70">Shipping</span>
               <span>{deliveryFee === 0 ? "Free" : formatRupees(deliveryFee)}</span>
             </div>
-            <div className="flex justify-between pt-2 text-base font-semibold text-teal">
+            <div className="flex justify-between pt-2 text-base font-semibold text-maroon">
               <span>Total</span>
               <span>{formatRupees(total)}</span>
             </div>

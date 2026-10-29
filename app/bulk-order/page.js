@@ -40,8 +40,8 @@ export default async function BulkOrderPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <div className="text-center">
-        <p className="text-sm font-semibold text-maroon">Bulk &amp; Wholesale</p>
-        <h1 className="mt-1 font-display text-4xl text-teal">Order Peda By The Kilo</h1>
+        <p className="text-sm font-semibold text-saffron">Bulk &amp; Wholesale</p>
+        <h1 className="mt-1 font-display text-4xl text-maroon">Order Peda By The Kilo</h1>
         <p className="mx-auto mt-3 max-w-xl text-[15px] text-ink/75">
           For weddings, tilak, festivals, office hampers and shop resale. Tell us the weights and
           the date, pay a small advance, and we deliver it fresh to your door.
@@ -52,7 +52,7 @@ export default async function BulkOrderPage() {
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {points.map((p) => (
           <div key={p.title} className="rounded-xl border border-gold/30 bg-cream-dark/30 p-5">
-            <h2 className="font-display text-base text-teal">{p.title}</h2>
+            <h2 className="font-display text-base text-maroon">{p.title}</h2>
             <p className="mt-1.5 text-sm text-ink/70">{p.body}</p>
           </div>
         ))}

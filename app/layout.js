@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className="flex min-h-full flex-col">
+      <body className="paper flex min-h-full flex-col">
         <CartProvider>
           <AnnouncementBar />
           <Navbar />

@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #EAD9B0;
-  --cream-dark: #DCC084;
-  --teal: #6E1E2B;
-  --teal-dark: #511420;
-  --maroon: #DB8A1F;
+  /* Three colours carry the brand: maroon (main), paper cream (ground),
+     gold (thin rules only). Saffron is reserved for order buttons and
+     small accents — it's dark enough to pass contrast as text on cream. */
+  --cream: #F6ECD6;
+  --cream-dark: #EBD9B4;
+  --maroon: #6E1E2B;
+  --maroon-dark: #4E1420;
+  --saffron: #A9520C;
   --gold: #B8892E;
   --ink: #3A2A1C;
 
@@ -16,9 +19,9 @@
 @theme inline {
   --color-cream: var(--cream);
   --color-cream-dark: var(--cream-dark);
-  --color-teal: var(--teal);
-  --color-teal-dark: var(--teal-dark);
   --color-maroon: var(--maroon);
+  --color-maroon-dark: var(--maroon-dark);
+  --color-saffron: var(--saffron);
   --color-gold: var(--gold);
   --color-ink: var(--ink);
   --font-display: var(--font-display);
@@ -39,7 +42,7 @@ body {
   font-family: var(--font-body);
 }
 
-h1, h2, h3, .font-display {
+h1, h2, .font-display {
   font-family: var(--font-display);
   letter-spacing: 0.01em;
 }
@@ -49,7 +52,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--maroon);
+  outline: 2px solid var(--saffron);
   outline-offset: 2px;
 }
 
@@ -92,4 +95,73 @@ textarea:focus-visible {
   height: 1.5px;
   flex: 1;
   background: var(--gold);
+}
+
+/* Faint paper grain so large cream areas don't read as flat digital fill. */
+.paper {
+  background-color: var(--cream);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Rubber-stamp mark, like the ink stamp on a mithai box. */
+.stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 9999px;
+  line-height: 1.05;
+  text-align: center;
+  transform: rotate(-9deg);
+  opacity: 0.88;
+}
+
+/* Hand-drawn brush stroke under a word in a heading. */
+.brush {
+  position: relative;
+  white-space: nowrap;
+}
+
+.brush::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -0.12em;
+  height: 0.32em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9c30-5 62-7 96-6 34 1 64 3 98 1' fill='none' stroke='%23A9520C' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  z-index: -1;
+}
+
+/* Scalloped edge (like a toran / mithai-box paper trim) on top of a dark band. */
+.scallop-top {
+  position: relative;
+}
+
+.scallop-top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -11px;
+  height: 12px;
+  background: radial-gradient(circle at 12px 12px, var(--maroon) 11.5px, transparent 12px) repeat-x;
+  background-size: 24px 12px;
+}
+
+/* Horizontal photo strip that scrolls on phones without a page scrollbar. */
+.photo-strip {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.photo-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.photo-strip > * {
+  scroll-snap-align: start;
 }

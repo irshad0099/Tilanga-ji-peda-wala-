@@ -48,7 +48,7 @@ export default function SettingsTab({ adminKey }) {
 
   return (
     <form onSubmit={save} className="max-w-3xl space-y-8">
-      <h2 className="font-display text-xl text-teal">Shop settings</h2>
+      <h2 className="font-display text-xl text-maroon">Shop settings</h2>
       <p className="text-xs text-ink/50">
         Changes here go live everywhere immediately — the payment QR, invoices, WhatsApp
         messages, checkout and the footer all read from this.
@@ -154,11 +154,11 @@ export default function SettingsTab({ adminKey }) {
         <button
           type="submit"
           disabled={saving}
-          className="rounded-lg bg-maroon px-6 py-2.5 text-sm font-semibold text-cream hover:bg-maroon/90 disabled:opacity-60"
+          className="rounded-lg bg-saffron px-6 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
         >
           {saving ? "Saving…" : saved ? "Saved ✓" : "Save settings"}
         </button>
-        {error && <p className="text-sm text-maroon">{error}</p>}
+        {error && <p className="text-sm text-saffron">{error}</p>}
       </div>
     </form>
   );
@@ -167,7 +167,7 @@ export default function SettingsTab({ adminKey }) {
 function Section({ title, children }) {
   return (
     <fieldset className="rounded-xl border border-gold/30 bg-cream-dark/20 p-5">
-      <legend className="px-1 font-display text-base text-teal">{title}</legend>
+      <legend className="px-1 font-display text-base text-maroon">{title}</legend>
       <div className="mt-2 grid gap-4 sm:grid-cols-2">{children}</div>
     </fieldset>
   );
@@ -182,7 +182,7 @@ function Field({ label, value, onChange, full, type = "text", step }) {
         step={step}
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-lg border border-teal/30 bg-cream px-3 py-2 text-[15px] outline-none focus:border-teal"
+        className="mt-1 w-full rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-[15px] outline-none focus:border-maroon"
       />
     </label>
   );

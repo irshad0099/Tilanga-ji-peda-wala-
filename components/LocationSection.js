@@ -3,29 +3,29 @@ import { getSettings } from "@/lib/db/settings.server";
 export default async function LocationSection() {
   const { shop } = await getSettings();
   return (
-    <div className="grid gap-8 rounded-2xl border border-gold/30 bg-cream p-6 sm:p-8 lg:grid-cols-2">
+    <div className="grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-14">
+      {/* Highway milestone, the kind every traveller passes on the way to the shop */}
+      <svg viewBox="0 0 160 200" className="mx-auto w-36 md:w-44" aria-hidden="true">
+        <path d="M20 200V70a60 60 0 0 1 120 0v130z" fill="#FBF6EA" stroke="#3A2A1C" strokeOpacity=".25" strokeWidth="2" />
+        <path d="M20 78V70a60 60 0 0 1 120 0v8z" fill="#E8B23A" />
+        <text x="80" y="118" textAnchor="middle" fontFamily="Yatra One, serif" fontSize="22" fill="#6E1E2B">सकड्डी</text>
+        <text x="80" y="146" textAnchor="middle" fontFamily="Hind, sans-serif" fontSize="11" fontWeight="600" fill="#3A2A1C" fillOpacity=".7">ARA–PATNA HWY</text>
+        <rect x="0" y="188" width="160" height="12" fill="#3A2A1C" fillOpacity=".12" />
+      </svg>
+
       <div>
-        <h3 className="font-display text-xl text-teal">Visit the original shop</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/80">{shop.address}</p>
-        <p className="mt-4 text-[15px] text-ink/80">{shop.hours}</p>
+        <h2 className="font-display text-4xl text-maroon sm:text-5xl">दुकान पर आइए</h2>
+        <p className="mt-4 max-w-md text-[17px] leading-relaxed text-ink/85">{shop.address}</p>
+        <p className="mt-2 text-[15px] text-ink/70">{shop.hours}</p>
         <a
           href="https://www.google.com/maps/search/?api=1&query=Tilanga+Ji+Ka+Mashahur+Peda+Dukan+Sakaddi"
           target="_blank"
           rel="noreferrer"
-          className="mt-5 inline-block rounded-lg bg-teal px-5 py-2.5 text-sm font-semibold text-cream hover:bg-teal-dark"
+          className="mt-6 inline-block rounded-md bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark"
         >
-          Get directions
+          Rasta dekhein (Google Maps)
         </a>
       </div>
-      <svg viewBox="0 0 300 220" className="w-full max-w-sm justify-self-center" aria-hidden="true">
-        <rect width="300" height="220" rx="16" fill="#F0E3C8" />
-        <path d="M20 180 Q100 100 150 140 Q220 90 280 60" stroke="#B8892E" strokeWidth="6" fill="none" strokeDasharray="2 14" strokeLinecap="round" />
-        <circle cx="150" cy="110" r="14" fill="#DB8A1F" />
-        <path d="M150 96 a14 14 0 1 1 -0.1 0 z" fill="#DB8A1F" />
-        <path d="M150 96 L150 140 L138 118 Z" fill="#DB8A1F" />
-        <circle cx="150" cy="108" r="5" fill="#FBF3E5" />
-        <text x="150" y="180" textAnchor="middle" fontFamily="Georgia, serif" fontSize="14" fill="#6E1E2B">Sakaddi, Ara–Patna Highway</text>
-      </svg>
     </div>
   );
 }

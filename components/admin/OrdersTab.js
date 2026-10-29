@@ -39,11 +39,11 @@ export default function OrdersTab({ adminKey }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-xl text-teal">Orders ({orders.length})</h2>
+        <h2 className="font-display text-xl text-maroon">Orders ({orders.length})</h2>
         <button
           onClick={load}
           disabled={loading}
-          className="rounded-lg border-2 border-teal px-4 py-2 text-sm font-semibold text-teal hover:bg-teal hover:text-cream disabled:opacity-60"
+          className="rounded-lg border-2 border-maroon px-4 py-2 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream disabled:opacity-60"
         >
           {loading ? "Refreshing…" : "Refresh"}
         </button>
@@ -55,7 +55,7 @@ export default function OrdersTab({ adminKey }) {
         <div className="mt-6 overflow-x-auto rounded-xl border border-gold/30">
           <table className="w-full min-w-[62rem] text-sm">
             <thead>
-              <tr className="bg-teal text-left text-cream">
+              <tr className="bg-maroon text-left text-cream">
                 <th className="px-3 py-2.5 font-semibold">Order</th>
                 <th className="px-3 py-2.5 font-semibold">Customer</th>
                 <th className="px-3 py-2.5 font-semibold">Amount</th>
@@ -84,12 +84,12 @@ export default function OrdersTab({ adminKey }) {
                       <p className="text-ink">{order.customer?.name}</p>
                       <p className="text-xs text-ink/50">{order.customer?.phone}</p>
                     </td>
-                    <td className="px-3 py-2.5 font-medium text-maroon">{formatRupees(total)}</td>
+                    <td className="px-3 py-2.5 font-medium text-saffron">{formatRupees(total)}</td>
                     <td className="px-3 py-2.5">
                       <p className="text-ink/80">{paymentStatusLabels[order.paymentStatus] || order.paymentStatus}</p>
                       {order.txnRef && <p className="font-mono text-xs text-ink/50">{order.txnRef}</p>}
                       {order.paymentVerified ? (
-                        <span className="text-xs font-semibold text-teal">✓ Verified</span>
+                        <span className="text-xs font-semibold text-maroon">✓ Verified</span>
                       ) : canVerify ? (
                         <button
                           onClick={() =>
@@ -98,7 +98,7 @@ export default function OrdersTab({ adminKey }) {
                               ...(order.paymentStatus === "pending_verification" ? { paymentStatus: "paid" } : {}),
                             })
                           }
-                          className="mt-1 rounded border border-teal/40 px-2 py-0.5 text-xs font-semibold text-teal hover:bg-cream-dark"
+                          className="mt-1 rounded border border-maroon/40 px-2 py-0.5 text-xs font-semibold text-maroon hover:bg-cream-dark"
                         >
                           Verify payment
                         </button>
@@ -108,7 +108,7 @@ export default function OrdersTab({ adminKey }) {
                       <select
                         value={order.status}
                         onChange={(e) => patchOrder(order._id, { status: e.target.value })}
-                        className="rounded-lg border border-teal/30 bg-cream px-2 py-1.5 text-sm outline-none focus:border-teal"
+                        className="rounded-lg border border-maroon/30 bg-cream px-2 py-1.5 text-sm outline-none focus:border-maroon"
                       >
                         {orderStages.map((s) => (
                           <option key={s} value={s}>
@@ -118,7 +118,7 @@ export default function OrdersTab({ adminKey }) {
                       </select>
                     </td>
                     <td className="px-3 py-2.5">
-                      <Link href={`/invoice/${order.id}`} target="_blank" className="text-sm font-medium text-teal hover:text-maroon">
+                      <Link href={`/invoice/${order.id}`} target="_blank" className="text-sm font-medium text-maroon hover:text-saffron">
                         View
                       </Link>
                     </td>

@@ -24,9 +24,9 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <LogoBadge size={46} />
-          <span className="font-display leading-tight text-teal">
+          <span className="font-display leading-tight text-maroon">
             <span className="block text-lg sm:text-xl">Tilanga Ji</span>
-            <span className="block text-[11px] font-body font-medium tracking-wide text-maroon">
+            <span className="block text-[11px] font-body font-medium tracking-wide text-saffron">
               Mashahur Peda Dukan
             </span>
           </span>
@@ -37,8 +37,8 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-[15px] font-medium transition-colors hover:text-maroon ${
-                pathname === link.href ? "text-maroon" : "text-ink"
+              className={`text-[15px] font-medium transition-colors hover:text-saffron ${
+                pathname === link.href ? "text-saffron" : "text-ink"
               }`}
             >
               {link.label}
@@ -49,7 +49,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="/login"
-            className="hidden text-[15px] font-medium text-ink hover:text-maroon sm:inline"
+            className="hidden text-[15px] font-medium text-ink hover:text-saffron sm:inline"
           >
             Login
           </Link>
@@ -61,20 +61,20 @@ export default function Navbar() {
               fill="none"
               stroke="currentColor"
               strokeWidth="1.8"
-              className="text-teal"
+              className="text-maroon"
             >
               <circle cx="9" cy="21" r="1.5" fill="currentColor" stroke="none" />
               <circle cx="18" cy="21" r="1.5" fill="currentColor" stroke="none" />
               <path d="M2.5 3h2l2.2 12.1a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6" />
             </svg>
             {totalItems > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-maroon text-[11px] font-semibold text-cream">
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-saffron text-[11px] font-semibold text-cream">
                 {totalItems}
               </span>
             )}
           </Link>
           <button
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-teal/30 md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-maroon/30 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -94,7 +94,7 @@ export default function Navbar() {
               href={link.href}
               onClick={() => setOpen(false)}
               className={`rounded-md px-3 py-2 text-[15px] font-medium ${
-                pathname === link.href ? "bg-cream-dark text-maroon" : "text-ink"
+                pathname === link.href ? "bg-cream-dark text-saffron" : "text-ink"
               }`}
             >
               {link.label}
