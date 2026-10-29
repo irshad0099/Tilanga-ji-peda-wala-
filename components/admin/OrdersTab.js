@@ -66,17 +66,14 @@ export default function OrdersTab({ adminKey }) {
             </thead>
             <tbody>
               {orders.map((order) => {
-                const isBulk = order.type === "bulk";
-                const total = isBulk ? order.grandTotal : order.total;
-                const canVerify =
-                  ["pending_verification", "advance_paid"].includes(order.paymentStatus) &&
-                  !order.paymentVerified;
+                // Online orders the customer never finished paying for — kept
+                // for reference, but there's nothing to pack or ship.
+                const unpaid = ["awaiting_payment", "failed"].includes(order.paymentStatus);
                 return (
-                  <tr key={order._id} className="border-t border-gold/20 align-top">
+                  <tr key={order._id} className={`border-t border-gold/20 align-top ${unpaid ? "opacity-55" : ""}`}>
                     <td className="px-3 py-2.5">
                       <p className="font-mono text-[13px] text-ink">{order.id}</p>
                       <p className="text-xs text-ink/50">
-                        {isBulk ? "Bulk" : "Retail"} ·{" "}
                         {new Date(order.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                       </p>
                     </td>
@@ -84,38 +81,32 @@ export default function OrdersTab({ adminKey }) {
                       <p className="text-ink">{order.customer?.name}</p>
                       <p className="text-xs text-ink/50">{order.customer?.phone}</p>
                     </td>
-                    <td className="px-3 py-2.5 font-medium text-saffron">{formatRupees(total)}</td>
+                    <td className="px-3 py-2.5 font-medium text-saffron">{formatRupees(order.total)}</td>
                     <td className="px-3 py-2.5">
-                      <p className="text-ink/80">{paymentStatusLabels[order.paymentStatus] || order.paymentStatus}</p>
-                      {order.txnRef && <p className="font-mono text-xs text-ink/50">{order.txnRef}</p>}
-                      {order.paymentVerified ? (
-                        <span className="text-xs font-semibold text-maroon">✓ Verified</span>
-                      ) : canVerify ? (
-                        <button
-                          onClick={() =>
-                            patchOrder(order._id, {
-                              paymentVerified: true,
-                              ...(order.paymentStatus === "pending_verification" ? { paymentStatus: "paid" } : {}),
-                            })
-                          }
-                          className="mt-1 rounded border border-maroon/40 px-2 py-0.5 text-xs font-semibold text-maroon hover:bg-cream-dark"
-                        >
-                          Verify payment
-                        </button>
-                      ) : null}
+                      <p className={order.paymentStatus === "paid" ? "font-semibold text-maroon" : "text-ink/80"}>
+                        {order.paymentStatus === "paid" && "✓ "}
+                        {paymentStatusLabels[order.paymentStatus] || order.paymentStatus}
+                      </p>
+                      {order.razorpayPaymentId && (
+                        <p className="font-mono text-xs text-ink/50">{order.razorpayPaymentId}</p>
+                      )}
                     </td>
                     <td className="px-3 py-2.5">
-                      <select
-                        value={order.status}
-                        onChange={(e) => patchOrder(order._id, { status: e.target.value })}
-                        className="rounded-lg border border-maroon/30 bg-cream px-2 py-1.5 text-sm outline-none focus:border-maroon"
-                      >
-                        {orderStages.map((s) => (
-                          <option key={s} value={s}>
-                            {s}
-                          </option>
-                        ))}
-                      </select>
+                      {unpaid ? (
+                        <span className="text-xs text-ink/60">Not placed — payment pending</span>
+                      ) : (
+                        <select
+                          value={order.status}
+                          onChange={(e) => patchOrder(order._id, { status: e.target.value })}
+                          className="rounded-lg border border-maroon/30 bg-cream px-2 py-1.5 text-sm outline-none focus:border-maroon"
+                        >
+                          {orderStages.map((s) => (
+                            <option key={s} value={s}>
+                              {s}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </td>
                     <td className="px-3 py-2.5">
                       <Link href={`/invoice/${order.id}`} target="_blank" className="text-sm font-medium text-maroon hover:text-saffron">

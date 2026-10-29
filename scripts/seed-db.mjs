@@ -8,7 +8,7 @@
 import { MongoClient } from "mongodb";
 import { readFileSync, existsSync } from "fs";
 import { products } from "../lib/products.js";
-import { shop, upi, whatsapp, phones, retail, bulk } from "../lib/config.js";
+import { shop, whatsapp, phones, retail } from "../lib/config.js";
 
 function loadEnvLocal() {
   if (!existsSync(".env.local")) return;
@@ -51,11 +51,9 @@ if (settingsDoc) {
   await settingsCol.insertOne({
     _id: "shop",
     shop: { hours: "Open daily, 7:00 AM – 9:30 PM", ...shop },
-    upi,
     whatsapp,
     phones,
     retail,
-    bulk,
     updatedAt: new Date().toISOString(),
   });
   console.log("settings: seeded default document.");

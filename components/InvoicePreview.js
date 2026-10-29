@@ -8,13 +8,13 @@ import { toInvoice, downloadInvoicePdf } from "@/lib/invoice";
 export default function InvoicePreview({ order }) {
   const [busy, setBusy] = useState(false);
   const { settings } = useSettings();
-  const { shop, upi } = settings;
+  const { shop } = settings;
   const inv = toInvoice(order);
 
   async function handleDownload() {
     setBusy(true);
     try {
-      await downloadInvoicePdf(inv, { shop, upi });
+      await downloadInvoicePdf(inv, { shop });
     } finally {
       setBusy(false);
     }
@@ -49,9 +49,6 @@ export default function InvoicePreview({ order }) {
             <p className="font-display text-lg text-ink">{inv.type}</p>
             <p className="mt-1 text-xs text-ink/60">Invoice No: {inv.number}</p>
             <p className="text-xs text-ink/60">Date: {fmtDate(inv.date)}</p>
-            {inv.deliveryDate && (
-              <p className="text-xs text-ink/60">Delivery: {fmtDate(inv.deliveryDate)}</p>
-            )}
           </div>
         </div>
 
@@ -110,9 +107,8 @@ export default function InvoicePreview({ order }) {
             <p className="font-semibold text-ink">Payment</p>
             <p className="mt-1">
               {inv.paymentMethod} · {inv.paymentStatus}
-              {inv.paymentRef ? ` · Ref ${inv.paymentRef}` : ""}
             </p>
-            <p className="mt-0.5">UPI: {upi.vpa}</p>
+            {inv.paymentRef && <p className="mt-0.5 font-mono">Payment ID: {inv.paymentRef}</p>}
           </div>
         </div>
       </div>

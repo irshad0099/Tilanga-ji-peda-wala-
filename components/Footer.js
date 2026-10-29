@@ -23,7 +23,6 @@ export default async function Footer() {
           <h3 className="font-display text-base">Shop</h3>
           <ul className="mt-3 space-y-2 text-sm text-cream/80">
             <li><Link href="/menu" className="hover:text-gold">Menu</Link></li>
-            <li><Link href="/bulk-order" className="hover:text-gold">Bulk / Wholesale</Link></li>
             <li><Link href="/gallery" className="hover:text-gold">Gallery</Link></li>
             <li><Link href="/cart" className="hover:text-gold">Cart</Link></li>
             <li><Link href="/track-order" className="hover:text-gold">Track Order</Link></li>

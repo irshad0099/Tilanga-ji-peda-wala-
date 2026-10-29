@@ -226,30 +226,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Bulk orders */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="flex flex-col gap-8 border-2 border-dashed border-saffron/50 p-8 sm:p-10 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-6">
-            <span className="stamp hidden h-24 w-24 shrink-0 text-saffron sm:inline-flex">
-              <span className="font-display text-lg">शादी</span>
-              <span className="text-[10px] font-semibold tracking-[0.2em]">त्योहार</span>
-            </span>
-            <div>
-              <h2 className="font-display text-3xl text-maroon sm:text-4xl">शादी या त्योहार के लिए?</h2>
-              <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-ink/80">
-                Order peda by the kilo at wholesale rates. Pick the weight and date, pay a small
-                advance, and we deliver fresh to your home or venue across Bihar.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/bulk-order"
-            className="shrink-0 self-start rounded-md bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark md:self-auto"
-          >
-            Bulk order karein
-          </Link>
-        </div>
-      </section>
 
       {/* Visit */}
       <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">

@@ -8,25 +8,24 @@ champagne-sand / maroon / saffron palette.
 ## Ismein kya hai (What's included)
 
 - Home, Menu (search + category filter), Product detail, Cart, Checkout,
-  **Bulk / Wholesale order**, Track Order, **Invoice**, Gallery, Login,
+  Track Order, **Invoice**, Gallery, Login,
   Privacy/Terms/Refund pages
 - **Real HD photos** in `public/images/photos/` (Indian-mithai stock
   photography). Swap any file — keep the filename — with the shop's own
   photo and it updates everywhere.
-- **UPI payment** — checkout and bulk-order advance show named buttons for
-  **PhonePe, Google Pay, Paytm** (each opens that app directly with the
-  amount filled in) plus a generic "Other UPI app" button, a scannable QR,
-  and the bank UPI ID for manual entry (`lib/upi.js`,
-  `components/UpiQrPayment.js`). Customer enters the UPI reference number;
-  the shop confirms it manually. No payment gateway account needed.
+- **Payments: Razorpay + cash on delivery.** Checkout offers "Pay online"
+  (UPI, cards, netbanking, wallets through Razorpay Checkout) and "Cash on
+  Delivery". The server prices every order from the live menu — the browser
+  only sends product slugs and quantities — then creates a matching Razorpay
+  order. After payment the signature is verified on the server
+  (`/api/checkout/verify`) and the order is marked paid automatically; a
+  Razorpay webhook (`/api/razorpay/webhook`) does the same as a backup if the
+  customer closes the tab. If a payment fails or is cancelled, the customer
+  can retry or switch that order to COD. See "Set up Razorpay" below.
 - **Invoice** — every order gets an on-screen invoice preview and a
   downloadable PDF (`/invoice/<order-id>`, also linked from Track Order).
-- **WhatsApp order relay** — after placing an order the customer taps
-  "Send order on WhatsApp" and the full order lands in the shop's chat, so
-  orders are received even without a backend.
-- **Bulk orders** — order the Classic Khoya Peda by the kilo at a wholesale
-  rate, minimum 3 kg, home delivery, 25% advance online + balance on
-  delivery.
+- **WhatsApp share** — after placing an order the customer can send the
+  full order to the shop's WhatsApp.
 - **Menu is split — only ONE item ships pan-India.** Every product carries a
   `deliverable` flag in `lib/products.js`; only `classic-khoya-peda` is
   `true`. Everything else (other peda flavours, both gift boxes, mawa barfi,
@@ -34,16 +33,16 @@ champagne-sand / maroon / saffron palette.
   shown on the menu with an "At the shop only" badge, no Add-to-cart —
   customers must visit the restaurant for those. Flip a product's flag to
   change what ships.
-- **Database: MongoDB Atlas.** Orders (retail + bulk), the **menu/products**
+- **Database: MongoDB Atlas.** Orders, the **menu/products**
   and **shop settings** all live in Atlas, not in code:
-  - Orders: `/api/orders` (`lib/db/orders.server.js`) — Track Order / Invoice
-    work from *any* device once `MONGODB_URI` is set.
+  - Orders: created only by `/api/checkout` (`lib/db/checkout.server.js`,
+    `lib/db/orders.server.js`); Track Order / Invoice work from any device.
   - Products: `/api/products` (`lib/db/products.server.js`) — every price,
     MRP, badge, category, `deliverable` flag and `inStock` flag ("Sold out
     today") is editable from `/admin` with no redeploy.
-  - Settings: `/api/settings` (`lib/db/settings.server.js`) — UPI ID, payee
-    name, WhatsApp number, phones, shop address/hours/GSTIN, retail shipping
-    rule and bulk-order rule, also editable from `/admin`.
+  - Settings: `/api/settings` (`lib/db/settings.server.js`) — WhatsApp
+    number, phones, shop address/hours/GSTIN and the retail shipping rule,
+    also editable from `/admin`.
 
   `/admin` (password = `ADMIN_KEY`) has three tabs: **Orders**, **Products**,
   **Settings**. `lib/products.js` and `lib/config.js` are now only the
@@ -59,15 +58,12 @@ tab and fill in:
 
 | Field | What to put |
 |---|---|
-| UPI ID (VPA) | The shop's real UPI ID, e.g. `tilangaji@okhdfcbank` |
-| Payee name | Name registered on that UPI ID |
 | WhatsApp number | Digits only with country code, e.g. `919431055263` |
 | GSTIN | Optional — printed on invoices when set |
 
-Per-kg bulk prices (per product, in the **Products** tab), advance %,
-delivery fees and retail shipping rules are all editable there too — changes
-are live immediately, no redeploy. Until the UPI ID is real, the payment QR
-still renders but UPI apps will reject the payment.
+Retail shipping rules are editable there too — changes are live immediately,
+no redeploy. Razorpay keys are secrets, so they are set as environment
+variables instead (see "Set up Razorpay").
 
 Before Atlas is set up (or if you'd rather edit code than use `/admin`), the
 same fields live in [`lib/config.js`](lib/config.js) (settings) and
@@ -107,9 +103,8 @@ Roughly square or portrait, ideally 1200px+ on the short side.
    - On Vercel: Project → Settings → Environment Variables → add `MONGODB_URI`
      and `ADMIN_KEY` (Production + Preview + Development) → redeploy.
 
-Until this is done, the site still works fully — orders just stay in each
-browser's localStorage instead of syncing to Atlas, and `/admin` shows an
-"admin access isn't configured" message.
+Until this is done, the menu and pages still work, but checkout can't place
+orders and `/admin` shows an "admin access isn't configured" message.
 
 Once it's set, run the one-time seed so `/admin` has the current menu and
 settings to edit:
@@ -122,8 +117,30 @@ It's idempotent — safe to re-run any time; it only fills in collections that
 are still empty, never overwrites edits already made from `/admin`.
 
 Then visit **`/admin`** and log in with your `ADMIN_KEY` to see every order,
-edit the menu, edit shop settings, mark UPI payments as verified, and move
-orders through Placed → Preparing → Out for Delivery → Delivered.
+edit the menu, edit shop settings, and move orders through Placed →
+Preparing → Out for Delivery → Delivered. Online payments are confirmed
+automatically; orders whose online payment was never completed are greyed
+out as "payment pending".
+
+## Set up Razorpay (online payments)
+
+1. **Create an account** at [razorpay.com](https://razorpay.com) and finish
+   KYC (PAN, bank account, business details). Test Mode works straight away;
+   Live Mode needs Razorpay to activate the account.
+2. **API keys** — Dashboard → Account & Settings → API Keys → Generate Key.
+   Put them in `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` (`.env.local`
+   locally; Vercel → Project → Settings → Environment Variables for the live
+   site, then redeploy).
+3. **Webhook** — Dashboard → Account & Settings → Webhooks → Add New
+   Webhook. URL `https://<your-domain>/api/razorpay/webhook`, make up a
+   secret and put the same value in `RAZORPAY_WEBHOOK_SECRET`, tick the
+   events `payment.captured`, `payment.failed` and `order.paid`.
+4. **Payment capture** — keep automatic capture on (Account & Settings →
+   Payment Capture), so payments settle without anyone clicking "capture".
+5. **Test** with Test Mode keys — Razorpay's test UPI ID `success@razorpay`
+   or test card `4111 1111 1111 1111` — then swap in the Live keys.
+
+Without the keys the checkout simply shows cash on delivery only.
 
 ## Run locally
 
@@ -141,13 +158,11 @@ npm run start
 
 ## Aage kya karna hai (Next steps before going fully live)
 
-1. Set up MongoDB Atlas (above), run the seed script, then set the real UPI
-   ID, payee name, WhatsApp number and shop hours from `/admin` → Settings
+1. Set up MongoDB Atlas (above), run the seed script, then set the real
+   WhatsApp number and shop hours from `/admin` → Settings, and add the
+   Razorpay keys (above)
 2. Replace the stock photos in `public/images/photos/` with real ones
 3. Finalise the Privacy / Terms / Refund policy placeholder text
 4. Optionally get a real logo and replace `LogoBadge.js` + `app/icon.svg`
-5. For fully automatic payment verification (no manual UPI-reference check),
-   a Razorpay/Cashfree gateway integration would replace the current
-   scan-and-confirm flow — a bigger, separate piece of work
-6. Product photo upload isn't built into `/admin` yet — a new menu item
+5. Product photo upload isn't built into `/admin` yet — a new menu item
    still needs its photo added to `public/images/photos/` by hand

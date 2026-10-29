@@ -13,15 +13,11 @@ const faqs = [
   },
   {
     q: "What payment methods do you accept?",
-    a: "Cash on delivery, or UPI online — pay with PhonePe, Google Pay, Paytm, any bank UPI app, or by scanning the QR at checkout.",
+    a: "Pay online at checkout through Razorpay — UPI (Google Pay, PhonePe, Paytm or any bank app), debit or credit card, netbanking or wallets — or choose cash on delivery and pay when the box arrives.",
   },
   {
     q: "How long does the peda stay fresh?",
     a: "Best enjoyed within 4-5 days of dispatch, kept in a cool, dry place. Refrigerate in humid weather for a slightly longer shelf life.",
-  },
-  {
-    q: "Can I order for a wedding or bulk event?",
-    a: "Yes — message us on WhatsApp with your quantity and date, and we'll work out bulk pricing and a delivery schedule.",
   },
 ];
 

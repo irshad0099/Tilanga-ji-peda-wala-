@@ -4,9 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
+import { useSettings } from "@/lib/useSettings";
+import PaymentLogos from "@/components/PaymentLogos";
 
 export default function CartPage() {
   const { items, updateQty, removeItem, subtotal, hydrated } = useCart();
+  const { retail } = useSettings().settings;
 
   if (hydrated && items.length === 0) {
     return (
@@ -20,7 +23,7 @@ export default function CartPage() {
     );
   }
 
-  const deliveryFee = subtotal > 0 && subtotal < 599 ? 79 : 0;
+  const deliveryFee = subtotal > 0 && subtotal < retail.freeShippingAbove ? retail.flatShippingFee : 0;
   const total = subtotal + deliveryFee;
 
   return (
@@ -63,14 +66,20 @@ export default function CartPage() {
           <span className="text-ink/70">Shipping</span>
           <span>{deliveryFee === 0 ? "Free" : formatRupees(deliveryFee)}</span>
         </div>
-        {deliveryFee > 0 && <p className="mt-1 text-xs text-ink/50">Free shipping above Rs. 599</p>}
+        {deliveryFee > 0 && (
+          <p className="mt-1 text-xs text-ink/50">Free shipping above {formatRupees(retail.freeShippingAbove)}</p>
+        )}
         <div className="mt-3 flex justify-between border-t border-gold/30 pt-3 text-base font-semibold text-maroon">
           <span>Total</span>
           <span>{formatRupees(total)}</span>
         </div>
-        <Link href="/checkout" className="mt-5 block rounded-lg bg-saffron py-3 text-center text-[15px] font-semibold text-cream hover:bg-saffron/90">
-          Proceed to checkout
+        <Link href="/checkout" className="mt-5 block rounded-md bg-saffron py-3.5 text-center text-[15px] font-semibold text-cream shadow-[0_3px_0_var(--maroon-dark)] hover:bg-saffron/90">
+          Proceed to checkout →
         </Link>
+        <div className="mt-4">
+          <PaymentLogos height={16} />
+          <p className="mt-2 text-xs text-ink/55">Pay online with Razorpay, or cash on delivery.</p>
+        </div>
       </div>
     </div>
   );

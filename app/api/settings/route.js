@@ -2,12 +2,16 @@ import { NextResponse } from "next/server";
 import { getSettings, updateSettings } from "@/lib/db/settings.server";
 import { isDbConfigured } from "@/lib/mongodb";
 import { requireAdmin } from "@/lib/adminAuth";
+import { isRazorpayConfigured } from "@/lib/razorpay.server";
 
-// Public — checkout, invoices and the payment panel all read live settings
-// this way (UPI ID, WhatsApp number, shipping/bulk rules). No secrets here.
+// Public — checkout, invoices and the footer read live settings this way
+// (WhatsApp number, shipping rule, which payment methods are on). No secrets.
 export async function GET() {
   const settings = await getSettings();
-  return NextResponse.json({ settings, dbConfigured: isDbConfigured() });
+  return NextResponse.json({
+    settings: { ...settings, payments: { online: isRazorpayConfigured(), cod: true } },
+    dbConfigured: isDbConfigured(),
+  });
 }
 
 // Update shop settings — shop-admin only.

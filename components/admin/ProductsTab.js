@@ -55,7 +55,6 @@ export default function ProductsTab({ adminKey }) {
         weight: p.weight,
         deliverable: !!p.deliverable,
         inStock: !!p.inStock,
-        pricePerKg: p.pricePerKg ? Number(p.pricePerKg) : undefined,
       }),
     });
     setSavingSlug("");
@@ -194,7 +193,6 @@ export default function ProductsTab({ adminKey }) {
               <th className="px-3 py-2.5 font-semibold">Badge</th>
               <th className="px-3 py-2.5 font-semibold">Ships</th>
               <th className="px-3 py-2.5 font-semibold">In stock</th>
-              <th className="px-3 py-2.5 font-semibold">₹ / kg</th>
               <th className="px-3 py-2.5 font-semibold"></th>
             </tr>
           </thead>
@@ -247,19 +245,6 @@ export default function ProductsTab({ adminKey }) {
                     checked={p.inStock !== false}
                     onChange={(e) => updateLocal(p.slug, { inStock: e.target.checked })}
                   />
-                </td>
-                <td className="px-3 py-2 align-top">
-                  {p.deliverable ? (
-                    <input
-                      type="number"
-                      value={p.pricePerKg || ""}
-                      onChange={(e) => updateLocal(p.slug, { pricePerKg: e.target.value })}
-                      placeholder="—"
-                      className="w-20 rounded border border-maroon/20 bg-cream px-2 py-1 text-sm outline-none focus:border-maroon"
-                    />
-                  ) : (
-                    <span className="text-ink/30">—</span>
-                  )}
                 </td>
                 <td className="px-3 py-2 align-top">
                   <button

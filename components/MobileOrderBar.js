@@ -7,7 +7,7 @@ import { formatRupees } from "@/lib/format";
 
 // Pages where a sticky "Order Now" bar would just be clutter — already
 // mid-checkout, already in the cart, or an internal/admin view.
-const HIDDEN_PREFIXES = ["/cart", "/checkout", "/admin", "/login", "/bulk-order", "/track-order", "/invoice"];
+const HIDDEN_PREFIXES = ["/cart", "/checkout", "/admin", "/login", "/track-order", "/invoice"];
 
 export default function MobileOrderBar() {
   const pathname = usePathname();

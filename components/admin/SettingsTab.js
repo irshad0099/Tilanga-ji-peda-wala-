@@ -28,10 +28,7 @@ export default function SettingsTab({ adminKey }) {
     const res = await fetch("/api/settings", {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
-      body: JSON.stringify({
-        ...settings,
-        bulk: { ...settings.bulk, advanceFraction: Number(settings.bulk.advanceFraction) },
-      }),
+      body: JSON.stringify(settings),
     });
     setSaving(false);
     if (res.ok) {
@@ -50,8 +47,8 @@ export default function SettingsTab({ adminKey }) {
     <form onSubmit={save} className="max-w-3xl space-y-8">
       <h2 className="font-display text-xl text-maroon">Shop settings</h2>
       <p className="text-xs text-ink/50">
-        Changes here go live everywhere immediately — the payment QR, invoices, WhatsApp
-        messages, checkout and the footer all read from this.
+        Changes here go live everywhere immediately — invoices, WhatsApp messages, checkout
+        and the footer all read from this.
       </p>
 
       <Section title="Shop">
@@ -69,14 +66,24 @@ export default function SettingsTab({ adminKey }) {
         />
       </Section>
 
-      <Section title="UPI payment">
-        <Field label="UPI ID (VPA)" value={settings.upi.vpa} onChange={(v) => set("upi", "vpa", v)} />
-        <Field label="Payee name" value={settings.upi.payeeName} onChange={(v) => set("upi", "payeeName", v)} />
-        <Field
-          label="Merchant code (optional)"
-          value={settings.upi.merchantCode}
-          onChange={(v) => set("upi", "merchantCode", v)}
-        />
+      <Section title="Payments">
+        <div className="text-sm sm:col-span-2">
+          <p className="text-ink/80">
+            Online payment (Razorpay):{" "}
+            {settings.payments?.online ? (
+              <span className="font-semibold text-maroon">On</span>
+            ) : (
+              <span className="font-semibold text-saffron">Off — Razorpay keys are not set</span>
+            )}
+          </p>
+          <p className="mt-1 text-ink/80">
+            Cash on delivery: <span className="font-semibold text-maroon">On</span>
+          </p>
+          <p className="mt-2 text-xs text-ink/50">
+            Razorpay keys are secrets, so they are set as environment variables on Vercel
+            (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, RAZORPAY_WEBHOOK_SECRET), not here.
+          </p>
+        </div>
       </Section>
 
       <Section title="WhatsApp & phone">
@@ -113,40 +120,6 @@ export default function SettingsTab({ adminKey }) {
           type="number"
           value={settings.retail.flatShippingFee}
           onChange={(v) => set("retail", "flatShippingFee", Number(v))}
-        />
-      </Section>
-
-      <Section title="Bulk orders">
-        <Field
-          label="Minimum kg"
-          type="number"
-          value={settings.bulk.minKg}
-          onChange={(v) => set("bulk", "minKg", Number(v))}
-        />
-        <Field
-          label="Advance fraction (0–1, e.g. 0.25 = 25%)"
-          type="number"
-          step="0.01"
-          value={settings.bulk.advanceFraction}
-          onChange={(v) => set("bulk", "advanceFraction", v)}
-        />
-        <Field
-          label="Delivery fee (₹)"
-          type="number"
-          value={settings.bulk.deliveryFee}
-          onChange={(v) => set("bulk", "deliveryFee", Number(v))}
-        />
-        <Field
-          label="Free delivery above (₹)"
-          type="number"
-          value={settings.bulk.freeDeliveryAbove}
-          onChange={(v) => set("bulk", "freeDeliveryAbove", Number(v))}
-        />
-        <Field
-          label="Lead time (days)"
-          type="number"
-          value={settings.bulk.leadTimeDays}
-          onChange={(v) => set("bulk", "leadTimeDays", Number(v))}
         />
       </Section>
 
