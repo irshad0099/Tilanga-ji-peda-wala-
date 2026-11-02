@@ -45,7 +45,7 @@ export default function SettingsTab({ adminKey }) {
 
   return (
     <form onSubmit={save} className="max-w-3xl space-y-8">
-      <h2 className="font-display text-xl text-maroon">Shop settings</h2>
+      <h2 className="font-display text-xl text-leaf">Shop settings</h2>
       <p className="text-xs text-ink/50">
         Changes here go live everywhere immediately — invoices, WhatsApp messages, checkout
         and the footer all read from this.
@@ -71,13 +71,13 @@ export default function SettingsTab({ adminKey }) {
           <p className="text-ink/80">
             Online payment (Razorpay):{" "}
             {settings.payments?.online ? (
-              <span className="font-semibold text-maroon">On</span>
+              <span className="font-semibold text-leaf">On</span>
             ) : (
-              <span className="font-semibold text-saffron">Off — Razorpay keys are not set</span>
+              <span className="font-semibold text-mustard">Off — Razorpay keys are not set</span>
             )}
           </p>
           <p className="mt-1 text-ink/80">
-            Cash on delivery: <span className="font-semibold text-maroon">On</span>
+            Cash on delivery: <span className="font-semibold text-leaf">On</span>
           </p>
           <p className="mt-2 text-xs text-ink/50">
             Razorpay keys are secrets, so they are set as environment variables on Vercel
@@ -127,11 +127,11 @@ export default function SettingsTab({ adminKey }) {
         <button
           type="submit"
           disabled={saving}
-          className="rounded-lg bg-saffron px-6 py-2.5 text-sm font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
+          className="rounded-lg bg-leaf px-6 py-2.5 text-sm font-semibold text-cream hover:bg-leaf-dark disabled:opacity-60"
         >
           {saving ? "Saving…" : saved ? "Saved ✓" : "Save settings"}
         </button>
-        {error && <p className="text-sm text-saffron">{error}</p>}
+        {error && <p className="text-sm text-mustard">{error}</p>}
       </div>
     </form>
   );
@@ -140,7 +140,7 @@ export default function SettingsTab({ adminKey }) {
 function Section({ title, children }) {
   return (
     <fieldset className="rounded-xl border border-gold/30 bg-cream-dark/20 p-5">
-      <legend className="px-1 font-display text-base text-maroon">{title}</legend>
+      <legend className="px-1 font-display text-base text-leaf">{title}</legend>
       <div className="mt-2 grid gap-4 sm:grid-cols-2">{children}</div>
     </fieldset>
   );
@@ -155,7 +155,7 @@ function Field({ label, value, onChange, full, type = "text", step }) {
         step={step}
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-[15px] outline-none focus:border-maroon"
+        className="mt-1 w-full rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-[15px] outline-none focus:border-leaf"
       />
     </label>
   );

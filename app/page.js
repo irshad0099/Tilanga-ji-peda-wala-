@@ -32,7 +32,7 @@ export default async function HomePage() {
             <p className="text-sm font-medium tracking-wide text-ink/70">
               सकड्डी, आरा–पटना हाईवे · Bhojpur, Bihar
             </p>
-            <h1 className="isolate mt-3 font-display text-5xl leading-[1.15] text-maroon sm:text-6xl lg:text-7xl">
+            <h1 className="isolate mt-3 font-display text-5xl leading-[1.15] text-leaf sm:text-6xl lg:text-7xl">
               बिहार का <span className="brush">मशहूर</span> पेड़ा
             </h1>
             <p className="mt-5 max-w-md text-lg leading-relaxed text-ink/85">
@@ -43,13 +43,13 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link
                 href={deliveryItem ? `/product/${deliveryItem.slug}` : "/menu"}
-                className="rounded-md bg-saffron px-7 py-3.5 text-base font-semibold text-cream shadow-[0_3px_0_var(--maroon-dark)] transition-transform hover:-translate-y-0.5"
+                className="rounded-md bg-leaf px-7 py-3.5 text-base font-semibold text-cream btn-3d"
               >
                 पेड़ा मंगाइए →
               </Link>
               <Link
                 href="/gallery"
-                className="text-[15px] font-semibold text-maroon underline decoration-gold decoration-2 underline-offset-4 hover:decoration-saffron"
+                className="text-[15px] font-semibold text-leaf underline decoration-gold decoration-2 underline-offset-4 hover:decoration-mustard"
               >
                 Dukaan ki photos dekhein
               </Link>
@@ -61,12 +61,12 @@ export default async function HomePage() {
                   href={shop.googleMapsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-semibold text-maroon hover:text-saffron"
+                  className="font-semibold text-leaf hover:text-mustard"
                 >
-                  <span className="text-saffron">★</span> 3,100+ Google reviews
+                  <span className="text-mustard">★</span> 3,100+ Google reviews
                 </a>
               ) : (
-                <span className="font-semibold text-maroon">3,100+ Google reviews</span>
+                <span className="font-semibold text-leaf">3,100+ Google reviews</span>
               )}
               <span aria-hidden="true" className="text-gold">✦</span>
               <span>रोज़ ताज़ा, हाथ से बना</span>
@@ -86,7 +86,7 @@ export default async function HomePage() {
               className="relative aspect-4/5 w-full rounded-sm object-cover"
               priority
             />
-            <span className="stamp absolute -left-2 -top-7 h-24 w-24 bg-cream/90 text-maroon sm:-left-10 sm:h-28 sm:w-28">
+            <span className="stamp absolute -left-2 -top-7 h-24 w-24 bg-cream/90 text-leaf sm:-left-10 sm:h-28 sm:w-28">
               <span className="text-[10px] font-semibold tracking-[0.2em]">स्थापित</span>
               <span className="font-display text-3xl">1975</span>
               <span className="text-[10px] font-semibold tracking-[0.2em]">सकड्डी</span>
@@ -97,7 +97,7 @@ export default async function HomePage() {
                 className="absolute -bottom-8 right-4 rotate-2 rounded-sm bg-cream px-5 py-3 shadow-[0_6px_20px_rgba(58,42,28,0.18)] transition-transform hover:rotate-0"
               >
                 <span className="block text-sm font-semibold text-ink/80">{featured.name}</span>
-                <span className="font-display text-2xl text-maroon">{formatRupees(featured.price)}</span>
+                <span className="font-display text-2xl text-leaf">{formatRupees(featured.price)}</span>
                 {featured.mrp > featured.price && (
                   <span className="ml-2 text-sm text-ink/45 line-through">{formatRupees(featured.mrp)}</span>
                 )}
@@ -111,20 +111,20 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_22rem] lg:gap-16">
           <div>
-            <h2 className="font-display text-4xl text-maroon sm:text-5xl">घर बैठे मंगाइए</h2>
+            <h2 className="font-display text-4xl text-leaf sm:text-5xl">घर बैठे मंगाइए</h2>
             <p className="mt-4 max-w-lg text-[17px] leading-relaxed text-ink/85">
               We ship just one thing — our Classic Khoya Peda — so it always travels well and
               reaches you soft. Everything else on the menu is made through the day and eaten hot at
               the shop.
             </p>
             <ul className="mt-6 space-y-2.5 text-[15px] text-ink/85">
-              <li className="flex gap-3"><span className="text-saffron">—</span>Packed the same day it&apos;s made</li>
-              <li className="flex gap-3"><span className="text-saffron">—</span>UPI or cash on delivery, invoice with every order</li>
-              <li className="flex gap-3"><span className="text-saffron">—</span>Bhojpur same day · Bihar 1–2 days · rest of India 3–5 days</li>
+              <li className="flex gap-3"><span className="text-mustard">—</span>Packed the same day it&apos;s made</li>
+              <li className="flex gap-3"><span className="text-mustard">—</span>UPI or cash on delivery, invoice with every order</li>
+              <li className="flex gap-3"><span className="text-mustard">—</span>Bhojpur same day · Bihar 1–2 days · rest of India 3–5 days</li>
             </ul>
 
             <div className="mt-9 max-w-lg border-l-2 border-gold pl-5">
-              <p className="text-sm font-semibold text-maroon">Kab tak pahunchega? Pincode daalein</p>
+              <p className="text-sm font-semibold text-leaf">Kab tak pahunchega? Pincode daalein</p>
               <div className="mt-3">
                 <DeliveryEstimate />
               </div>
@@ -140,7 +140,7 @@ export default async function HomePage() {
       </section>
 
       {/* Story — the one dark band on the page */}
-      <section className="scallop-top mt-10 bg-maroon text-cream">
+      <section className="scallop-top mt-10 bg-leaf text-cream">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <figure className="relative mx-auto w-full max-w-sm -rotate-2">
             <Image
@@ -180,7 +180,7 @@ export default async function HomePage() {
       <section className="py-20">
         <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-4 px-4 sm:px-6">
           <div>
-            <h2 className="font-display text-4xl text-maroon sm:text-5xl">दुकान पर और भी है</h2>
+            <h2 className="font-display text-4xl text-leaf sm:text-5xl">दुकान पर और भी है</h2>
             <p className="mt-3 max-w-md text-[15px] text-ink/80">
               Litti-chokha, fresh mithai and kulhad chai — these don&apos;t travel, so come eat
               them hot.
@@ -188,7 +188,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/menu"
-            className="text-[15px] font-semibold text-maroon underline decoration-gold decoration-2 underline-offset-4 hover:decoration-saffron"
+            className="text-[15px] font-semibold text-leaf underline decoration-gold decoration-2 underline-offset-4 hover:decoration-mustard"
           >
             Poora menu dekhein →
           </Link>
@@ -208,7 +208,7 @@ export default async function HomePage() {
                 className="aspect-4/5 w-full rounded-sm object-cover"
               />
               <figcaption className="mt-3 flex items-baseline justify-between gap-3">
-                <span className="font-display text-xl text-maroon">{photo.caption}</span>
+                <span className="font-display text-xl text-leaf">{photo.caption}</span>
                 <span className="text-sm text-ink/65">{photo.note}</span>
               </figcaption>
             </figure>
@@ -219,7 +219,7 @@ export default async function HomePage() {
       {/* Reviews */}
       <section className="border-y border-gold/40 bg-cream-dark/45 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="font-display text-4xl text-maroon sm:text-5xl">लोग क्या कहते हैं</h2>
+          <h2 className="font-display text-4xl text-leaf sm:text-5xl">लोग क्या कहते हैं</h2>
           <div className="mt-10">
             <Testimonials />
           </div>

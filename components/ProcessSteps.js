@@ -17,7 +17,7 @@ const steps = [
   },
 ];
 
-// Sits on the dark maroon story band on the home page.
+// Sits on the dark leaf story band on the home page.
 export default function ProcessSteps() {
   return (
     <ol className="grid gap-x-8 gap-y-5 sm:grid-cols-2">

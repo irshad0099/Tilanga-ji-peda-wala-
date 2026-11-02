@@ -106,7 +106,7 @@ export default function CheckoutPage() {
       image: `${window.location.origin}/apple-icon.png`,
       prefill: { name: order.customer.name, contact: `+91${order.customer.phone}` },
       notes: { orderId: order.id },
-      theme: { color: "#6E1E2B" },
+      theme: { color: "#3D5A1C" },
       handler: async (response) => {
         setBusy("verifying");
         const { ok: verified, data } = await postJson("/api/checkout/verify", { orderId: order.id, ...response });
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
 
     setBusy("placing");
     const { ok, data } = await postJson("/api/checkout", {
-      items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+      items: items.map((i) => ({ slug: i.slug, boxes: i.boxes || 1, qty: i.qty })),
       customer: form,
       payment: method,
     });
@@ -176,9 +176,9 @@ export default function CheckoutPage() {
   if (hydrated && items.length === 0 && !pending) {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
-        <h1 className="font-display text-4xl text-maroon">कार्ट खाली है</h1>
+        <h1 className="font-display text-4xl text-leaf">कार्ट खाली है</h1>
         <p className="mt-3 text-[15px] text-ink/70">Add a box of peda from the menu to check out.</p>
-        <Link href="/menu" className="mt-7 inline-block rounded-md bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark">
+        <Link href="/menu" className="mt-7 inline-block rounded-md bg-leaf px-6 py-3 text-[15px] font-semibold text-cream hover:bg-leaf-dark">
           Browse the menu
         </Link>
       </div>
@@ -190,7 +190,7 @@ export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-24 pt-10 sm:px-6">
       <Steps current={1} />
-      <h1 className="mt-6 font-display text-4xl text-maroon sm:text-5xl">ऑर्डर पूरा करें</h1>
+      <h1 className="mt-6 font-display text-4xl text-leaf sm:text-5xl">ऑर्डर पूरा करें</h1>
 
       <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_24rem] lg:gap-14">
         <form onSubmit={handleSubmit} noValidate className="space-y-10">
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
               </Field>
               <Field name="phone" label="Mobile number" error={errors.phone} hint="For delivery updates">
                 <div className={`flex items-stretch overflow-hidden ${inputClass(errors.phone, true)}`}>
-                  <span className="flex items-center border-r border-maroon/20 bg-cream-dark/50 px-3 text-[15px] text-ink/60">+91</span>
+                  <span className="flex items-center border-r border-leaf/20 bg-cream-dark/50 px-3 text-[15px] text-ink/60">+91</span>
                   <input
                     value={form.phone}
                     onChange={(e) => setField("phone", e.target.value.replace(/\D/g, "").slice(0, 10))}
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
               </Field>
               <div className="flex items-end pb-3 text-sm">
                 {estimate && !errors.pincode && (
-                  <p className="text-maroon">
+                  <p className="text-leaf">
                     <span className="font-semibold">{estimate.days}</span>
                     <span className="text-ink/60"> · {estimate.zone}</span>
                   </p>
@@ -288,12 +288,12 @@ export default function CheckoutPage() {
           ) : (
             <div>
               {formError && (
-                <p className="mb-4 rounded-md border border-saffron/40 bg-saffron/5 px-4 py-3 text-sm text-saffron">{formError}</p>
+                <p className="mb-4 rounded-md border border-mustard/40 bg-mustard/5 px-4 py-3 text-sm text-mustard">{formError}</p>
               )}
               <button
                 type="submit"
                 disabled={Boolean(busy) || !hydrated}
-                className="flex w-full items-center justify-center gap-2 rounded-md bg-saffron px-6 py-4 text-base font-semibold text-cream shadow-[0_3px_0_var(--maroon-dark)] transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-leaf px-6 py-4 text-base font-semibold text-cream btn-3d disabled:opacity-70"
               >
                 {busy ? (
                   <>
@@ -322,7 +322,7 @@ export default function CheckoutPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-6 backdrop-blur-sm">
           <div className="max-w-sm rounded-md bg-cream p-8 text-center shadow-xl">
             <Spinner large />
-            <p className="mt-4 font-display text-2xl text-maroon">पेमेंट कन्फर्म हो रहा है</p>
+            <p className="mt-4 font-display text-2xl text-leaf">पेमेंट कन्फर्म हो रहा है</p>
             <p className="mt-2 text-sm text-ink/70">Please don&apos;t close or refresh this page.</p>
           </div>
         </div>
@@ -342,12 +342,12 @@ function Steps({ current }) {
           {i > 0 && <span className="h-px w-5 bg-gold sm:w-10" aria-hidden="true" />}
           <span
             className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] ${
-              i < current ? "bg-maroon text-cream" : i === current ? "bg-saffron text-cream" : "border border-ink/25 text-ink/45"
+              i < current ? "bg-leaf text-cream" : i === current ? "bg-olive text-cream" : "border border-ink/25 text-ink/45"
             }`}
           >
             {i < current ? "✓" : i + 1}
           </span>
-          <span className={i === current ? "text-maroon" : "text-ink/55"}>{label}</span>
+          <span className={i === current ? "text-leaf" : "text-ink/55"}>{label}</span>
         </li>
       ))}
     </ol>
@@ -358,15 +358,15 @@ function SectionTitle({ n, title, sub }) {
   return (
     <div className="flex items-baseline gap-3 border-b border-gold/50 pb-3">
       <span className="font-display text-2xl text-gold">{n}</span>
-      <h2 className="font-display text-2xl text-maroon">{title}</h2>
+      <h2 className="font-display text-2xl text-leaf">{title}</h2>
       <span className="ml-auto text-xs font-medium uppercase tracking-wider text-ink/45">{sub}</span>
     </div>
   );
 }
 
 function inputClass(error, wrapper = false) {
-  const base = `w-full rounded-md border bg-cream ${error ? "border-saffron" : "border-maroon/25"} focus-within:border-maroon`;
-  return wrapper ? base : `${base} px-4 py-3 text-[15px] outline-none focus:border-maroon disabled:opacity-60`;
+  const base = `w-full rounded-md border bg-cream ${error ? "border-mustard" : "border-leaf/25"} focus-within:border-leaf`;
+  return wrapper ? base : `${base} px-4 py-3 text-[15px] outline-none focus:border-leaf disabled:opacity-60`;
 }
 
 function Field({ name, label, error, hint, full, children }) {
@@ -377,7 +377,7 @@ function Field({ name, label, error, hint, full, children }) {
         {hint && <span className="text-xs font-normal text-ink/45">{hint}</span>}
       </span>
       <div className="mt-1.5">{children}</div>
-      {error && <span className="mt-1.5 block text-sm text-saffron">{error}</span>}
+      {error && <span className="mt-1.5 block text-sm text-mustard">{error}</span>}
     </label>
   );
 }
@@ -389,24 +389,24 @@ function PayOption({ checked, disabled, onSelect, title, badge, body }) {
         disabled
           ? "cursor-not-allowed border-ink/10 opacity-55"
           : checked
-            ? "border-maroon bg-cream shadow-[0_8px_24px_rgba(58,42,28,0.10)]"
-            : "border-maroon/15 hover:border-maroon/40"
+            ? "border-leaf bg-cream shadow-[0_8px_24px_rgba(58,42,28,0.10)]"
+            : "border-leaf/15 hover:border-leaf/40"
       }`}
     >
       <input type="radio" name="payment" checked={checked} disabled={disabled} onChange={onSelect} className="peer sr-only" />
       <span
         aria-hidden="true"
         className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
-          checked ? "border-maroon" : "border-ink/30"
-        } peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-saffron`}
+          checked ? "border-leaf" : "border-ink/30"
+        } peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-mustard`}
       >
-        {checked && <span className="h-2.5 w-2.5 rounded-full bg-maroon" />}
+        {checked && <span className="h-2.5 w-2.5 rounded-full bg-leaf" />}
       </span>
       <span className="flex-1">
         <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <span className="text-[16px] font-semibold text-ink">{title}</span>
           {badge && (
-            <span className={`text-xs font-semibold ${disabled ? "text-ink/50" : "text-saffron"}`}>{badge}</span>
+            <span className={`text-xs font-semibold ${disabled ? "text-ink/50" : "text-mustard"}`}>{badge}</span>
           )}
         </span>
         <span className="mt-2.5 block">{body}</span>
@@ -417,8 +417,8 @@ function PayOption({ checked, disabled, onSelect, title, badge, body }) {
 
 function PaymentIncomplete({ pending, busy, onRetry, onCod, onEdit }) {
   return (
-    <div className="rounded-md border-2 border-saffron/50 bg-saffron/5 p-6">
-      <p className="font-display text-2xl text-maroon">पेमेंट पूरा नहीं हुआ</p>
+    <div className="rounded-md border-2 border-mustard/50 bg-mustard/5 p-6">
+      <p className="font-display text-2xl text-leaf">पेमेंट पूरा नहीं हुआ</p>
       <p className="mt-1.5 text-sm text-ink/75">
         {pending.error || "Complete the payment in the Razorpay window."} No money has been taken for order{" "}
         <span className="font-mono font-semibold">{pending.order.id}</span> yet.
@@ -429,7 +429,7 @@ function PaymentIncomplete({ pending, busy, onRetry, onCod, onEdit }) {
           type="button"
           onClick={onRetry}
           disabled={Boolean(busy)}
-          className="flex items-center gap-2 rounded-md bg-saffron px-5 py-3 text-[15px] font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
+          className="flex items-center gap-2 rounded-md bg-leaf px-5 py-3 text-[15px] font-semibold text-cream hover:bg-leaf-dark disabled:opacity-60"
         >
           {busy === "opening" && <Spinner />} Try paying again · {formatRupees(pending.order.total)}
         </button>
@@ -437,12 +437,12 @@ function PaymentIncomplete({ pending, busy, onRetry, onCod, onEdit }) {
           type="button"
           onClick={onCod}
           disabled={Boolean(busy)}
-          className="flex items-center gap-2 rounded-md border-2 border-maroon px-5 py-3 text-[15px] font-semibold text-maroon hover:bg-maroon hover:text-cream disabled:opacity-60"
+          className="flex items-center gap-2 rounded-md border-2 border-leaf px-5 py-3 text-[15px] font-semibold text-leaf hover:bg-leaf hover:text-cream disabled:opacity-60"
         >
           {busy === "switching" && <Spinner />} Switch to Cash on Delivery
         </button>
       </div>
-      <button type="button" onClick={onEdit} disabled={Boolean(busy)} className="mt-4 text-sm text-ink/60 underline underline-offset-4 hover:text-maroon">
+      <button type="button" onClick={onEdit} disabled={Boolean(busy)} className="mt-4 text-sm text-ink/60 underline underline-offset-4 hover:text-leaf">
         Change address or cart
       </button>
     </div>
@@ -461,13 +461,13 @@ function OrderSummary({ items, pending, subtotal, deliveryFee, total, retail }) 
   return (
     <aside className="h-fit rounded-md bg-cream shadow-[0_10px_30px_rgba(58,42,28,0.12)] ring-1 ring-gold/30 lg:sticky lg:top-24">
       <div className="border-b border-dashed border-gold/60 p-6">
-        <h2 className="font-display text-xl text-maroon">आपका ऑर्डर</h2>
+        <h2 className="font-display text-xl text-leaf">आपका ऑर्डर</h2>
         <ul className="mt-5 space-y-4">
           {lines.map((item) => (
-            <li key={item.slug} className="flex items-center gap-3">
+            <li key={`${item.slug}:${item.boxes || 1}`} className="flex items-center gap-3">
               <span className="relative shrink-0">
                 <Image src={item.image} alt="" width={112} height={112} className="h-14 w-14 rounded-sm object-cover" />
-                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-maroon px-1 text-[11px] font-semibold text-cream">
+                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-leaf px-1 text-[11px] font-semibold text-cream">
                   {item.qty}
                 </span>
               </span>
@@ -480,7 +480,7 @@ function OrderSummary({ items, pending, subtotal, deliveryFee, total, retail }) 
           ))}
         </ul>
         {!o && (
-          <Link href="/cart" className="mt-4 inline-block text-xs font-semibold text-maroon underline decoration-gold underline-offset-4">
+          <Link href="/cart" className="mt-4 inline-block text-xs font-semibold text-leaf underline decoration-gold underline-offset-4">
             Edit cart
           </Link>
         )}
@@ -492,14 +492,14 @@ function OrderSummary({ items, pending, subtotal, deliveryFee, total, retail }) 
         </div>
         <div className="flex justify-between">
           <dt className="text-ink/65">Delivery</dt>
-          <dd>{fee === 0 ? <span className="font-semibold text-maroon">Free</span> : formatRupees(fee)}</dd>
+          <dd>{fee === 0 ? <span className="font-semibold text-leaf">Free</span> : formatRupees(fee)}</dd>
         </div>
         {fee > 0 && toFree > 0 && (
           <p className="text-xs text-ink/55">Add {formatRupees(toFree)} more for free delivery.</p>
         )}
         <div className="flex items-baseline justify-between border-t border-gold/40 pt-3">
-          <dt className="font-semibold text-maroon">Total</dt>
-          <dd className="font-display text-3xl text-maroon">{formatRupees(tot)}</dd>
+          <dt className="font-semibold text-leaf">Total</dt>
+          <dd className="font-display text-3xl text-leaf">{formatRupees(tot)}</dd>
         </div>
       </dl>
       <ul className="space-y-1.5 border-t border-gold/30 bg-cream-dark/40 px-6 py-4 text-xs text-ink/65">
@@ -519,24 +519,24 @@ function OrderPlaced({ order, whatsapp }) {
       <Steps current={2} />
 
       <div className="mt-10 text-center">
-        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-maroon text-cream shadow-[0_0_0_8px_var(--cream-dark)]">
+        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-leaf text-cream shadow-[0_0_0_8px_var(--cream-dark)]">
           <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12.5l4.5 4.5L19 7.5" />
           </svg>
         </span>
-        <h1 className="mt-6 font-display text-4xl text-maroon sm:text-5xl">ऑर्डर हो गया!</h1>
+        <h1 className="mt-6 font-display text-4xl text-leaf sm:text-5xl">ऑर्डर हो गया!</h1>
         <p className="mt-3 text-[16px] text-ink/75">
           Thank you, {order.customer?.name?.split(" ")[0]}. Your peda is in good hands.
         </p>
 
         <div className="mx-auto mt-8 max-w-md rounded-md border-2 border-dashed border-gold bg-cream px-6 py-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-ink/50">Order ID</p>
-          <p className="mt-1 font-display text-3xl tracking-wide text-maroon">{order.id}</p>
+          <p className="mt-1 font-display text-3xl tracking-wide text-leaf">{order.id}</p>
           <p className="mt-3 text-sm">
             {paid ? (
-              <span className="font-semibold text-maroon">✓ {formatRupees(order.total)} paid online</span>
+              <span className="font-semibold text-leaf">✓ {formatRupees(order.total)} paid online</span>
             ) : (
-              <span className="font-semibold text-saffron">{formatRupees(order.total)} to pay in cash on delivery</span>
+              <span className="font-semibold text-mustard">{formatRupees(order.total)} to pay in cash on delivery</span>
             )}
           </p>
           {order.razorpayPaymentId && (
@@ -557,7 +557,7 @@ function OrderPlaced({ order, whatsapp }) {
           <li key={s.t} className="flex gap-3 sm:block sm:text-center">
             <span className="font-display text-3xl leading-none text-gold">{i + 1}</span>
             <span>
-              <span className="block font-display text-lg text-maroon sm:mt-2">{s.t}</span>
+              <span className="block font-display text-lg text-leaf sm:mt-2">{s.t}</span>
               <span className="text-sm text-ink/65">{s.d}</span>
             </span>
           </li>
@@ -567,7 +567,7 @@ function OrderPlaced({ order, whatsapp }) {
       <div className="mt-12 flex flex-wrap justify-center gap-3">
         <Link
           href="/track-order"
-          className="rounded-md bg-maroon px-6 py-3 text-[15px] font-semibold text-cream hover:bg-maroon-dark"
+          className="rounded-md bg-leaf px-6 py-3 text-[15px] font-semibold text-cream hover:bg-leaf-dark"
         >
           Track this order
         </Link>
@@ -575,11 +575,11 @@ function OrderPlaced({ order, whatsapp }) {
           href={retailOrderWhatsappLink(order, whatsapp)}
           target="_blank"
           rel="noreferrer"
-          className="rounded-md border-2 border-maroon px-6 py-3 text-[15px] font-semibold text-maroon hover:bg-maroon hover:text-cream"
+          className="rounded-md border-2 border-leaf px-6 py-3 text-[15px] font-semibold text-leaf hover:bg-leaf hover:text-cream"
         >
           Share on WhatsApp
         </a>
-        <Link href="/menu" className="px-2 py-3 text-[15px] font-semibold text-maroon underline decoration-gold decoration-2 underline-offset-4">
+        <Link href="/menu" className="px-2 py-3 text-[15px] font-semibold text-leaf underline decoration-gold decoration-2 underline-offset-4">
           Continue shopping
         </Link>
       </div>

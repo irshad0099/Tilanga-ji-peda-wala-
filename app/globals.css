@@ -1,27 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  /* Three colours carry the brand: maroon (main), paper cream (ground),
-     gold (thin rules only). Saffron is reserved for order buttons and
-     small accents — it's dark enough to pass contrast as text on cream. */
-  --cream: #F6ECD6;
-  --cream-dark: #EBD9B4;
-  --maroon: #6E1E2B;
-  --maroon-dark: #4E1420;
-  --saffron: #A9520C;
+  /* Farm-green palette: leaf (main — buttons, headings, dark bands),
+     olive (softer green for chips, selected states), haldi (bright mustard
+     panels and highlights — background only, too light for text), mustard
+     (dark enough to read as text on cream), cream (ground), gold (rules). */
+  --cream: #FBF6E4;
+  --cream-dark: #F2E7BF;
+  --leaf: #3D5A1C;
+  --leaf-dark: #283D10;
+  --olive: #6F8A2C;
+  --haldi: #EBC64C;
+  --mustard: #8A6410;
   --gold: #B8892E;
-  --ink: #3A2A1C;
+  --ink: #2C2A17;
 
-  --font-display: "Yatra One", "Georgia", serif;
+  --font-display: "Baloo 2", "Segoe UI", sans-serif;
   --font-body: "Hind", "Segoe UI", sans-serif;
 }
 
 @theme inline {
   --color-cream: var(--cream);
   --color-cream-dark: var(--cream-dark);
-  --color-maroon: var(--maroon);
-  --color-maroon-dark: var(--maroon-dark);
-  --color-saffron: var(--saffron);
+  --color-leaf: var(--leaf);
+  --color-leaf-dark: var(--leaf-dark);
+  --color-olive: var(--olive);
+  --color-haldi: var(--haldi);
+  --color-mustard: var(--mustard);
   --color-gold: var(--gold);
   --color-ink: var(--ink);
   --font-display: var(--font-display);
@@ -44,7 +49,8 @@ body {
 
 h1, h2, .font-display {
   font-family: var(--font-display);
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 a:focus-visible,
@@ -52,7 +58,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--saffron);
+  outline: 2px solid var(--mustard);
   outline-offset: 2px;
 }
 
@@ -132,7 +138,7 @@ textarea:focus-visible {
   right: -2%;
   bottom: -0.12em;
   height: 0.32em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9c30-5 62-7 96-6 34 1 64 3 98 1' fill='none' stroke='%23A9520C' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9c30-5 62-7 96-6 34 1 64 3 98 1' fill='none' stroke='%23EBC64C' stroke-opacity='.9' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
   z-index: -1;
 }
 
@@ -148,7 +154,7 @@ textarea:focus-visible {
   right: 0;
   top: -11px;
   height: 12px;
-  background: radial-gradient(circle at 12px 12px, var(--maroon) 11.5px, transparent 12px) repeat-x;
+  background: radial-gradient(circle at 12px 12px, var(--leaf) 11.5px, transparent 12px) repeat-x;
   background-size: 24px 12px;
 }
 
@@ -164,4 +170,215 @@ textarea:focus-visible {
 
 .photo-strip > * {
   scroll-snap-align: start;
+}
+
+/* ------------------------------------------------------------------------
+   Motion + depth. All of it is switched off by the prefers-reduced-motion
+   block above (durations collapse to ~0).
+   ------------------------------------------------------------------------ */
+
+/* Endless scrolling announcement strip. The track holds the message twice,
+   so translating by -50% loops seamlessly. */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Fade-and-rise on scroll — toggled by components/Reveal.js. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Chunky "pressable" button: a darker slab under the face that the button
+   sinks into when pressed. */
+.btn-3d {
+  position: relative;
+  box-shadow: 0 5px 0 var(--leaf-dark), 0 10px 18px rgba(40, 61, 16, 0.25);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.2s;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--leaf-dark), 0 14px 22px rgba(40, 61, 16, 0.28);
+}
+
+.btn-3d:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--leaf-dark), 0 3px 6px rgba(40, 61, 16, 0.2);
+}
+
+.btn-3d-haldi {
+  box-shadow: 0 5px 0 #b8901f, 0 10px 18px rgba(138, 100, 16, 0.25);
+}
+
+.btn-3d-haldi:hover {
+  box-shadow: 0 7px 0 #b8901f, 0 14px 22px rgba(138, 100, 16, 0.3);
+}
+
+.btn-3d-haldi:active {
+  box-shadow: 0 1px 0 #b8901f, 0 3px 6px rgba(138, 100, 16, 0.2);
+}
+
+/* Hanging wooden signboard (the "You save" tag). */
+.wood-sign {
+  position: relative;
+  background: linear-gradient(180deg, #a0682f 0%, #8a5524 45%, #7a4a1e 100%);
+  background-image:
+    repeating-linear-gradient(176deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, #a0682f 0%, #8a5524 45%, #7a4a1e 100%);
+  border: 2px solid #5e3815;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 12px rgba(60, 35, 10, 0.35);
+  transform-origin: 50% -14px;
+  animation: swing 3.2s ease-in-out infinite;
+}
+
+.wood-sign::before,
+.wood-sign::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  width: 2px;
+  height: 14px;
+  background: #5e3815;
+}
+
+.wood-sign::before {
+  left: 18%;
+  transform: rotate(-14deg);
+}
+
+.wood-sign::after {
+  right: 18%;
+  transform: rotate(14deg);
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+/* Gentle bob for badges and decorative bits. */
+.float {
+  animation: float 4.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Leaves on a branch sway from their stem. */
+.sway {
+  transform-origin: 0% 50%;
+  animation: sway 5s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Light sweep across a surface — used on the selected pack card. */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: shine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Visible "fill this in later" slot for content the shop hasn't supplied
+   yet (photos, videos, licence numbers). Easy to spot, easy to grep. */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 2px dashed rgba(61, 90, 28, 0.35);
+  background:
+    repeating-linear-gradient(45deg, rgba(61, 90, 28, 0.04) 0 10px, transparent 10px 20px),
+    var(--cream);
+  color: rgba(44, 42, 23, 0.55);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px;
+}
+
+/* Soft organic blob behind section headings. */
+.blob {
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  animation: blob 12s ease-in-out infinite;
+}
+
+@keyframes blob {
+  50% {
+    border-radius: 58% 42% 38% 62% / 55% 37% 63% 45%;
+  }
+}
+
+/* Hide scrollbars on horizontal carousels (still scrollable). */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.2;
+    transform: scale(1.03);
+  }
 }

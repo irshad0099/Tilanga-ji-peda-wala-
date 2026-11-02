@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { cartKey, findPack, packLabel } from "@/lib/packs";
 
 const CartContext = createContext(null);
 const STORAGE_KEY = "tilanga_cart_v1";
@@ -12,7 +13,8 @@ export function CartProvider({ children }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
+      // Carts saved before pack sizes existed are single boxes.
+      if (raw) setItems(JSON.parse(raw).map((i) => ({ boxes: 1, key: cartKey(i.slug, i.boxes || 1), ...i })));
     } catch {
       // Ignore corrupted/blocked storage — cart just starts empty.
     }
@@ -28,24 +30,28 @@ export function CartProvider({ children }) {
     }
   }, [items, hydrated]);
 
-  function addItem(product, qty = 1) {
+  // `boxes` picks a pack size (see lib/packs.js); `qty` is how many packs.
+  function addItem(product, qty = 1, boxes = 1) {
     // Dine-in only items (litti-chokha, fresh sweets, chai) can't be shipped,
     // and a sold-out item can't be added even if it's normally deliverable.
     if (product.deliverable === false || product.inStock === false) return;
+    const pack = findPack(product, boxes);
+    if (!pack) return;
+    const key = cartKey(product.slug, pack.boxes);
     setItems((prev) => {
-      const existing = prev.find((i) => i.slug === product.slug);
+      const existing = prev.find((i) => i.key === key);
       if (existing) {
-        return prev.map((i) =>
-          i.slug === product.slug ? { ...i, qty: i.qty + qty } : i
-        );
+        return prev.map((i) => (i.key === key ? { ...i, qty: i.qty + qty } : i));
       }
       return [
         ...prev,
         {
+          key,
           slug: product.slug,
+          boxes: pack.boxes,
           name: product.name,
-          price: product.price,
-          weight: product.weight,
+          price: pack.price,
+          weight: pack.boxes === 1 ? product.weight : `${packLabel(pack.boxes)} × ${product.weight}`,
           image: product.image,
           qty,
         },
@@ -53,13 +59,13 @@ export function CartProvider({ children }) {
     });
   }
 
-  function updateQty(slug, qty) {
-    if (qty < 1) return removeItem(slug);
-    setItems((prev) => prev.map((i) => (i.slug === slug ? { ...i, qty } : i)));
+  function updateQty(key, qty) {
+    if (qty < 1) return removeItem(key);
+    setItems((prev) => prev.map((i) => (i.key === key ? { ...i, qty } : i)));
   }
 
-  function removeItem(slug) {
-    setItems((prev) => prev.filter((i) => i.slug !== slug));
+  function removeItem(key) {
+    setItems((prev) => prev.filter((i) => i.key !== key));
   }
 
   function clearCart() {

@@ -27,7 +27,7 @@ export default function TrackOrderPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <div className="text-center">
-        <h1 className="font-display text-3xl text-maroon">Track Your Order</h1>
+        <h1 className="font-display text-3xl text-leaf">Track Your Order</h1>
         <p className="mt-3 text-[15px] text-ink/70">
           Enter the order ID you received at checkout (for example, TJ-482913).
         </p>
@@ -38,19 +38,19 @@ export default function TrackOrderPage() {
           value={orderId}
           onChange={(e) => setOrderId(e.target.value)}
           placeholder="TJ-XXXXXX"
-          className="w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon"
+          className="w-full rounded-lg border border-leaf/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-leaf"
         />
         <button
           type="submit"
           disabled={searching}
-          className="shrink-0 rounded-lg bg-maroon px-5 py-2.5 text-sm font-semibold text-cream hover:bg-maroon-dark disabled:opacity-60"
+          className="shrink-0 rounded-lg bg-leaf px-5 py-2.5 text-sm font-semibold text-cream hover:bg-leaf-dark disabled:opacity-60"
         >
           {searching ? "Searching…" : "Track"}
         </button>
       </form>
 
       {searched && !order && !searching && (
-        <p className="mt-6 text-center text-[15px] text-saffron">
+        <p className="mt-6 text-center text-[15px] text-mustard">
           No order found with that ID.
         </p>
       )}
@@ -58,7 +58,7 @@ export default function TrackOrderPage() {
       {order && (
         <div className="mt-10 rounded-xl border border-gold/30 bg-cream-dark/30 p-6">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="font-display text-xl text-maroon">
+            <h2 className="font-display text-xl text-leaf">
               {order.id}
             </h2>
             <span className="text-sm text-ink/60">
@@ -67,7 +67,7 @@ export default function TrackOrderPage() {
           </div>
 
           {unpaid ? (
-            <p className="mt-6 rounded-lg border border-saffron/40 bg-saffron/5 p-4 text-sm text-ink/80">
+            <p className="mt-6 rounded-lg border border-mustard/40 bg-mustard/5 p-4 text-sm text-ink/80">
               The online payment for this order wasn&apos;t completed, so it hasn&apos;t been placed.
               Please order again from the menu, or call the shop if money was deducted.
             </p>
@@ -75,8 +75,8 @@ export default function TrackOrderPage() {
             <ol className="mt-6 flex justify-between text-center text-xs">
               {orderStages.map((stage, i) => (
                 <li key={stage} className="flex-1">
-                  <div className={`mx-auto h-3 w-3 rounded-full ${i <= currentStageIndex ? "bg-saffron" : "bg-maroon/20"}`} />
-                  <p className={`mt-2 ${i <= currentStageIndex ? "font-semibold text-maroon" : "text-ink/50"}`}>{stage}</p>
+                  <div className={`mx-auto h-3 w-3 rounded-full ${i <= currentStageIndex ? "bg-olive" : "bg-leaf/20"}`} />
+                  <p className={`mt-2 ${i <= currentStageIndex ? "font-semibold text-leaf" : "text-ink/50"}`}>{stage}</p>
                 </li>
               ))}
             </ol>
@@ -90,7 +90,7 @@ export default function TrackOrderPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-3 flex justify-between border-t border-gold/30 pt-3 text-base font-semibold text-maroon">
+          <div className="mt-3 flex justify-between border-t border-gold/30 pt-3 text-base font-semibold text-leaf">
             <span>Total</span>
             <span>{formatRupees(order.total)}</span>
           </div>
@@ -99,7 +99,7 @@ export default function TrackOrderPage() {
             <div className="flex justify-between gap-4">
               <dt>Payment</dt>
               <dd className="text-right">
-                {order.paymentStatus === "paid" && <span className="text-maroon">✓ </span>}
+                {order.paymentStatus === "paid" && <span className="text-leaf">✓ </span>}
                 {paymentStatusLabels[order.paymentStatus] || order.paymentStatus}
               </dd>
             </div>
@@ -117,7 +117,7 @@ export default function TrackOrderPage() {
 
           <Link
             href={`/invoice/${order.id}`}
-            className="mt-5 inline-block rounded-lg border-2 border-maroon px-5 py-2.5 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream"
+            className="mt-5 inline-block rounded-lg border-2 border-leaf px-5 py-2.5 text-sm font-semibold text-leaf hover:bg-leaf hover:text-cream"
           >
             View / download invoice
           </Link>

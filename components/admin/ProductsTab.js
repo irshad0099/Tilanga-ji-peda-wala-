@@ -109,18 +109,18 @@ export default function ProductsTab({ adminKey }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-xl text-maroon">Menu items ({products.length})</h2>
+        <h2 className="font-display text-xl text-leaf">Menu items ({products.length})</h2>
         <div className="flex gap-2">
           <button
             onClick={load}
             disabled={loading}
-            className="rounded-lg border-2 border-maroon px-4 py-2 text-sm font-semibold text-maroon hover:bg-maroon hover:text-cream disabled:opacity-60"
+            className="rounded-lg border-2 border-leaf px-4 py-2 text-sm font-semibold text-leaf hover:bg-leaf hover:text-cream disabled:opacity-60"
           >
             {loading ? "Refreshing…" : "Refresh"}
           </button>
           <button
             onClick={() => setShowAdd((v) => !v)}
-            className="rounded-lg bg-saffron px-4 py-2 text-sm font-semibold text-cream hover:bg-saffron/90"
+            className="rounded-lg bg-leaf px-4 py-2 text-sm font-semibold text-cream hover:bg-leaf-dark"
           >
             {showAdd ? "Cancel" : "+ Add item"}
           </button>
@@ -139,33 +139,33 @@ export default function ProductsTab({ adminKey }) {
             placeholder="Name"
             value={draft.name}
             onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-            className="rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-sm outline-none focus:border-maroon"
+            className="rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-sm outline-none focus:border-leaf"
           />
           <input
             placeholder="Category"
             value={draft.category}
             onChange={(e) => setDraft((d) => ({ ...d, category: e.target.value }))}
-            className="rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-sm outline-none focus:border-maroon"
+            className="rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-sm outline-none focus:border-leaf"
           />
           <input
             placeholder="Weight / serving"
             value={draft.weight}
             onChange={(e) => setDraft((d) => ({ ...d, weight: e.target.value }))}
-            className="rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-sm outline-none focus:border-maroon"
+            className="rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-sm outline-none focus:border-leaf"
           />
           <input
             type="number"
             placeholder="Price ₹"
             value={draft.price}
             onChange={(e) => setDraft((d) => ({ ...d, price: e.target.value }))}
-            className="rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-sm outline-none focus:border-maroon"
+            className="rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-sm outline-none focus:border-leaf"
           />
           <input
             type="number"
             placeholder="MRP ₹ (optional)"
             value={draft.mrp}
             onChange={(e) => setDraft((d) => ({ ...d, mrp: e.target.value }))}
-            className="rounded-lg border border-maroon/30 bg-cream px-3 py-2 text-sm outline-none focus:border-maroon"
+            className="rounded-lg border border-leaf/30 bg-cream px-3 py-2 text-sm outline-none focus:border-leaf"
           />
           <label className="flex items-center gap-2 text-sm text-ink/80">
             <input
@@ -175,17 +175,17 @@ export default function ProductsTab({ adminKey }) {
             />
             Ships / deliverable
           </label>
-          <button type="submit" className="rounded-lg bg-maroon px-4 py-2 text-sm font-semibold text-cream hover:bg-maroon-dark">
+          <button type="submit" className="rounded-lg bg-leaf px-4 py-2 text-sm font-semibold text-cream hover:bg-leaf-dark">
             Add to menu
           </button>
-          {addError && <p className="text-sm text-saffron sm:col-span-2 lg:col-span-4">{addError}</p>}
+          {addError && <p className="text-sm text-mustard sm:col-span-2 lg:col-span-4">{addError}</p>}
         </form>
       )}
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-gold/30">
         <table className="w-full min-w-[68rem] text-sm">
           <thead>
-            <tr className="bg-maroon text-left text-cream">
+            <tr className="bg-leaf text-left text-cream">
               <th className="px-3 py-2.5 font-semibold">Name</th>
               <th className="px-3 py-2.5 font-semibold">Category</th>
               <th className="px-3 py-2.5 font-semibold">Price</th>
@@ -203,7 +203,7 @@ export default function ProductsTab({ adminKey }) {
                   <input
                     value={p.name}
                     onChange={(e) => updateLocal(p.slug, { name: e.target.value })}
-                    className="w-40 rounded border border-maroon/20 bg-cream px-2 py-1 text-sm outline-none focus:border-maroon"
+                    className="w-40 rounded border border-leaf/20 bg-cream px-2 py-1 text-sm outline-none focus:border-leaf"
                   />
                   <p className="mt-0.5 font-mono text-[11px] text-ink/40">{p.slug}</p>
                 </td>
@@ -213,7 +213,7 @@ export default function ProductsTab({ adminKey }) {
                     type="number"
                     value={p.price}
                     onChange={(e) => updateLocal(p.slug, { price: e.target.value })}
-                    className="w-20 rounded border border-maroon/20 bg-cream px-2 py-1 text-sm outline-none focus:border-maroon"
+                    className="w-20 rounded border border-leaf/20 bg-cream px-2 py-1 text-sm outline-none focus:border-leaf"
                   />
                 </td>
                 <td className="px-3 py-2 align-top">
@@ -221,7 +221,7 @@ export default function ProductsTab({ adminKey }) {
                     type="number"
                     value={p.mrp || 0}
                     onChange={(e) => updateLocal(p.slug, { mrp: e.target.value })}
-                    className="w-20 rounded border border-maroon/20 bg-cream px-2 py-1 text-sm outline-none focus:border-maroon"
+                    className="w-20 rounded border border-leaf/20 bg-cream px-2 py-1 text-sm outline-none focus:border-leaf"
                   />
                 </td>
                 <td className="px-3 py-2 align-top">
@@ -229,7 +229,7 @@ export default function ProductsTab({ adminKey }) {
                     value={p.badge || ""}
                     onChange={(e) => updateLocal(p.slug, { badge: e.target.value })}
                     placeholder="—"
-                    className="w-24 rounded border border-maroon/20 bg-cream px-2 py-1 text-sm outline-none focus:border-maroon"
+                    className="w-24 rounded border border-leaf/20 bg-cream px-2 py-1 text-sm outline-none focus:border-leaf"
                   />
                 </td>
                 <td className="px-3 py-2 text-center align-top">
@@ -250,7 +250,7 @@ export default function ProductsTab({ adminKey }) {
                   <button
                     onClick={() => save(p.slug)}
                     disabled={savingSlug === p.slug}
-                    className="rounded-lg bg-saffron px-3 py-1.5 text-xs font-semibold text-cream hover:bg-saffron/90 disabled:opacity-60"
+                    className="rounded-lg bg-leaf px-3 py-1.5 text-xs font-semibold text-cream hover:bg-leaf-dark disabled:opacity-60"
                   >
                     {savingSlug === p.slug ? "Saving…" : savedSlug === p.slug ? "Saved ✓" : "Save"}
                   </button>

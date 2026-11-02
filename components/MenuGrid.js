@@ -31,7 +31,7 @@ export default function MenuGrid({ products, categories }) {
           placeholder="Search the menu..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-lg border border-maroon/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-maroon sm:max-w-xs"
+          className="w-full rounded-lg border border-leaf/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-leaf sm:max-w-xs"
         />
         <div className="flex flex-wrap gap-2">
           {["All", ...categories].map((cat) => (
@@ -40,8 +40,8 @@ export default function MenuGrid({ products, categories }) {
               onClick={() => setCategory(cat)}
               className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                 category === cat
-                  ? "border-maroon bg-maroon text-cream"
-                  : "border-maroon/30 text-maroon hover:bg-cream-dark"
+                  ? "border-leaf bg-leaf text-cream"
+                  : "border-leaf/30 text-leaf hover:bg-cream-dark"
               }`}
             >
               {cat}
@@ -50,12 +50,12 @@ export default function MenuGrid({ products, categories }) {
         </div>
       </div>
 
-      <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 rounded-full border border-saffron/30 px-4 py-1.5 text-sm font-medium text-saffron">
+      <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 rounded-full border border-mustard/30 px-4 py-1.5 text-sm font-medium text-mustard">
         <input
           type="checkbox"
           checked={deliveryOnly}
           onChange={(e) => setDeliveryOnly(e.target.checked)}
-          className="accent-saffron"
+          className="accent-mustard"
         />
         Delivery available only
       </label>

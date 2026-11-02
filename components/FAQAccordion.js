@@ -25,20 +25,30 @@ export default function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="max-w-3xl divide-y divide-gold/40 border-y border-gold/40">
+    <div className="max-w-3xl space-y-3">
       {faqs.map((item, i) => {
         const isOpen = openIndex === i;
         return (
-          <div key={item.q}>
+          <div key={item.q} className="overflow-hidden rounded-2xl shadow-[0_6px_16px_-8px_rgba(40,61,16,0.4)]">
             <button
               onClick={() => setOpenIndex(isOpen ? -1 : i)}
               aria-expanded={isOpen}
-              className="flex w-full items-center justify-between gap-4 py-4 text-left"
+              className={`flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors ${
+                isOpen ? "bg-leaf" : "bg-olive hover:bg-leaf"
+              }`}
             >
-              <span className="text-[16px] font-semibold text-maroon">{item.q}</span>
-              <span className="shrink-0 text-xl text-gold">{isOpen ? "−" : "+"}</span>
+              <span className="text-[16px] font-bold text-cream">{item.q}</span>
+              <span
+                className={`shrink-0 text-3xl font-light leading-none text-cream transition-transform duration-300 ${
+                  isOpen ? "rotate-45" : ""
+                }`}
+              >
+                +
+              </span>
             </button>
-            {isOpen && <p className="pb-4 text-[15px] leading-relaxed text-ink/75">{item.a}</p>}
+            {isOpen && (
+              <p className="animate-[fadeIn_.3s_ease] bg-cream px-5 py-4 text-[15px] leading-relaxed text-ink/80">{item.a}</p>
+            )}
           </div>
         );
       })}

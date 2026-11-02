@@ -22,8 +22,8 @@ export default async function Testimonials() {
   return (
     <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
       <figure>
-        <span aria-hidden="true" className="block font-display text-7xl leading-none text-saffron/60">“</span>
-        <blockquote className="-mt-4 font-display text-2xl leading-snug text-maroon sm:text-3xl">
+        <span aria-hidden="true" className="block font-display text-7xl leading-none text-mustard/60">“</span>
+        <blockquote className="-mt-4 font-display text-2xl leading-snug text-leaf sm:text-3xl">
           {lead.text}
         </blockquote>
         <figcaption className="mt-5 text-[15px] font-semibold text-ink/75">— {lead.name}</figcaption>
@@ -33,9 +33,9 @@ export default async function Testimonials() {
             href={shop.googleMapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-maroon underline decoration-gold decoration-2 underline-offset-4 hover:decoration-saffron"
+            className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-leaf underline decoration-gold decoration-2 underline-offset-4 hover:decoration-mustard"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-saffron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-mustard">
               <path d="M12 2l2.9 6.26L21.5 9l-4.9 4.4L17.8 21 12 17.4 6.2 21l1.2-7.6L2.5 9l6.6-.74L12 2z" />
             </svg>
             Google par 3,100+ reviews padhein

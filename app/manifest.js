@@ -5,8 +5,8 @@ export default function manifest() {
     description: "Bihar's famous peda since 1975 — order online, shipped fresh pan-India.",
     start_url: "/",
     display: "standalone",
-    background_color: "#FBF3E5",
-    theme_color: "#6E1E2B",
+    background_color: "#FBF6E4",
+    theme_color: "#3D5A1C",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },

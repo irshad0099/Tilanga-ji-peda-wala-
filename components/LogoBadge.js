@@ -7,15 +7,15 @@ export default function LogoBadge({ size = 44 }) {
       aria-hidden="true"
       className="shrink-0"
     >
-      <circle cx="50" cy="50" r="47" fill="#6E1E2B" stroke="#B8892E" strokeWidth="3" />
+      <circle cx="50" cy="50" r="47" fill="#3D5A1C" stroke="#B8892E" strokeWidth="3" />
       <circle cx="50" cy="50" r="38" fill="none" stroke="#B8892E" strokeWidth="1.5" />
       <text
         x="50"
         y="60"
         textAnchor="middle"
-        fontFamily="Yatra One, Georgia, serif"
+        fontFamily="Baloo 2, sans-serif"
         fontSize="30"
-        fill="#FBF3E5"
+        fill="#FBF6E4"
       >
         TJ
       </text>
