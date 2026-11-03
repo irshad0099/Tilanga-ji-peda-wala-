@@ -1,71 +1,56 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
+import CategoryPills from "@/components/CategoryPills";
 
+// Full menu with category pills and search. The header's dropdown and search
+// box land here with ?category=, ?deliver=1 or ?q= already set.
 export default function MenuGrid({ products, categories }) {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
-  const [deliveryOnly, setDeliveryOnly] = useState(false);
+  const params = useSearchParams();
+  const initial = params.get("deliver") === "1" ? "ships" : params.get("category") || "all";
+  const [filter, setFilter] = useState(categories.includes(initial) || initial === "ships" ? initial : "all");
+  const [query, setQuery] = useState(params.get("q") || "");
 
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("deliver") === "1") {
-      setDeliveryOnly(true);
-    }
-  }, []);
+  const options = [
+    { id: "all", label: "All", icon: "all" },
+    { id: "ships", label: "Ships pan-India", icon: "ships" },
+    ...categories.map((c) => ({ id: c, label: c, icon: c })),
+  ];
 
   const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
     return products.filter((p) => {
-      const matchesCategory = category === "All" || p.category === category;
-      const matchesQuery = p.name.toLowerCase().includes(query.toLowerCase());
-      const matchesDelivery = !deliveryOnly || p.deliverable;
-      return matchesCategory && matchesQuery && matchesDelivery;
+      const byFilter = filter === "all" || (filter === "ships" ? p.deliverable : p.category === filter);
+      const byQuery = !q || `${p.name} ${p.hindiName || ""} ${p.category}`.toLowerCase().includes(q);
+      return byFilter && byQuery;
     });
-  }, [products, query, category, deliveryOnly]);
+  }, [products, filter, query]);
 
   return (
     <div>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <CategoryPills options={options} value={filter} onChange={setFilter} />
+
+      <div className="mx-auto mt-6 flex max-w-md items-center rounded-2xl border-2 border-leaf/20 bg-cream px-4 focus-within:border-leaf">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-leaf" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="M20 20l-4.2-4.2" />
+        </svg>
         <input
-          type="text"
-          placeholder="Search the menu..."
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-lg border border-leaf/30 bg-cream px-4 py-2.5 text-[15px] outline-none focus:border-leaf sm:max-w-xs"
+          placeholder="Search peda, sweets, chai…"
+          aria-label="Search the menu"
+          className="w-full bg-transparent px-3 py-3 text-[15px] font-semibold outline-none"
         />
-        <div className="flex flex-wrap gap-2">
-          {["All", ...categories].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-                category === cat
-                  ? "border-leaf bg-leaf text-cream"
-                  : "border-leaf/30 text-leaf hover:bg-cream-dark"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
       </div>
 
-      <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 rounded-full border border-mustard/30 px-4 py-1.5 text-sm font-medium text-mustard">
-        <input
-          type="checkbox"
-          checked={deliveryOnly}
-          onChange={(e) => setDeliveryOnly(e.target.checked)}
-          className="accent-mustard"
-        />
-        Delivery available only
-      </label>
-
       {filtered.length === 0 ? (
-        <p className="mt-12 text-center text-ink/60">
-          Nothing matches that. Try a different name, category or clear the delivery filter.
-        </p>
+        <p className="mt-14 text-center text-[15px] font-semibold text-ink/60">Nothing matches that — try another name or category.</p>
       ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {filtered.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}

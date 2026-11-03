@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import Image from "next/image";
 import MenuGrid from "@/components/MenuGrid";
 import { getAllProducts } from "@/lib/db/products.server";
 
@@ -6,24 +8,47 @@ export const metadata = {
   description: "Classic Khoya Peda ships pan-India. Every other peda, our gift boxes, litti-chokha, fresh sweets and kulhad chai are served at the shop.",
 };
 
-export default async function MenuPage() {
-  const products = await getAllProducts();
+export default async function MenuPage({ searchParams }) {
+  const [products, params] = await Promise.all([getAllProducts(), searchParams]);
   const categories = Array.from(new Set(products.map((p) => p.category)));
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <div className="text-center">
-        <p className="text-sm font-semibold text-mustard">Our Menu</p>
-        <h1 className="mt-1 font-display text-4xl text-leaf">Peda, Sweets &amp; Dhaba Plates</h1>
-        <p className="mx-auto mt-3 max-w-xl text-[15px] text-ink/75">
-          Only <span className="font-medium text-ink">Classic Khoya Peda</span> ships pan-India —
-          add it to the cart and check out. Every other peda flavour, our gift boxes,{" "}
-          <span className="font-medium text-ink">litti-chokha, fresh sweets and chai</span> are made
-          through the day and served at the shop only — please visit us for these.
+    <div>
+      {/* Banner */}
+      <section className="relative overflow-hidden bg-leaf-dark">
+        <Image
+          src="/images/photos/gur-peda.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="animate-[kenburns_18s_ease-in-out_infinite_alternate] object-cover opacity-55"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-leaf-dark via-leaf-dark/80 to-transparent" />
+        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
+          <p className="font-display text-2xl font-bold text-haldi sm:text-3xl">
+            Har dibbe mein <span className="italic">50 saal</span> ki
+          </p>
+          <h1 className="mt-1 font-display text-5xl font-black leading-[1.05] text-cream sm:text-7xl">
+            Mithas &amp;
+            <br />
+            Parampara
+          </h1>
+          <span className="mt-5 block h-1 w-56 border-b-[3px] border-dotted border-haldi" />
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6">
+        <h2 className="text-center font-display text-4xl font-black text-ink sm:text-5xl">All Products</h2>
+        <p className="mx-auto mt-3 max-w-xl text-center text-[15px] text-ink/70">
+          <span className="font-bold text-leaf">Classic Khoya Peda</span> ships across India. Everything else is
+          made through the day and served at the shop in Sakaddi.
         </p>
-      </div>
-      <div className="mt-10">
-        <MenuGrid products={products} categories={categories} />
+        <div className="mt-10">
+          <Suspense>
+            <MenuGrid key={JSON.stringify(params)} products={products} categories={categories} />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

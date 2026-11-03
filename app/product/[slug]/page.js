@@ -5,25 +5,19 @@ import { products as defaultProducts } from "@/lib/products";
 import { getAllProducts, getProductBySlug } from "@/lib/db/products.server";
 import { getSettings } from "@/lib/db/settings.server";
 import { packsFor } from "@/lib/packs";
-import {
-  certifications,
-  founder,
-  fssaiLicence,
-  mediaCoverage,
-  productDetails,
-  productGallery,
-  reels,
-} from "@/lib/content";
+import { certifications, fssaiLicence, productDetails, productGallery } from "@/lib/content";
 import Gallery from "@/components/product/Gallery";
 import BuyBox from "@/components/product/BuyBox";
 import TrustBadges from "@/components/product/TrustBadges";
 import ProductTabs from "@/components/product/ProductTabs";
-import FAQAccordion from "@/components/FAQAccordion";
-import Testimonials from "@/components/Testimonials";
 import ProductCard from "@/components/ProductCard";
 import Placeholder from "@/components/Placeholder";
 import Reveal from "@/components/Reveal";
 import Branch from "@/components/Branch";
+import MediaSection from "@/components/brand/MediaSection";
+import ReelsSection from "@/components/brand/ReelsSection";
+import FaqFounder from "@/components/brand/FaqFounder";
+import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 
 // Pre-render the default menu's slugs at build time; any DB-only product
 // (created later from /admin) still renders fine on first request.
@@ -134,105 +128,31 @@ export default async function ProductPage({ params }) {
         </Reveal>
       </section>
 
-      {/* ---- Media coverage + reels ------------------------------------- */}
-      <section className="bg-[#FFF3B8]/60 py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading sub="Newspapers, TV and YouTube channels that have featured the shop.">Media mein charcha</SectionHeading>
-          </Reveal>
-          <Reveal delay={100} className="mt-10 flex flex-wrap justify-center gap-5">
-            {(mediaCoverage.length ? mediaCoverage : [null, null, null]).map((m, i) => (
-              <WoodBoard key={m?.name || i} tilt={[-3, 2, -1.5][i % 3]}>
-                {m ? (
-                  <a href={m.url} target="_blank" rel="noreferrer">
-                    <Image src={m.logo} alt={m.name} width={160} height={64} className="h-12 w-auto object-contain" />
-                  </a>
-                ) : (
-                  <span className="text-xs font-bold uppercase tracking-wide text-ink/45">Media logo</span>
-                )}
-              </WoodBoard>
-            ))}
-          </Reveal>
-
-          <Reveal delay={150} className="mt-16">
-            <h3 className="font-display text-3xl font-extrabold text-leaf">Spotlight</h3>
-            <div className="no-scrollbar mt-6 flex snap-x gap-4 overflow-x-auto pb-2">
-              {(reels.length ? reels : [null, null, null, null]).map((r, i) =>
-                r ? (
-                  <a key={r.url} href={r.url} target="_blank" rel="noreferrer" className="group relative w-52 shrink-0 snap-start overflow-hidden rounded-3xl">
-                    <Image src={r.poster} alt={r.title} width={416} height={740} className="aspect-[9/16] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-ink/60 text-cream backdrop-blur">▶</span>
-                    </span>
-                  </a>
-                ) : (
-                  <Placeholder key={i} icon="video" label="Reel / video" hint="Add in lib/content.js → reels" className="aspect-[9/16] w-44 shrink-0 snap-start !rounded-3xl sm:w-52" />
-                )
-              )}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Founder ----------------------------------------------------- */}
-      <section className="relative overflow-hidden py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 md:grid-cols-2">
-          <Reveal className="relative mx-auto w-full max-w-sm">
-            <div aria-hidden="true" className="blob absolute inset-4 bg-haldi" />
-            {founder.photo ? (
-              <Image src={founder.photo} alt={founder.name} width={600} height={700} className="float relative w-full" />
-            ) : (
-              <Placeholder label="Founder ki photo / illustration" hint="lib/content.js → founder.photo" className="float relative aspect-[6/7] w-full !rounded-[40px] !bg-cream/80" />
-            )}
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-olive">The hands behind it</p>
-            <h2 className="mt-2 font-display text-4xl font-extrabold text-leaf">{founder.name}</h2>
-            <p className="font-semibold text-ink/60">{founder.title}</p>
-            {founder.quote ? (
-              <blockquote className="mt-6 border-l-4 border-haldi pl-5 text-lg leading-relaxed text-ink/85">“{founder.quote}”</blockquote>
-            ) : (
-              <Placeholder icon="text" label="Founder ke apne shabd — 3-4 lines" hint="lib/content.js → founder.quote" className="mt-6 min-h-32" />
-            )}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- FAQ ------------------------------------------------------------ */}
-      {product.deliverable && (
-        <section className="bg-cream-dark/50 py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <Reveal>
-              <SectionHeading>FAQ&apos;s</SectionHeading>
-            </Reveal>
-            <Reveal delay={100} className="mt-10">
-              <FAQAccordion />
-            </Reveal>
-          </div>
-        </section>
-      )}
+      <MediaSection />
+      <ReelsSection product={canBuy ? product : all.find((p) => p.deliverable && p.inStock !== false)} />
+      <FaqFounder />
 
       {/* ---- Reviews ------------------------------------------------------- */}
-      <section className="py-20">
+      <section className="bg-cream pb-16 pt-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
-            <h2 className="font-display text-4xl font-extrabold text-leaf">Customer reviews</h2>
+            <h2 className="text-center font-display text-4xl font-black text-leaf-dark sm:text-5xl">Customer Reviews</h2>
           </Reveal>
-          <Reveal delay={100} className="mt-10">
-            <Testimonials />
-          </Reveal>
+          <div className="mt-8">
+            <ReviewsCarousel googleUrl={shop.googleMapsUrl} />
+          </div>
         </div>
       </section>
 
       {/* ---- Related -------------------------------------------------------- */}
-      <section className="bg-leaf py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <Reveal>
-            <SectionHeading light sub="Some of it ships, the rest is waiting at the shop.">Dukaan par aur bhi</SectionHeading>
+            <SectionHeading sub="Some of it ships, the rest is waiting at the shop.">Related Products</SectionHeading>
           </Reveal>
-          <div className="no-scrollbar mt-10 flex snap-x gap-5 overflow-x-auto pb-4">
+          <div className="no-scrollbar mt-10 flex snap-x gap-4 overflow-x-auto pb-4">
             {related.map((p) => (
-              <div key={p.slug} className="w-64 shrink-0 snap-start">
+              <div key={p.slug} className="w-60 shrink-0 snap-start sm:w-72">
                 <ProductCard product={p} />
               </div>
             ))}
@@ -267,19 +187,6 @@ export default async function ProductPage({ params }) {
           </Reveal>
         </div>
       </section>
-    </div>
-  );
-}
-
-function WoodBoard({ tilt = 0, children }) {
-  return (
-    <div className="float" style={{ "--float-delay": `${Math.abs(tilt) * 0.3}s` }}>
-      <div
-        className="wood-sign !animate-none flex h-24 w-48 items-center justify-center rounded-xl p-3"
-        style={{ transform: `rotate(${tilt}deg)` }}
-      >
-        <div className="flex h-full w-full items-center justify-center rounded-md bg-cream/95 shadow-inner">{children}</div>
-      </div>
     </div>
   );
 }

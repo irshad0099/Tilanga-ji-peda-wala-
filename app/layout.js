@@ -32,7 +32,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#3D5A1C",
+  themeColor: "#2F4A1D",
 };
 
 export default function RootLayout({ children }) {
@@ -42,11 +42,11 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Hind:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Hind:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="paper flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col">
         <CartProvider>
           <AnnouncementBar />
           <Navbar />

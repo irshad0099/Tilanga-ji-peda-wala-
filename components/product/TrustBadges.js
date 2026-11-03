@@ -2,7 +2,7 @@ import { trustBadges, fssaiLicence } from "@/lib/content";
 
 const icons = {
   since: (
-    <text x="32" y="38" textAnchor="middle" fontFamily="Baloo 2, sans-serif" fontWeight="800" fontSize="14" fill="currentColor">
+    <text x="32" y="38" textAnchor="middle" fontFamily="Nunito, sans-serif" fontWeight="800" fontSize="14" fill="currentColor">
       1975
     </text>
   ),
@@ -45,7 +45,7 @@ export default function TrustBadges() {
             <svg viewBox="0 0 64 64" className={`h-16 w-16 sm:h-20 sm:w-20 ${pending ? "opacity-40" : ""}`} aria-hidden="true">
               <circle cx="32" cy="32" r="21" fill="#FBF6E4" stroke="#B8892E" strokeWidth="1.5" strokeDasharray={pending ? "3 3" : undefined} />
               <Laurel />
-              <g className="text-leaf" color="#3D5A1C">{icons[b.id]}</g>
+              <g className="text-leaf" color="#57703B">{icons[b.id]}</g>
             </svg>
             <span className={`-mt-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:text-[11px] ${pending ? "border border-dashed border-leaf/40 text-ink/50" : "bg-leaf text-cream"}`}>
               {b.label}
