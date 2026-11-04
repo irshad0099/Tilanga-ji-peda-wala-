@@ -1,7 +1,7 @@
 import { getAllProducts } from "@/lib/db/products.server";
 import { getSettings } from "@/lib/db/settings.server";
 import Reveal from "@/components/Reveal";
-import HeroSlider from "@/components/brand/HeroSlider";
+import ProductHero from "@/components/product/ProductHero";
 import FeaturedProducts from "@/components/brand/FeaturedProducts";
 import JourneyTimeline from "@/components/brand/JourneyTimeline";
 import MediaSection from "@/components/brand/MediaSection";
@@ -16,10 +16,13 @@ const STORY =
 export default async function HomePage() {
   const [products, { shop }] = await Promise.all([getAllProducts(), getSettings()]);
   const shipItem = products.find((p) => p.deliverable && p.inStock !== false);
+  // The hero shows the shipping peda even on a sold-out day (it then says so).
+  const heroItem = shipItem || products.find((p) => p.deliverable) || products[0];
 
   return (
     <div className="overflow-x-clip">
-      <HeroSlider />
+      {/* Hero: the peda that ships, ready to buy straight from the home page. */}
+      {heroItem && <ProductHero product={heroItem} shop={shop} onHome />}
 
       {/* Featured products */}
       <section className="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6">

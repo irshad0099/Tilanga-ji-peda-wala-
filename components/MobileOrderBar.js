@@ -7,7 +7,8 @@ import { formatRupees } from "@/lib/format";
 
 // Pages where a sticky "Order Now" bar would just be clutter — already
 // mid-checkout, already in the cart, or an internal/admin view.
-// Product pages have their own sticky buy bar (components/product/BuyBox.js).
+// Product pages (and the home hero) have their own sticky buy bar
+// (components/product/BuyBox.js).
 const HIDDEN_PREFIXES = ["/cart", "/checkout", "/admin", "/login", "/track-order", "/invoice", "/product"];
 
 export default function MobileOrderBar() {
@@ -36,7 +37,8 @@ export default function MobileOrderBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const hidden = HIDDEN_PREFIXES.some((p) => pathname.startsWith(p));
+  // The home page hero is a product buy box with its own sticky bar too.
+  const hidden = pathname === "/" || HIDDEN_PREFIXES.some((p) => pathname.startsWith(p));
   const show = !hidden && scrolled && product;
 
   function handleOrder() {
