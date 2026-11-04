@@ -50,7 +50,7 @@ export default function DeliveryTimeline() {
   }
 
   return (
-    <div className="rounded-2xl border-2 border-olive/30 bg-cream p-4 sm:p-5">
+    <div className="py-1">
       <ol className="relative grid grid-cols-3 text-center">
         <span aria-hidden="true" className="absolute left-[16%] right-[16%] top-6 h-1 rounded-full bg-gradient-to-r from-leaf via-olive to-haldi" />
         {(steps || [{ label: "Order placed" }, { label: "Ships" }, { label: "Delivered" }]).map((s, i) => (

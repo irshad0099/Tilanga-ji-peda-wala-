@@ -67,29 +67,32 @@ export default async function ProductPage({ params }) {
   return (
     <div className="overflow-x-clip">
       {/* ---- Hero: gallery + buy box -------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-4 pb-16 pt-6 sm:px-6">
-        <nav className="mb-5 text-sm text-ink/60">
-          <Link href="/menu" className="hover:text-leaf">Menu</Link>
-          <span className="mx-2">/</span>
-          <span className="text-ink">{product.name}</span>
-        </nav>
-
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
-          <div className="lg:sticky lg:top-24 lg:self-start">
+      {/* Split hero: photos on a dark-green field, buying on cream. */}
+      <section className="grid lg:min-h-[calc(100vh-124px)] lg:grid-cols-[1.4fr_1fr]">
+        {/* overflow-clip (not -hidden): hidden would make this the sticky
+            photo's scroll container and push it 132px down the panel. */}
+        <div className="relative flex justify-center overflow-clip bg-leaf-dark px-4 pb-8 pt-6 sm:px-8 lg:items-start lg:px-12 lg:py-8">
+          <Branch className="absolute -bottom-2 -left-6 hidden w-72 rotate-[-18deg] opacity-90 lg:block" />
+          <div className="relative w-full lg:sticky lg:top-[132px]">
             <Gallery images={images} name={product.name} savePct={canBuy ? savePct : 0} />
           </div>
+        </div>
 
+        <div className="bg-cream px-4 pb-14 pt-6 sm:px-8 lg:px-7 lg:pt-5 xl:pr-10">
+          <nav className="mb-2 text-xs font-semibold text-ink/50">
+            <Link href="/menu" className="hover:text-leaf">Menu</Link>
+            <span className="mx-1.5">/</span>
+            <span>{product.name}</span>
+          </nav>
           <div>
-            {product.badge && (
-              <span className="inline-block rounded-full bg-haldi px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-leaf-dark">
-                {product.badge}
-              </span>
-            )}
-            <h1 className="mt-3 font-display text-4xl font-extrabold leading-tight text-leaf sm:text-5xl">{product.name}</h1>
-            {product.hindiName && <p className="mt-1 font-display text-xl font-semibold text-olive">{product.hindiName}</p>}
+            <h1 className="font-display text-[28px] font-bold leading-tight text-leaf-dark sm:text-[32px]">
+              {product.name}
+              {product.weight && <span className="font-semibold"> – {product.weight}</span>}
+            </h1>
+            {product.hindiName && <p className="mt-0.5 text-[17px] font-bold text-olive">{product.hindiName}</p>}
             {shop.googleMapsUrl && (
-              <a href={shop.googleMapsUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-ink/80 hover:text-leaf">
-                <span className="text-lg text-haldi drop-shadow-[0_1px_0_#b8901f]">★</span>
+              <a href={shop.googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1.5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink hover:text-leaf">
+                <span className="text-[17px] text-[#F2A93B]">★</span>
                 3,100+ reviews on Google
               </a>
             )}

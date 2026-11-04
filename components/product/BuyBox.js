@@ -45,26 +45,26 @@ export default function BuyBox({ product, packs, badges }) {
   return (
     <div>
       {/* Price */}
-      <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3">
         {pack.mrp > pack.price && (
-          <span className="text-lg text-ink/45 line-through decoration-2">{formatRupees(pack.mrp)}</span>
+          <span className="text-[15px] font-semibold text-ink/45 line-through">{formatRupees(pack.mrp)}</span>
         )}
-        <span key={pack.price} className="animate-[fadeIn_.35s_ease] font-display text-4xl font-extrabold text-leaf">
+        <span key={pack.price} className="animate-[fadeIn_.35s_ease] font-display text-[34px] font-extrabold leading-none text-[#6E9A2A]">
           {formatRupees(pack.price)}
         </span>
         {save > 0 && (
-          <span className="wood-sign ml-1 rounded-md px-3 py-1.5 text-sm font-extrabold uppercase tracking-wide text-[#fff3d6]">
+          <span className="wood-sign ml-1 rounded-[5px] px-3 py-1.5 text-[12px] font-extrabold uppercase tracking-wide text-[#fff3d6]">
             You save {formatRupees(save)}
           </span>
         )}
       </div>
-      <p className="mt-1 text-sm font-semibold text-ink/70">MRP (incl. of all taxes)</p>
+      <p className="mt-2 text-sm font-bold text-ink">MRP (Incl. of all taxes)</p>
 
       {badges && <div className="mt-6">{badges}</div>}
 
       {/* Packs */}
-      <p className="mt-7 text-xs font-bold uppercase tracking-[0.16em] text-ink/60">Select your pack</p>
-      <div role="radiogroup" aria-label="Pack size" className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
+      <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-ink/70">Select your quantity</p>
+      <div role="radiogroup" aria-label="Pack size" className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-3">
         {packs.map((p) => {
           const selected = p.boxes === boxes;
           const off = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
@@ -74,24 +74,26 @@ export default function BuyBox({ product, packs, badges }) {
               role="radio"
               aria-checked={selected}
               onClick={() => setBoxes(p.boxes)}
-              className={`relative overflow-hidden rounded-2xl border-2 text-left transition-all duration-200 ${
-                selected
-                  ? "shine -translate-y-1 border-leaf shadow-[0_12px_24px_-8px_rgba(40,61,16,0.45)]"
-                  : "border-olive/40 hover:-translate-y-0.5 hover:border-olive"
+              className={`relative rounded-lg border-2 text-left transition-all duration-200 ${
+                selected ? "border-leaf-dark shadow-[0_10px_20px_-12px_rgba(40,61,16,0.7)]" : "border-olive/60 hover:-translate-y-0.5"
               }`}
             >
               {p.tag && (
-                <span className={`absolute right-0 top-0 rounded-bl-xl px-2 py-0.5 text-[10px] font-bold uppercase ${selected ? "bg-haldi text-leaf-dark" : "bg-cream-dark text-ink/60"}`}>
+                <span className="absolute -top-2.5 right-3 z-10 rounded border border-leaf-dark/40 bg-cream px-2 py-px text-[9px] font-extrabold uppercase tracking-wide text-leaf-dark">
                   {p.tag}
                 </span>
               )}
-              <span className={`block px-2.5 pb-1.5 pt-4 font-display text-base font-bold sm:px-3 sm:text-lg ${selected ? "bg-leaf text-cream" : "bg-olive/15 text-leaf"}`}>
+              {/* The shine sweep lives on the strip, not the card — the card
+                  must not clip the tag that sits over its top edge. */}
+              <span className={`block rounded-t-[5px] px-3 py-1.5 text-[15px] font-extrabold text-cream ${selected ? "shine bg-leaf-dark" : "bg-olive/80"}`}>
                 {packLabel(p.boxes)}
               </span>
-              <span className="flex flex-wrap items-center gap-x-2 gap-y-1 bg-cream px-2.5 py-2.5 sm:px-3">
-                <span className="text-[15px] font-bold text-ink">{formatRupees(p.price)}</span>
-                {p.mrp > p.price && <span className="text-xs text-ink/45 line-through">{formatRupees(p.mrp)}</span>}
-                {off > 0 && <span className="rounded-full bg-olive px-1.5 py-0.5 text-[10px] font-bold text-cream">{off}% off</span>}
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-b-[5px] bg-cream px-3 py-2.5">
+                <span className="whitespace-nowrap text-[13px] font-bold text-ink">{formatRupees(p.price)}</span>
+                {p.mrp > p.price && <span className="whitespace-nowrap text-[11px] text-ink/45 line-through">{formatRupees(p.mrp)}</span>}
+                {off > 0 && (
+                  <span className="whitespace-nowrap rounded-full bg-[#6E9A2A] px-2 py-0.5 text-[10px] font-extrabold text-cream sm:ml-auto">{off}% Off</span>
+                )}
               </span>
             </button>
           );
@@ -99,31 +101,36 @@ export default function BuyBox({ product, packs, badges }) {
       </div>
 
       {/* Quantity + actions */}
-      <div ref={actionsRef} className="mt-7 flex gap-3">
-        <div className="flex items-stretch overflow-hidden rounded-xl border-2 border-leaf">
-          <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="bg-leaf px-4 text-xl font-bold text-cream hover:bg-leaf-dark" aria-label="Decrease quantity">
+      <div ref={actionsRef} className="mt-6 flex gap-2.5">
+        <div className="flex items-stretch overflow-hidden rounded-lg border-2 border-leaf-dark">
+          <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="w-11 bg-leaf-dark text-xl font-bold text-cream transition hover:bg-leaf" aria-label="Decrease quantity">
             −
           </button>
-          <span className="flex w-12 items-center justify-center bg-cream text-lg font-bold" aria-live="polite">{qty}</span>
-          <button onClick={() => setQty((q) => Math.min(20, q + 1))} className="bg-leaf px-4 text-xl font-bold text-cream hover:bg-leaf-dark" aria-label="Increase quantity">
+          <span className="flex w-16 items-center justify-center bg-cream text-lg font-bold" aria-live="polite">
+            {qty}
+          </span>
+          <button onClick={() => setQty((q) => Math.min(20, q + 1))} className="w-11 bg-leaf-dark text-xl font-bold text-cream transition hover:bg-leaf" aria-label="Increase quantity">
             +
           </button>
         </div>
         <button
           onClick={handleAdd}
-          className="flex-1 rounded-xl border-2 border-leaf bg-cream py-3.5 text-[15px] font-bold text-leaf transition hover:bg-leaf hover:text-cream"
+          className="flex-1 rounded-lg border-2 border-leaf/50 bg-cream py-3 text-[15px] font-bold text-leaf transition hover:border-leaf-dark hover:bg-leaf-dark hover:text-cream"
         >
-          {added ? "✓ Added to cart" : "Add to cart"}
+          {added ? "✓ Added to cart" : "Add To Cart"}
         </button>
       </div>
-      <button onClick={handleBuy} className="btn-3d mt-4 w-full rounded-xl bg-leaf py-4 text-base font-extrabold uppercase tracking-wider text-cream">
+      <button
+        onClick={handleBuy}
+        className="mt-3 w-full rounded-lg bg-leaf-dark py-3.5 text-[15px] font-extrabold uppercase tracking-wider text-cream shadow-[0_4px_0_#1c2f10] transition hover:-translate-y-0.5 hover:bg-leaf active:translate-y-1 active:shadow-none"
+      >
         Buy it now · {formatRupees(pack.price * qty)}
       </button>
-      <p className="mt-3 text-center text-sm font-semibold text-ink/70">
-        Secure checkout · UPI, cards or cash on delivery · Invoice with every order
+      <p className="mt-3 text-center text-[13px] font-semibold text-ink">
+        Since 1975 | Secure checkout | UPI, cards or cash on delivery
       </p>
 
-      <div className="mt-8">
+      <div className="mt-6">
         <DeliveryTimeline />
       </div>
 
