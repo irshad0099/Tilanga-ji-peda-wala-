@@ -43,10 +43,11 @@ export default async function Footer() {
   const { shop, phones, whatsapp } = await getSettings();
   return (
     <footer className="relative overflow-hidden border-t border-leaf/10 text-ink">
-      <VillageScene className="absolute inset-x-0 bottom-9 h-56 w-full sm:h-64" />
-      <div className="absolute inset-x-0 bottom-[260px] top-0 bg-gradient-to-b from-cream to-[#FFF6DC] sm:bottom-[290px]" />
+      <VillageScene className="absolute inset-x-0 bottom-9 hidden h-80 w-full sm:block" />
+      <VillageScene compact className="absolute inset-x-0 bottom-9 aspect-[600/320] w-full sm:hidden" />
+      <div className="absolute inset-x-0 bottom-[290px] top-0 bg-gradient-to-b from-cream to-[#FFF4D6] sm:bottom-[350px]" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-60 pt-14 sm:px-6 sm:pb-72 lg:grid-cols-[1fr_1.4fr_1fr]">
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-64 pt-14 sm:px-6 sm:pb-80 lg:grid-cols-[1fr_1.4fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
             <LogoBadge size={60} />

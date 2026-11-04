@@ -344,3 +344,264 @@ textarea:focus-visible {
     transform: scale(0.9, 1.12);
   }
 }
+
+/* ------------------------------------------------------------------------
+   Village scene (components/brand/VillageScene.js). One 12s cycle: the man
+   walks from the cow to the house (0–40%), hands over the milk while the
+   woman reaches for it (40–58%), turns and walks back (58–95%).
+   ------------------------------------------------------------------------ */
+.vs-man-walk {
+  animation: vs-man-walk 12s ease-in-out infinite;
+}
+
+@keyframes vs-man-walk {
+  0%,
+  4% {
+    transform: translateX(800px);
+  }
+  40%,
+  58% {
+    transform: translateX(612px);
+  }
+  95%,
+  100% {
+    transform: translateX(800px);
+  }
+}
+
+.vs-man-face {
+  animation: vs-man-face 12s linear infinite;
+}
+
+@keyframes vs-man-face {
+  0%,
+  58% {
+    transform: scaleX(1);
+  }
+  59%,
+  97% {
+    transform: scaleX(-1);
+  }
+  98%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.vs-leg {
+  animation: vs-leg 0.55s ease-in-out infinite alternate;
+}
+
+.vs-leg-b {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes vs-leg {
+  from {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+
+.vs-woman-arm {
+  animation: vs-woman-arm 12s ease-in-out infinite;
+}
+
+@keyframes vs-woman-arm {
+  0%,
+  32%,
+  64%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40%,
+  56% {
+    transform: rotate(-70deg);
+  }
+}
+
+.vs-drop {
+  animation: vs-drop 1.05s ease-in infinite;
+}
+
+@keyframes vs-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+}
+
+.vs-tail {
+  animation: vs-tail 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes vs-tail {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+
+.vs-head {
+  animation: vs-head 2.6s ease-in-out infinite;
+}
+
+@keyframes vs-head {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.vs-smoke {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vs-smoke 3.6s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes vs-smoke {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(14px, -46px) scale(1.6);
+  }
+}
+
+.vs-cloud {
+  animation: vs-cloud 80s linear infinite;
+}
+
+@keyframes vs-cloud {
+  from {
+    transform: translateX(-320px);
+  }
+  to {
+    transform: translateX(1500px);
+  }
+}
+
+.vs-bird-fly {
+  animation: vs-bird-fly 24s linear infinite;
+}
+
+@keyframes vs-bird-fly {
+  0% {
+    transform: translate(-120px, 0);
+  }
+  50% {
+    transform: translate(720px, -18px);
+  }
+  100% {
+    transform: translate(1560px, 6px);
+  }
+}
+
+.vs-bird-flap {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vs-bird-flap 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes vs-bird-flap {
+  to {
+    transform: scaleY(-0.6);
+  }
+}
+
+.vs-sway {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: vs-sway 5s ease-in-out infinite;
+}
+
+@keyframes vs-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.vs-grass {
+  animation: vs-grass 3s ease-in-out infinite;
+}
+
+@keyframes vs-grass {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+.vs-sun {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vs-sun 4s ease-in-out infinite;
+}
+
+@keyframes vs-sun {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+}
+
+/* The pail changes hands at the door: his fades out, hers fades in, and it
+   resets while he's walking back off-screen of the handover. */
+.vs-pail-man {
+  animation: vs-pail-man 12s step-end infinite;
+}
+
+@keyframes vs-pail-man {
+  0% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+
+.vs-pail-woman {
+  animation: vs-pail-woman 12s step-end infinite;
+}
+
+@keyframes vs-pail-woman {
+  0% {
+    opacity: 0;
+  }
+  52% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0;
+  }
+}

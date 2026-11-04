@@ -11,7 +11,6 @@ import Placeholder from "@/components/Placeholder";
 import Reveal from "@/components/Reveal";
 import Branch from "@/components/Branch";
 import MediaSection from "@/components/brand/MediaSection";
-import ReelsSection from "@/components/brand/ReelsSection";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 
@@ -71,7 +70,6 @@ export default async function ProductPage({ params }) {
       </section>
 
       <MediaSection />
-      <ReelsSection product={canBuy ? product : all.find((p) => p.deliverable && p.inStock !== false)} />
       <FaqFounder />
 
       {/* ---- Reviews ------------------------------------------------------- */}

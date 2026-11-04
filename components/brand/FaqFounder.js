@@ -19,12 +19,22 @@ export default function FaqFounder() {
           </Reveal>
         </div>
         <Reveal delay={150} className="relative mx-auto w-full max-w-md">
-          <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" aria-hidden="true">
+          {/* Brush strokes behind the placeholder only — the round badge
+              photo would leave their tips poking out around its edge. */}
+          <svg viewBox="0 0 400 400" className={`absolute inset-x-0 top-0 aspect-square w-full ${founder.photo ? "hidden" : ""}`} aria-hidden="true">
             <path d="M40 250 C70 140 170 60 300 40 C330 36 350 50 330 70 C250 120 150 200 110 300 C100 330 60 320 40 250Z" fill="#F7E04A" opacity="0.9" />
             <path d="M90 330 C150 230 250 150 360 120 C380 116 384 134 368 146 C290 200 210 270 170 350 C150 380 70 370 90 330Z" fill="#F7E04A" opacity="0.75" />
           </svg>
           {founder.photo ? (
-            <Image src={founder.photo} alt={founder.name} width={600} height={700} className="float relative w-full" />
+            // The photo is a round badge on white — crop to the circle and
+            // ring it so the white corners never show.
+            <Image
+              src={founder.photo}
+              alt={`${founder.name} — ${founder.title}`}
+              width={800}
+              height={800}
+              className="float relative mx-auto aspect-square w-[88%] rounded-full object-cover shadow-[0_30px_60px_-20px_rgba(60,20,80,0.55)] ring-8 ring-cream"
+            />
           ) : (
             <Placeholder label="Founder ki photo / illustration" hint="lib/content.js → founder.photo" className="float relative aspect-[6/7] w-full !rounded-[40px] !bg-none !bg-transparent" />
           )}

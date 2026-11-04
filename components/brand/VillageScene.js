@@ -1,49 +1,201 @@
-// Original footer illustration: rolling fields at dusk with a hut, a tree,
-// a haystack and a grazing cow. Purely decorative.
-export default function VillageScene({ className = "" }) {
+import { useId } from "react";
+
+// Original animated footer scene: a village at golden hour. A cow is being
+// milked into a pail, a man carries the milk along the path to a house and
+// hands it to the woman at the door, then walks back for more. Smoke rises
+// from the chimney, clouds and birds drift, the tree and grass sway.
+// Motion is CSS (globals.css, "Village scene"); prefers-reduced-motion stops it.
+//
+// The story happens between x≈420 and x≈1000. `compact` (phones) frames
+// just that stretch so the house, the man and the cow all fit.
+export default function VillageScene({ className = "", compact = false }) {
+  // Two copies render in the footer (wide + compact) — keep gradient ids unique.
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   return (
-    <svg viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" className={className} aria-hidden="true">
+    <svg
+      viewBox={compact ? "410 40 600 320" : "0 0 1440 360"}
+      preserveAspectRatio="xMidYMax slice"
+      className={className}
+      aria-hidden="true"
+    >
       <defs>
-        <linearGradient id="vs-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#FFF6DC" />
-          <stop offset="1" stopColor="#FCE3B8" />
+        <linearGradient id={`${uid}sky`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FFF4D6" />
+          <stop offset="1" stopColor="#FCD9A6" />
+        </linearGradient>
+        <radialGradient id={`${uid}sun`} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#FFE08A" />
+          <stop offset="0.6" stopColor="#FFC65C" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#FFC65C" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id={`${uid}milk`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FFFFFF" />
+          <stop offset="1" stopColor="#F3EEE2" />
         </linearGradient>
       </defs>
-      <rect width="1440" height="360" fill="url(#vs-sky)" />
-      <circle cx="1180" cy="120" r="46" fill="#FFD27A" opacity="0.8" />
-      {/* far hills */}
-      <path d="M0 210 C180 150 330 170 480 196 C640 222 760 150 930 160 C1100 170 1250 210 1440 170 V360 H0Z" fill="#C9C46A" />
-      {/* near hills */}
-      <path d="M0 260 C200 210 380 240 560 250 C760 262 900 220 1080 228 C1240 236 1340 260 1440 248 V360 H0Z" fill="#A9B04A" />
-      <path d="M0 320 C240 290 520 300 760 312 C1000 324 1220 296 1440 300 V360 H0Z" fill="#8E9A3A" />
-      {/* path */}
-      <path d="M640 360 C690 320 760 300 860 290 C960 282 1040 270 1100 252" fill="none" stroke="#D9B98A" strokeWidth="26" strokeLinecap="round" opacity="0.85" />
-      {/* tree */}
-      <g transform="translate(150 150)">
-        <path d="M30 120 C32 90 28 60 34 30" stroke="#6B3F1D" strokeWidth="12" strokeLinecap="round" fill="none" />
-        <circle cx="34" cy="20" r="40" fill="#6F8A2C" />
-        <circle cx="0" cy="38" r="30" fill="#7E9550" />
-        <circle cx="66" cy="40" r="32" fill="#5E7A28" />
+
+      {/* sky, sun, clouds */}
+      <rect width="1440" height="360" fill={`url(#${uid}sky)`} />
+      <circle className="vs-sun" cx="1210" cy="118" r="78" fill={`url(#${uid}sun)`} />
+      <circle cx="1210" cy="118" r="38" fill="#FFD77A" />
+      <g className="vs-cloud" style={{ animationDuration: "70s" }}>
+        <path d="M160 92 a22 22 0 0 1 40 -10 a28 28 0 0 1 52 6 a18 18 0 0 1 4 34 h-92 a16 16 0 0 1 -4 -30z" fill="#FFFDF6" opacity="0.9" />
       </g>
-      {/* hut */}
-      <g transform="translate(360 196)">
-        <rect x="10" y="30" width="90" height="46" fill="#E7C891" />
-        <path d="M-6 34 L55 -6 L116 34 Z" fill="#B07A3B" />
-        <path d="M-6 34 L55 -6 L116 34" fill="none" stroke="#8A5524" strokeWidth="4" />
-        <rect x="44" y="46" width="22" height="30" fill="#6B3F1D" />
+      <g className="vs-cloud" style={{ animationDuration: "95s", animationDelay: "-40s" }}>
+        <path d="M820 60 a18 18 0 0 1 32 -8 a24 24 0 0 1 44 6 a15 15 0 0 1 3 28 h-76 a13 13 0 0 1 -3 -26z" fill="#FFFDF6" opacity="0.8" />
       </g>
-      {/* haystack */}
-      <path d="M560 262 C566 220 616 220 622 262 Z" fill="#E3B54A" />
-      {/* cow */}
-      <g transform="translate(1000 232)">
-        <ellipse cx="40" cy="22" rx="38" ry="18" fill="#F4EFE4" stroke="#4A3B2A" strokeWidth="2" />
-        <path d="M74 14 C88 8 98 14 96 26 C94 32 84 32 78 28" fill="#F4EFE4" stroke="#4A3B2A" strokeWidth="2" />
-        <path d="M86 8 L92 0 M80 8 L78 0" stroke="#4A3B2A" strokeWidth="2" strokeLinecap="round" />
-        <path d="M14 36 V54 M28 38 V54 M52 38 V54 M66 36 V54" stroke="#4A3B2A" strokeWidth="4" strokeLinecap="round" />
-        <ellipse cx="34" cy="16" rx="10" ry="7" fill="#B07A3B" opacity="0.7" />
-      </g>
+
       {/* birds */}
-      <path d="M700 90 q8 -8 16 0 q8 -8 16 0 M760 70 q6 -6 12 0 q6 -6 12 0 M640 110 q6 -6 12 0 q6 -6 12 0" fill="none" stroke="#6B5B3A" strokeWidth="2.4" strokeLinecap="round" />
+      {[
+        [0, 96, 0],
+        [36, 80, -0.4],
+        [62, 104, -0.8],
+      ].map(([dx, y, d], i) => (
+        <g key={i} className="vs-bird-fly" style={{ animationDelay: `${d - i * 6}s` }}>
+          <path className="vs-bird-flap" d={`M${dx} ${y} q8 -8 16 0 q8 -8 16 0`} fill="none" stroke="#6B5B3A" strokeWidth="2.6" strokeLinecap="round" style={{ animationDelay: `${d}s` }} />
+        </g>
+      ))}
+
+      {/* hills */}
+      <path d="M0 214 C180 156 330 176 480 200 C640 226 760 156 930 166 C1100 176 1250 214 1440 176 V360 H0Z" fill="#CBC76E" />
+      <path d="M0 262 C200 214 380 244 560 254 C760 266 900 224 1080 232 C1240 240 1340 262 1440 252 V360 H0Z" fill="#AEB44E" />
+      <path d="M0 312 C240 290 520 300 760 310 C1000 320 1220 296 1440 300 V360 H0Z" fill="#919C3C" />
+
+      {/* path from the house to the cow */}
+      <path d="M560 360 C600 330 640 318 700 314 C780 308 850 312 930 318" fill="none" stroke="#E2C596" strokeWidth="22" strokeLinecap="round" opacity="0.9" />
+
+      {/* big tree (sways) */}
+      <g transform="translate(110 132)">
+        <path d="M44 168 C46 120 40 80 48 40" stroke="#6B3F1D" strokeWidth="14" strokeLinecap="round" fill="none" />
+        <g className="vs-sway">
+          <circle cx="48" cy="34" r="46" fill="#6F8A2C" />
+          <circle cx="8" cy="54" r="34" fill="#7E9550" />
+          <circle cx="88" cy="56" r="36" fill="#5E7A28" />
+          <circle cx="40" cy="70" r="28" fill="#8FAE3C" opacity="0.8" />
+        </g>
+      </g>
+
+      {/* haystack */}
+      <path d="M300 300 C306 250 368 250 374 300 Z" fill="#E3B54A" />
+      <path d="M312 284 C330 276 350 276 364 284" stroke="#C9952E" strokeWidth="3" fill="none" />
+
+      {/* house */}
+      <g transform="translate(420 196)">
+        <rect x="96" y="-28" width="16" height="34" fill="#9A5222" />
+        {[0, 1, 2].map((i) => (
+          <circle key={i} className="vs-smoke" cx="104" cy="-34" r={7 + i * 2} fill="#EEE6D6" style={{ animationDelay: `${i * 1.2}s` }} />
+        ))}
+        <rect x="10" y="36" width="150" height="70" fill="#EFD2A0" />
+        <rect x="10" y="36" width="150" height="70" fill="none" stroke="#C99A5C" strokeWidth="2" />
+        <path d="M-10 40 L85 -12 L180 40 Z" fill="#B5652B" />
+        <path d="M-10 40 L85 -12 L180 40" fill="none" stroke="#8A4A1E" strokeWidth="5" strokeLinejoin="round" />
+        {[20, 40, 60, 80, 100, 120, 140].map((x) => (
+          <path key={x} d={`M${x} ${40 - (x < 85 ? (x + 10) * 0.55 : (180 - x) * 0.55)} L${x} 40`} stroke="#9A5222" strokeWidth="2" opacity="0.5" />
+        ))}
+        {/* door (open) */}
+        <rect x="104" y="54" width="34" height="52" fill="#3A2412" />
+        <path d="M104 54 L94 58 L94 106 L104 106 Z" fill="#7A4A1E" />
+        {/* window with warm light */}
+        <rect x="30" y="54" width="34" height="28" fill="#FFD77A" />
+        <path d="M47 54 V82 M30 68 H64" stroke="#8A4A1E" strokeWidth="3" />
+        {/* tulsi pot */}
+        <rect x="168" y="90" width="18" height="16" fill="#C2662A" />
+        <circle cx="177" cy="84" r="9" fill="#5E7A28" />
+      </g>
+
+      {/* woman at the door — raises her hand to take the milk */}
+      <g transform="translate(576 248)">
+        <ellipse cx="0" cy="56" rx="16" ry="3" fill="#000" opacity="0.12" />
+        <path d="M-12 54 L-8 18 L8 18 L12 54 Z" fill="#C23B5A" />
+        <path d="M-9 18 C-4 32 6 40 12 54 L4 54 C0 44 -6 34 -9 18 Z" fill="#F2A93B" />
+        <rect x="-7" y="2" width="14" height="18" rx="5" fill="#C23B5A" />
+        <circle cx="0" cy="-6" r="8" fill="#B5784A" />
+        <path d="M-8 -7 C-8 -16 8 -16 8 -7 C8 -12 4 -14 0 -14 C-4 -14 -8 -12 -8 -7Z" fill="#2B1B12" />
+        <path d="M-8 -8 C-10 -2 -10 6 -6 10" stroke="#F2A93B" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <circle cx="0" cy="-9" r="1.2" fill="#C23B5A" />
+        <g className="vs-woman-arm" style={{ transformOrigin: "6px 6px" }}>
+          <path d="M6 6 L20 20" stroke="#B5784A" strokeWidth="4" strokeLinecap="round" />
+        </g>
+        {/* the pail she's been handed (appears once he lets go) */}
+        <g className="vs-pail-woman" transform="translate(-14 30)">
+          <path d="M-7 2 L7 2 L5 16 L-5 16 Z" fill="#C9CED2" stroke="#8E979E" strokeWidth="1.5" />
+          <ellipse cx="0" cy="2" rx="7" ry="2.2" fill={`url(#${uid}milk)`} stroke="#8E979E" strokeWidth="1" />
+          <path d="M-6 2 C-6 -6 6 -6 6 2" fill="none" stroke="#8E979E" strokeWidth="1.4" />
+        </g>
+      </g>
+
+      {/* man carrying the milk pail between cow and house */}
+      <g className="vs-man-walk">
+        <g className="vs-man-face" style={{ transformOrigin: "0px 0px" }}>
+          <g transform="translate(0 246)">
+            <ellipse cx="0" cy="58" rx="16" ry="3" fill="#000" opacity="0.12" />
+            <g className="vs-leg" style={{ transformOrigin: "0px 32px" }}>
+              <path d="M-2 32 L-6 56" stroke="#EDE6D6" strokeWidth="6" strokeLinecap="round" />
+            </g>
+            <g className="vs-leg vs-leg-b" style={{ transformOrigin: "0px 32px" }}>
+              <path d="M2 32 L6 56" stroke="#E2D9C6" strokeWidth="6" strokeLinecap="round" />
+            </g>
+            <path d="M-10 4 L-12 36 L12 36 L10 4 Z" fill="#FBF8F0" stroke="#D8CFBC" strokeWidth="1.5" />
+            <path d="M-10 4 L10 4" stroke="#D8CFBC" strokeWidth="2" />
+            <circle cx="0" cy="-6" r="8" fill="#A86B3E" />
+            <path d="M-9 -8 C-8 -18 8 -18 9 -8 Z" fill="#E7E0CF" />
+            <path d="M-3 -1 C-1 0 1 0 3 -1" stroke="#2B1B12" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            {/* arm + milk pail (in front, toward the house) */}
+            <path d="M-8 8 L-18 24" stroke="#A86B3E" strokeWidth="4" strokeLinecap="round" />
+            <g transform="translate(-22 22)" className="vs-pail-man">
+              <path d="M-8 4 L8 4 L6 22 L-6 22 Z" fill="#C9CED2" stroke="#8E979E" strokeWidth="1.5" />
+              <ellipse cx="0" cy="4" rx="8" ry="2.6" fill={`url(#${uid}milk)`} stroke="#8E979E" strokeWidth="1" />
+              <path d="M-7 4 C-7 -6 7 -6 7 4" fill="none" stroke="#8E979E" strokeWidth="1.6" />
+            </g>
+          </g>
+        </g>
+      </g>
+
+      {/* cow being milked */}
+      <g transform="translate(860 230)">
+        <ellipse cx="62" cy="74" rx="70" ry="5" fill="#000" opacity="0.12" />
+        {/* tail */}
+        <g className="vs-tail" style={{ transformOrigin: "120px 18px" }}>
+          <path d="M120 18 C136 34 134 54 130 64" stroke="#4A3B2A" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d="M126 62 C132 60 136 66 130 72 C126 70 124 66 126 62Z" fill="#4A3B2A" />
+        </g>
+        {/* legs */}
+        {[30, 46, 92, 108].map((x) => (
+          <path key={x} d={`M${x} 44 V72`} stroke="#4A3B2A" strokeWidth="7" strokeLinecap="round" />
+        ))}
+        <path d="M18 20 C18 0 110 -4 122 16 C130 34 120 50 100 50 L36 50 C20 50 16 38 18 20Z" fill="#F6F1E6" stroke="#4A3B2A" strokeWidth="2.4" />
+        <path d="M60 6 C74 4 86 12 84 24 C80 32 64 30 58 22 C54 16 54 8 60 6Z" fill="#B07A3B" opacity="0.75" />
+        <path d="M100 12 C110 14 114 24 108 30 C102 26 98 20 100 12Z" fill="#B07A3B" opacity="0.75" />
+        {/* udder */}
+        <path d="M76 50 C76 60 96 60 96 50Z" fill="#F2B6A6" stroke="#4A3B2A" strokeWidth="1.6" />
+        <path d="M80 57 V62 M86 58 V63 M92 57 V62" stroke="#E79A88" strokeWidth="2.4" strokeLinecap="round" />
+        {/* milk drops falling into the pail */}
+        {[0, 1, 2].map((i) => (
+          <ellipse key={i} className="vs-drop" cx={81 + i * 5.5} cy="64" rx="1.8" ry="2.6" fill="#FFFFFF" stroke="#E7E1D2" strokeWidth="0.6" style={{ animationDelay: `${i * 0.35}s` }} />
+        ))}
+        {/* pail under the cow */}
+        <path d="M74 72 L98 72 L95 88 L77 88 Z" fill="#C9CED2" stroke="#8E979E" strokeWidth="1.5" />
+        <ellipse cx="86" cy="72" rx="12" ry="3" fill={`url(#${uid}milk)`} stroke="#8E979E" strokeWidth="1" />
+        {/* head (chews / nods) */}
+        <g className="vs-head" style={{ transformOrigin: "22px 20px" }}>
+          <path d="M24 12 C10 6 -8 10 -10 24 C-12 36 0 42 12 40 C22 38 28 28 24 12Z" fill="#F6F1E6" stroke="#4A3B2A" strokeWidth="2.4" />
+          <ellipse cx="-4" cy="34" rx="9" ry="6" fill="#F2B6A6" stroke="#4A3B2A" strokeWidth="1.6" />
+          <circle cx="-7" cy="34" r="1.2" fill="#4A3B2A" />
+          <circle cx="-1" cy="34" r="1.2" fill="#4A3B2A" />
+          <circle cx="6" cy="20" r="2" fill="#26261A" />
+          <path d="M14 8 L8 -4 M22 10 L26 -2" stroke="#8A6A3A" strokeWidth="3" strokeLinecap="round" />
+          <path d="M18 14 C28 10 34 14 30 20 C26 22 20 20 18 14Z" fill="#E9E2D2" stroke="#4A3B2A" strokeWidth="1.6" />
+          <path d="M18 40 C18 48 14 52 10 52" stroke="#C9952E" strokeWidth="2" fill="none" />
+          <circle cx="10" cy="54" r="3" fill="#E3B54A" />
+        </g>
+      </g>
+
+      {/* grass tufts (sway) */}
+      {[40, 250, 400, 690, 760, 1010, 1150, 1300, 1390].map((x, i) => (
+        <g key={x} className="vs-grass" style={{ transformOrigin: `${x}px 340px`, animationDelay: `${(i % 4) * 0.5}s` }}>
+          <path d={`M${x} 340 q-4 -14 -10 -18 M${x} 340 q0 -16 2 -22 M${x} 340 q5 -12 12 -16`} stroke="#6F8A2C" strokeWidth="3" fill="none" strokeLinecap="round" />
+        </g>
+      ))}
     </svg>
   );
 }
