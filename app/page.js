@@ -4,7 +4,6 @@ import Reveal from "@/components/Reveal";
 import ProductHero from "@/components/product/ProductHero";
 import FeaturedProducts from "@/components/brand/FeaturedProducts";
 import JourneyTimeline from "@/components/brand/JourneyTimeline";
-import MediaSection from "@/components/brand/MediaSection";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 import VisitBar from "@/components/brand/VisitBar";
@@ -35,7 +34,6 @@ export default async function HomePage() {
       </section>
 
       <JourneyTimeline story={STORY} />
-      <MediaSection />
       <FaqFounder />
 
       {/* Reviews */}

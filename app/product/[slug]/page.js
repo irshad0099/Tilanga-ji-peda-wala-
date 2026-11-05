@@ -10,7 +10,6 @@ import ProductCard from "@/components/ProductCard";
 import Placeholder from "@/components/Placeholder";
 import Reveal from "@/components/Reveal";
 import Branch from "@/components/Branch";
-import MediaSection from "@/components/brand/MediaSection";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 
@@ -69,7 +68,6 @@ export default async function ProductPage({ params }) {
         </Reveal>
       </section>
 
-      <MediaSection />
       <FaqFounder />
 
       {/* ---- Reviews ------------------------------------------------------- */}
