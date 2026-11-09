@@ -1,24 +1,18 @@
-export default function LogoBadge({ size = 44 }) {
+import Image from "next/image";
+
+// The shop's logo (Telangiji Sudh Desi Ghee Peda), background removed.
+// `size` is the height in px; width follows the logo's proportions.
+const RATIO = 539 / 578;
+
+export default function LogoBadge({ size = 44, priority = false, className = "" }) {
   return (
-    <svg
-      width={size}
+    <Image
+      src="/images/brand/logo.png"
+      alt="Telangiji Sudh Desi Ghee Peda"
+      width={Math.round(size * RATIO)}
       height={size}
-      viewBox="0 0 100 100"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <circle cx="50" cy="50" r="47" fill="#57703B" stroke="#B8892E" strokeWidth="3" />
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#B8892E" strokeWidth="1.5" />
-      <text
-        x="50"
-        y="60"
-        textAnchor="middle"
-        fontFamily="Nunito, sans-serif"
-        fontSize="30"
-        fill="#FBF6E4"
-      >
-        TJ
-      </text>
-    </svg>
+      priority={priority}
+      className={`shrink-0 drop-shadow-[0_3px_6px_rgba(47,74,29,0.25)] ${className}`}
+    />
   );
 }

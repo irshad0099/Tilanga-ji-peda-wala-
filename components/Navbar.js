@@ -68,12 +68,9 @@ export default function Navbar() {
   );
 
   const logo = (
-    <Link href="/" className="flex items-center gap-2.5" onClick={() => setDrawer(false)}>
-      <LogoBadge size={48} />
-      <span className="leading-none">
-        <span className="block font-display text-[22px] font-black tracking-tight text-leaf-dark">Tilanga Ji</span>
-        <span className="mt-1 block text-[11px] font-bold uppercase tracking-[0.18em] text-mustard">Mashahur Peda</span>
-      </span>
+    // The logo carries the shop name itself, so no text beside it.
+    <Link href="/" aria-label="Telangiji Peda — home" className="flex items-center transition-transform hover:scale-105" onClick={() => setDrawer(false)}>
+      <LogoBadge size={64} priority className="h-[60px] w-auto lg:h-[76px]" />
     </Link>
   );
 

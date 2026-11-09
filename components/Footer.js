@@ -49,13 +49,8 @@ export default async function Footer() {
 
       <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-64 pt-14 sm:px-6 sm:pb-80 lg:grid-cols-[1fr_1.4fr_1fr]">
         <div>
-          <div className="flex items-center gap-3">
-            <LogoBadge size={60} />
-            <span>
-              <span className="block font-display text-3xl font-black text-leaf-dark">Tilanga Ji</span>
-              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-mustard">Mashahur Peda · Since 1975</span>
-            </span>
-          </div>
+          <LogoBadge size={150} className="h-[150px] w-auto" />
+          <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.2em] text-mustard">Mashahur Peda · Since 1975</p>
           <p className="mt-5 max-w-xs text-[15px] font-semibold text-ink/75">
             Bihar&apos;s mashahur peda from the Ara–Patna highway — pure khoya, hand-shaped daily, shipped fresh across India.
           </p>
