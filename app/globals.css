@@ -1159,3 +1159,260 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------------
+   Footer (components/Footer.js + VillageScene.js). Drifting waves on the
+   top edge, headings whose underline draws in as the column reveals, links
+   that slide with an arrow, a shining WhatsApp button, and in the scene a
+   kite and blinking fireflies.
+   ------------------------------------------------------------------------ */
+.ft-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+}
+
+.ft-wave-back {
+  fill: var(--haldi);
+  opacity: 0.35;
+  animation: ft-wave 18s linear infinite;
+}
+
+.ft-wave-front {
+  fill: var(--cream);
+  animation: ft-wave 11s linear infinite reverse;
+}
+
+@keyframes ft-wave {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ft-heading {
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.ft-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--haldi), var(--leaf));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--reveal-delay, 0ms) + 350ms);
+}
+
+.is-visible .ft-heading::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 639px) {
+  .grid-cols-3 > div > .ft-heading::after {
+    left: 50%;
+    margin-left: -14px;
+    transform-origin: center;
+  }
+}
+
+.ft-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(var(--leaf), var(--leaf)) left bottom / 0 2px no-repeat;
+  transition: color 0.25s, background-size 0.35s ease, transform 0.25s ease;
+}
+
+.ft-link::after {
+  content: "→";
+  font-size: 12px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.ft-link:hover {
+  background-size: 100% 2px;
+  transform: translateX(3px);
+}
+
+.ft-link:hover::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* Light sweep across the WhatsApp button every few seconds. */
+.ft-shine {
+  position: relative;
+}
+
+.ft-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 252, 239, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: ft-shine 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ft-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.ft-pulse {
+  animation: ft-pulse 2.8s ease-out infinite;
+}
+
+@keyframes ft-pulse {
+  0% {
+    box-shadow: 0 5px 0 var(--leaf-dark), 0 10px 18px rgba(40, 61, 16, 0.25), 0 0 0 0 rgba(87, 112, 59, 0.45);
+  }
+  70%,
+  100% {
+    box-shadow: 0 5px 0 var(--leaf-dark), 0 10px 18px rgba(40, 61, 16, 0.25), 0 0 0 14px rgba(87, 112, 59, 0);
+  }
+}
+
+.ft-pulse:active {
+  animation: none;
+}
+
+.ft-nudge {
+  animation: ft-nudge 1.6s ease-in-out infinite;
+}
+
+@keyframes ft-nudge {
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.ft-chip {
+  transition: transform 0.25s cubic-bezier(0.34, 1.6, 0.5, 1), box-shadow 0.25s;
+}
+
+.ft-chip:hover {
+  transform: translateY(-3px) scale(1.08);
+}
+
+.ft-contact {
+  transition: color 0.25s, transform 0.25s;
+}
+
+.ft-contact:hover {
+  transform: translateX(3px);
+}
+
+.ft-contact:hover .ft-ring {
+  animation: ft-ring 0.6s ease-in-out 2;
+}
+
+@keyframes ft-ring {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-14deg);
+  }
+  75% {
+    transform: rotate(14deg);
+  }
+}
+
+.ft-heart {
+  animation: ft-heart 1.4s ease-in-out infinite;
+}
+
+@keyframes ft-heart {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.3);
+  }
+}
+
+a:hover > .ft-up {
+  animation: ft-up 0.8s ease-in-out infinite;
+}
+
+@keyframes ft-up {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.vs-kite {
+  transform-box: view-box;
+  animation: vs-kite 5s ease-in-out infinite;
+}
+
+@keyframes vs-kite {
+  0%,
+  100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  30% {
+    transform: rotate(4deg) translate(6px, -6px);
+  }
+  65% {
+    transform: rotate(-3deg) translate(-4px, 4px);
+  }
+}
+
+.vs-kite-tail {
+  transform-box: fill-box;
+  transform-origin: top;
+  animation: vs-kite-tail 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes vs-kite-tail {
+  to {
+    transform: rotate(18deg);
+  }
+}
+
+.vs-firefly {
+  opacity: 0;
+  animation: vs-firefly 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px #ffd34d);
+}
+
+@keyframes vs-firefly {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(6px, -8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-heading::after {
+    transform: scaleX(1);
+  }
+  .vs-firefly {
+    opacity: 0.8;
+  }
+}

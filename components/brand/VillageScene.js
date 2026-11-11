@@ -56,6 +56,18 @@ export default function VillageScene({ className = "", compact = false }) {
         </g>
       ))}
 
+      {/* kite tugging on its string above the house */}
+      <g className="vs-kite" style={{ transformOrigin: "640px 250px" }}>
+        <path className="vs-kite-string" d="M688 104 C660 150 610 190 600 250" fill="none" stroke="#8A6A3A" strokeWidth="1.2" />
+        <g transform="translate(688 84)">
+          <path d="M0 -22 L18 0 L0 22 L-18 0 Z" fill="#E3672B" />
+          <path d="M0 -22 L18 0 L0 0 Z" fill="#EBC64C" />
+          <path d="M0 0 L-18 0 L0 22 Z" fill="#C23B5A" />
+          <path d="M0 -22 V22 M-18 0 H18" stroke="#7A3F18" strokeWidth="1.2" />
+          <path className="vs-kite-tail" d="M0 22 q-6 8 0 14 q6 6 0 14" fill="none" stroke="#E3672B" strokeWidth="2" strokeLinecap="round" />
+        </g>
+      </g>
+
       {/* hills */}
       <path d="M0 214 C180 156 330 176 480 200 C640 226 760 156 930 166 C1100 176 1250 214 1440 176 V360 H0Z" fill="#CBC76E" />
       <path d="M0 262 C200 214 380 244 560 254 C760 266 900 224 1080 232 C1240 240 1340 262 1440 252 V360 H0Z" fill="#AEB44E" />
@@ -189,6 +201,13 @@ export default function VillageScene({ className = "", compact = false }) {
           <circle cx="10" cy="54" r="3" fill="#E3B54A" />
         </g>
       </g>
+
+      {/* fireflies blinking over the fields */}
+      {[
+        [240, 236], [380, 222], [660, 286], [800, 248], [1060, 214], [1180, 262], [1330, 230], [520, 300],
+      ].map(([x, y], i) => (
+        <circle key={`ff${i}`} className="vs-firefly" cx={x} cy={y} r="2.6" fill="#FFE27A" style={{ animationDelay: `${(i * 0.7) % 3.2}s` }} />
+      ))}
 
       {/* grass tufts (sway) */}
       {[40, 250, 400, 690, 760, 1010, 1150, 1300, 1390].map((x, i) => (
