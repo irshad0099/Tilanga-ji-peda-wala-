@@ -10,7 +10,7 @@ const SLOTS = 5;
 // Product photos for the dark-green half of the product hero: a vertical
 // thumbnail rail with up/down arrows beside a white-framed main photo
 // (thumbnails run underneath on phones). Missing photos keep their slot as
-// a placeholder — add them in lib/content.js → productGallery.
+// a placeholder — add them in lib/content.js → productPhotos.
 export default function Gallery({ images, name, savePct }) {
   const slots = [...images, ...Array(Math.max(0, SLOTS - images.length)).fill(null)];
   const [active, setActive] = useState(0);

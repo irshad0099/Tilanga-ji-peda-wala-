@@ -12,8 +12,8 @@ import JourneyProgress from "@/components/brand/JourneyProgress";
 const steps = [
   { title: "Subah ka taaza doodh", text: "Full-cream milk arrives fresh every morning — no milk powder, no shortcuts.", image: null, art: "milk" },
   { title: "Kadhai mein khoya", text: "The milk is reduced slowly in wide kadhais, stirred by hand the whole way, until it turns to khoya.", image: null, art: "kadhai" },
-  { title: "Haath se bane pede", text: "Each peda is rolled and pressed by hand — no machines, no two exactly alike.", image: "/images/photos/peda-platter.jpg" },
-  { title: "Usi din packing", text: "Boxed the same day it's made and sent out fast.", image: null, art: "packing" },
+  { title: "Haath se bane pede", text: "Each peda is rolled and pressed by hand — no machines, no two exactly alike.", image: "/images/peda/hand-placing-peda.jpg" },
+  { title: "Usi din packing", text: "Boxed the same day it's made and sent out fast.", image: "/images/peda/peda-box-open.jpg" },
   { title: "Aapke ghar tak", text: "Couriered across India — Bhojpur the same day, the rest of the country in a few days.", image: null, art: "delivery" },
 ];
 

@@ -17,7 +17,7 @@ export default async function MenuPage({ searchParams }) {
       {/* Banner */}
       <section className="relative overflow-hidden bg-leaf-dark">
         <Image
-          src="/images/photos/gur-peda.jpg"
+          src="/images/peda/brass-tray-dark.jpg"
           alt=""
           fill
           priority

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { packsFor } from "@/lib/packs";
-import { productGallery } from "@/lib/content";
+import { productPhotos } from "@/lib/content";
 import Gallery from "@/components/product/Gallery";
 import BuyBox from "@/components/product/BuyBox";
 import TrustBadges from "@/components/product/TrustBadges";
@@ -12,7 +12,7 @@ import Branch from "@/components/Branch";
 export default function ProductHero({ product, shop, onHome = false }) {
   const canBuy = product.deliverable && product.inStock !== false;
   const savePct = product.mrp > product.price ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
-  const images = [product.image, ...(productGallery[product.slug] || [])];
+  const images = productPhotos[product.slug] || [product.image];
 
   return (
     <section className="grid lg:min-h-[calc(100vh-124px)] lg:grid-cols-[1.4fr_1fr]">
