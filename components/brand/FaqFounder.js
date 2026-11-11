@@ -28,9 +28,9 @@ export default function FaqFounder() {
             <Image
               src={founder.photo}
               alt={`${founder.name} — ${founder.title}`}
-              width={667}
-              height={852}
-              className="float relative mx-auto w-[86%] drop-shadow-[0_24px_30px_rgba(120,60,10,0.35)]"
+              width={620}
+              height={715}
+              className="float relative mx-auto w-[82%] drop-shadow-[0_24px_30px_rgba(120,60,10,0.35)]"
             />
           ) : (
             <Placeholder label="Founder ki photo / illustration" hint="lib/content.js → founder.photo" className="float relative aspect-[6/7] w-full !rounded-[40px] !bg-none !bg-transparent" />

@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-// The shop's logo (Telangiji Sudh Desi Ghee Peda), background removed.
+// The shop's logo (Telangaji Sudh Desi Ghee Peda), background removed.
 // `size` is the height in px; width follows the logo's proportions.
-const RATIO = 539 / 578;
+const RATIO = 592 / 686;
 
 export default function LogoBadge({ size = 44, priority = false, className = "" }) {
   return (
     <Image
       src="/images/brand/logo.png"
-      alt="Telangiji Sudh Desi Ghee Peda"
+      alt="Telangaji Sudh Desi Ghee Peda"
       width={Math.round(size * RATIO)}
       height={size}
       priority={priority}

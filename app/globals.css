@@ -37,6 +37,8 @@
   --color-ink: var(--ink);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  /* High-contrast Devanagari-style display face for story headings. */
+  --font-story: "Rozha One", "Nunito", serif;
 }
 
 * {
@@ -315,35 +317,6 @@ textarea:focus-visible {
   }
 }
 
-/* Kadhai illustration: rising steam + flickering chulha flame. */
-.steam {
-  animation: steam 3.2s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes steam {
-  0% {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  40% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-}
-
-.flame {
-  animation: flame 0.9s ease-in-out infinite alternate;
-}
-
-@keyframes flame {
-  to {
-    transform: scale(0.9, 1.12);
-  }
-}
 
 /* ------------------------------------------------------------------------
    Village scene (components/brand/VillageScene.js). One 12s cycle: the man
@@ -604,4 +577,151 @@ textarea:focus-visible {
   96% {
     opacity: 0;
   }
+}
+
+/* ------------------------------------------------------------------------
+   Story intro (components/brand/StoryIntro.js). Everything waits in its
+   start state until .story-run is added on scroll; --d staggers each piece.
+   ------------------------------------------------------------------------ */
+.story-word {
+  transform: translateY(110%) rotate(4deg);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease;
+  transition-delay: var(--d, 0ms);
+}
+
+.story-fade {
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.7s ease;
+  transition-delay: var(--d, 0ms);
+}
+
+.story-brush {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.75s;
+}
+
+.story-run .story-word,
+.story-run .story-fade {
+  transform: none;
+  opacity: 1;
+}
+
+.story-run .story-brush {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-word,
+  .story-fade {
+    transform: none;
+    opacity: 1;
+  }
+  .story-brush {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Home illustration (components/brand/HomeIllustration.js), footer.
+   ------------------------------------------------------------------------ */
+.hm-smoke {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hm-smoke 4s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes hm-smoke {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(16px, -40px) scale(1.7);
+  }
+}
+
+.hm-flicker {
+  animation: hm-flicker 2.6s ease-in-out infinite;
+}
+
+@keyframes hm-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.82;
+  }
+  35% {
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.78;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.hm-toran {
+  animation: hm-swing-soft 3.4s ease-in-out infinite;
+}
+
+.hm-lantern {
+  animation: hm-swing 2.8s ease-in-out infinite;
+}
+
+@keyframes hm-swing-soft {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes hm-swing {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.hm-diya-flame {
+  animation: hm-flame 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes hm-flame {
+  to {
+    transform: scale(0.85, 1.15) skewX(4deg);
+  }
+}
+
+.hm-diya-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hm-glow 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes hm-glow {
+  to {
+    transform: scale(1.25);
+    opacity: 0.7;
+  }
+}
+
+.hm-tulsi {
+  animation: hm-swing-soft 3s ease-in-out infinite;
 }

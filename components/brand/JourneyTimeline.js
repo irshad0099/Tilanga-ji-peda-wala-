@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import Placeholder from "@/components/Placeholder";
-import BirdsBranch from "@/components/brand/BirdsBranch";
-import KadhaiIllustration from "@/components/brand/KadhaiIllustration";
+import StoryIntro from "@/components/brand/StoryIntro";
 
 // "The traditional journey" — how a peda is made, as a dotted vertical
 // timeline with wooden number medallions and wavy-edged photo stamps.
@@ -21,14 +20,7 @@ export default function JourneyTimeline({ story }) {
     <section id="story" className="relative scroll-mt-24 overflow-hidden bg-cream py-20">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-6">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <BirdsBranch className="-ml-6 w-full max-w-md" />
-          <Reveal>
-            <h2 className="mt-6 font-display text-4xl font-black leading-tight text-wood sm:text-5xl">
-              Pede Ka Paramparik Safar
-            </h2>
-            <p className="mt-5 max-w-md text-[17px] font-semibold leading-relaxed text-ink/75">{story}</p>
-          </Reveal>
-          <KadhaiIllustration className="mt-8 hidden w-full max-w-sm sm:block" />
+          <StoryIntro story={story} />
         </div>
 
         <ol className="relative">
