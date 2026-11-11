@@ -725,3 +725,437 @@ textarea:focus-visible {
 .hm-tulsi {
   animation: hm-swing-soft 3s ease-in-out infinite;
 }
+
+/* ------------------------------------------------------------------------
+   Journey timeline (components/brand/JourneyTimeline.js + JourneyArt.js +
+   JourneyProgress.js). Each step animates its parts instead of the whole
+   row: the medallion pops in, the card slides from the right with a shine
+   sweep, and the stamp spins into place. The spine fills via --jt-progress.
+   ------------------------------------------------------------------------ */
+.jt-step.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.jt-step .jt-medal {
+  transform: scale(0);
+  transition: transform 0.6s cubic-bezier(0.34, 1.7, 0.5, 1) var(--reveal-delay, 0ms);
+}
+
+.jt-step .jt-card {
+  opacity: 0;
+  transform: translateX(48px) rotate(1.5deg);
+  transition: opacity 0.7s ease calc(var(--reveal-delay, 0ms) + 120ms),
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--reveal-delay, 0ms) + 120ms),
+    border-color 0.3s, box-shadow 0.3s;
+}
+
+.jt-step .jt-stamp {
+  transform: scale(0.4) rotate(-90deg);
+  transition: transform 0.9s cubic-bezier(0.34, 1.5, 0.5, 1) calc(var(--reveal-delay, 0ms) + 260ms);
+}
+
+.jt-step.is-visible .jt-medal,
+.jt-step.is-visible .jt-stamp {
+  transform: none;
+}
+
+.jt-step.is-visible .jt-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Once landed, hovers respond immediately rather than after the entry delay. */
+.jt-step.is-visible .jt-card:hover {
+  transform: translateY(-4px);
+  transition-delay: 0ms;
+}
+
+.jt-step.is-visible .jt-card:hover .jt-stamp {
+  transform: rotate(6deg) scale(1.1);
+  transition-delay: 0ms;
+}
+
+/* Ring that pulses out of the medallion once it lands. */
+.jt-medal::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 3px solid var(--haldi);
+  opacity: 0;
+}
+
+.jt-step.is-visible .jt-medal::after {
+  animation: jt-ping 2.4s ease-out calc(var(--reveal-delay, 0ms) + 500ms) infinite;
+}
+
+@keyframes jt-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+/* Light sweep across the card as it arrives. */
+.jt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(235, 198, 76, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.jt-step.is-visible .jt-card::before {
+  animation: jt-shine 1.3s ease calc(var(--reveal-delay, 0ms) + 650ms) 1 both;
+}
+
+@keyframes jt-shine {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+.jt-photo {
+  animation: kenburns 9s ease-in-out infinite alternate;
+}
+
+/* Filled spine + glowing bead at its tip. */
+.jt-progress {
+  --jt-progress: 0;
+  pointer-events: none;
+}
+
+.jt-progress-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--haldi), var(--wood));
+  transform-origin: top;
+  transform: scaleY(var(--jt-progress));
+}
+
+.jt-progress-bead {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--jt-progress) * 100%);
+  width: 15px;
+  height: 15px;
+  margin: -7px 0 0 -7.5px;
+  border-radius: 9999px;
+  background: var(--haldi);
+  box-shadow: 0 0 0 4px var(--cream), 0 0 14px 4px rgba(235, 198, 76, 0.8);
+  animation: jt-bead 1.6s ease-in-out infinite;
+}
+
+@keyframes jt-bead {
+  50% {
+    box-shadow: 0 0 0 4px var(--cream), 0 0 22px 8px rgba(235, 198, 76, 0.5);
+  }
+}
+
+/* Illustration motion. view-box lets the px transform-origins set inline in
+   JourneyArt.js map to the SVG's own coordinates. */
+.ja-sun,
+.ja-lota,
+.ja-stir,
+.ja-lid,
+.ja-tick,
+.ja-wheel,
+.ja-flame {
+  transform-box: view-box;
+}
+
+.ja-sun {
+  transform-origin: 28px 34px;
+  animation: ja-sun 6s ease-in-out infinite;
+}
+
+@keyframes ja-sun {
+  0%,
+  100% {
+    transform: translateY(6px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(45deg);
+  }
+}
+
+.ja-lota {
+  animation: ja-lota 3s ease-in-out infinite;
+}
+
+@keyframes ja-lota {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+}
+
+.ja-stream {
+  stroke-dasharray: 6 5;
+  animation: ja-stream 0.6s linear infinite;
+}
+
+@keyframes ja-stream {
+  to {
+    stroke-dashoffset: -11;
+  }
+}
+
+.ja-splash {
+  animation: ja-splash 1.05s ease-out infinite;
+}
+
+@keyframes ja-splash {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-9px);
+  }
+}
+
+.ja-steam {
+  stroke-dasharray: 40;
+  opacity: 0;
+  animation: ja-steam 2.1s ease-in-out infinite;
+}
+
+@keyframes ja-steam {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 40;
+    transform: translateY(6px);
+  }
+  40% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.ja-flame {
+  transform-origin: 60px 98px;
+  animation: ja-flame 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes ja-flame {
+  to {
+    transform: scaleY(1.25) scaleX(0.9);
+  }
+}
+
+.ja-stir {
+  animation: ja-stir 2s ease-in-out infinite;
+}
+
+@keyframes ja-stir {
+  0%,
+  100% {
+    transform: rotate(-14deg) translateX(-6px);
+  }
+  50% {
+    transform: rotate(10deg) translateX(8px);
+  }
+}
+
+.ja-bubble {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ja-bubble 2s ease-in-out infinite;
+}
+
+@keyframes ja-bubble {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(2px) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1);
+  }
+}
+
+/* Packing: one 3.2s loop — peda drops (0–35%), lid shuts (38–52%), tick
+   pops (52–85%), lid reopens (88–100%). */
+.ja-drop {
+  animation: ja-drop 3.2s ease-in infinite;
+}
+
+@keyframes ja-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+}
+
+.ja-lid {
+  animation: ja-lid 3.2s ease-in-out infinite;
+}
+
+@keyframes ja-lid {
+  0%,
+  38% {
+    transform: rotate(-110deg);
+  }
+  52%,
+  88% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-110deg);
+  }
+}
+
+.ja-tick {
+  animation: ja-tick 3.2s ease-out infinite;
+}
+
+@keyframes ja-tick {
+  0%,
+  52% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+  70%,
+  85% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.ja-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ja-twinkle 1.8s ease-in-out infinite;
+}
+
+@keyframes ja-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(45deg);
+  }
+}
+
+/* Delivery: road and clouds scroll left, scooter bobs, wheels spin. */
+.ja-road {
+  animation: ja-road 0.7s linear infinite;
+}
+
+@keyframes ja-road {
+  to {
+    transform: translateX(-40px);
+  }
+}
+
+.ja-clouds {
+  animation: ja-clouds 9s linear infinite;
+}
+
+@keyframes ja-clouds {
+  to {
+    transform: translateX(-120px);
+  }
+}
+
+.ja-ride {
+  animation: ja-ride 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes ja-ride {
+  to {
+    transform: translateY(-2px);
+  }
+}
+
+.ja-wheel {
+  animation: ja-wheel 0.5s linear infinite;
+}
+
+@keyframes ja-wheel {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ja-speed {
+  animation: ja-speed 0.8s ease-out infinite;
+}
+
+@keyframes ja-speed {
+  0% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jt-step .jt-medal,
+  .jt-step .jt-card,
+  .jt-step .jt-stamp {
+    opacity: 1;
+    transform: none;
+  }
+  .ja-steam {
+    opacity: 0.9;
+  }
+  .ja-drop,
+  .ja-tick {
+    opacity: 0;
+  }
+  .ja-lid {
+    transform: none;
+  }
+}
