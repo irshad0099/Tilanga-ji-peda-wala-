@@ -1,10 +1,12 @@
 import "./globals.css";
+import { Hind, Nunito, Rozha_One } from "next/font/google";
 import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 import MobileOrderBar from "@/components/MobileOrderBar";
+import PauseOffscreen from "@/components/PauseOffscreen";
 
 // Footer (and several pages) read live product/settings data from MongoDB
 // on every render. Force the whole app to render per-request rather than
@@ -12,6 +14,14 @@ import MobileOrderBar from "@/components/MobileOrderBar";
 // stock, UPI ID, WhatsApp number, ...) show up immediately everywhere
 // instead of only after the next deploy.
 export const dynamic = "force-dynamic";
+
+// Self-hosted by next/font: no render-blocking request to Google and no text
+// jump when the font arrives. Nunito is the face of the whole site and is
+// preloaded; Hind (Devanagari) and Rozha One (story headings) load on use.
+// globals.css reads these through --font-display / --font-body / --font-story.
+const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
+const hind = Hind({ subsets: ["latin", "devanagari"], weight: ["400", "500", "600", "700"], variable: "--font-hind", display: "swap", preload: false });
+const rozha = Rozha_One({ subsets: ["latin"], weight: "400", variable: "--font-rozha", display: "swap", preload: false });
 
 export const metadata = {
   title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
@@ -37,15 +47,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Rozha+One&family=Hind:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`h-full antialiased ${nunito.variable} ${hind.variable} ${rozha.variable}`}>
       <body className="flex min-h-full flex-col">
         <CartProvider>
           <AnnouncementBar />
@@ -54,6 +56,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <WhatsAppFloatButton />
           <MobileOrderBar />
+          <PauseOffscreen />
         </CartProvider>
       </body>
     </html>

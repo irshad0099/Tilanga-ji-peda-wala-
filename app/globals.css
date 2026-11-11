@@ -19,8 +19,8 @@
   --ink: #26261A;
 
   /* Rounded Nunito like a friendly label; Devanagari falls back to Hind. */
-  --font-display: "Nunito", "Hind", "Segoe UI", sans-serif;
-  --font-body: "Nunito", "Hind", "Segoe UI", sans-serif;
+  --font-display: var(--font-nunito), var(--font-hind), "Segoe UI", sans-serif;
+  --font-body: var(--font-nunito), var(--font-hind), "Segoe UI", sans-serif;
 }
 
 @theme inline {
@@ -38,7 +38,7 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   /* High-contrast Devanagari-style display face for story headings. */
-  --font-story: "Rozha One", "Nunito", serif;
+  --font-story: var(--font-rozha), var(--font-nunito), serif;
 }
 
 * {
@@ -102,6 +102,14 @@ textarea:focus-visible {
   to {
     transform: translateX(-50%);
   }
+}
+
+/* Looping animations inside a [data-anim] section stop while it's off
+   screen — components/PauseOffscreen.js sets data-paused. */
+[data-paused] *,
+[data-paused] *::before,
+[data-paused] *::after {
+  animation-play-state: paused !important;
 }
 
 /* Fade-and-rise on scroll — toggled by components/Reveal.js. */
@@ -1288,6 +1296,8 @@ textarea:focus-visible {
   }
 }
 
+/* Let .btn-3d's own hover/press shadows take over while it's touched. */
+.ft-pulse:hover,
 .ft-pulse:active {
   animation: none;
 }
@@ -1390,10 +1400,13 @@ a:hover > .ft-up {
   }
 }
 
+/* No filter glow here: an animated drop-shadow repaints every frame. The
+   pale stroke gives the same halo for free. */
 .vs-firefly {
   opacity: 0;
+  stroke: rgba(255, 226, 122, 0.45);
+  stroke-width: 3;
   animation: vs-firefly 3.2s ease-in-out infinite;
-  filter: drop-shadow(0 0 4px #ffd34d);
 }
 
 @keyframes vs-firefly {

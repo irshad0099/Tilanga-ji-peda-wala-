@@ -19,7 +19,7 @@ const steps = [
 
 export default function JourneyTimeline({ story }) {
   return (
-    <section id="story" className="relative scroll-mt-24 overflow-hidden bg-cream py-20">
+    <section id="story" data-anim className="relative scroll-mt-24 overflow-hidden bg-cream py-20">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-6">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <StoryIntro story={story} />

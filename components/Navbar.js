@@ -72,7 +72,7 @@ export default function Navbar() {
 
   return (
     <>
-    <header className="sticky top-0 z-40 border-b border-leaf/10 bg-gradient-to-r from-cream via-cream to-butter/70 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-leaf/10 bg-gradient-to-r from-cream via-cream to-butter">
       {/* Desktop */}
       <div className="mx-auto hidden h-[88px] max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 lg:grid">
         <nav className="flex items-center gap-5">

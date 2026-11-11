@@ -42,7 +42,7 @@ const payApps = [
 export default async function Footer() {
   const { shop, phones, whatsapp } = await getSettings();
   return (
-    <footer className="relative overflow-hidden text-ink">
+    <footer data-anim className="relative overflow-hidden text-ink">
       {/* Two drifting waves where the page meets the footer. Each path is two
           wavelengths of the same curve, so sliding it by half loops cleanly. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-10 overflow-hidden">

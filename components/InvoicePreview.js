@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSettings } from "@/lib/useSettings";
 import { formatRupees } from "@/lib/format";
-import { toInvoice, downloadInvoicePdf } from "@/lib/invoice";
+import { toInvoice, downloadInvoicePdf, preloadInvoicePdf } from "@/lib/invoice";
 
 export default function InvoicePreview({ order }) {
   const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
   const { settings } = useSettings();
   const { shop } = settings;
   const inv = toInvoice(order);
 
+  // Fetch the PDF library while the customer is reading the preview.
+  useEffect(() => {
+    preloadInvoicePdf().catch(() => {});
+  }, []);
+
   async function handleDownload() {
     setBusy(true);
+    setFailed(false);
     try {
       await downloadInvoicePdf(inv, { shop });
+    } catch {
+      setFailed(true);
     } finally {
       setBusy(false);
     }
@@ -30,11 +39,23 @@ export default function InvoicePreview({ order }) {
         <button
           onClick={handleDownload}
           disabled={busy}
-          className="rounded-lg bg-leaf px-5 py-2.5 text-sm font-semibold text-cream hover:bg-leaf-dark disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-lg bg-leaf px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-leaf-dark active:scale-[0.97] disabled:opacity-70"
         >
+          {busy ? (
+            <span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-cream/40 border-t-cream" />
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+            </svg>
+          )}
           {busy ? "Preparing…" : "Download PDF"}
         </button>
       </div>
+      {failed && (
+        <p role="alert" className="mt-2 text-sm font-semibold text-red-700">
+          Couldn&apos;t create the PDF — check your internet connection and try again.
+        </p>
+      )}
 
       <div className="mt-4 overflow-hidden rounded-2xl border border-gold/40 bg-cream">
         {/* header */}
