@@ -1,16 +1,15 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import MenuGrid from "@/components/MenuGrid";
-import { getAllProducts } from "@/lib/db/products.server";
+import { getMenuProducts } from "@/lib/db/products.server";
 
 export const metadata = {
   title: "Menu - Tilanga Ji Ka Mashahur Peda Dukan",
-  description: "Classic Khoya Peda ships pan-India. Every other peda, our gift boxes, litti-chokha, fresh sweets and kulhad chai are served at the shop.",
+  description: "Order our Classic Khoya Peda online — delivered fresh across Bihar.",
 };
 
 export default async function MenuPage({ searchParams }) {
-  const [products, params] = await Promise.all([getAllProducts(), searchParams]);
-  const categories = Array.from(new Set(products.map((p) => p.category)));
+  const [products, params] = await Promise.all([getMenuProducts(), searchParams]);
 
   return (
     <div>
@@ -41,12 +40,12 @@ export default async function MenuPage({ searchParams }) {
       <div className="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6">
         <h2 className="text-center font-display text-4xl font-black text-ink sm:text-5xl">All Products</h2>
         <p className="mx-auto mt-3 max-w-xl text-center text-[15px] text-ink/70">
-          <span className="font-bold text-leaf">Classic Khoya Peda</span> ships across India. Everything else is
-          made through the day and served at the shop in Sakaddi.
+          Our <span className="font-bold text-leaf">Classic Khoya Peda</span>, packed fresh at the shop in
+          Sakaddi and delivered across Bihar.
         </p>
         <div className="mt-10">
           <Suspense>
-            <MenuGrid key={JSON.stringify(params)} products={products} categories={categories} />
+            <MenuGrid key={JSON.stringify(params)} products={products} />
           </Suspense>
         </div>
       </div>

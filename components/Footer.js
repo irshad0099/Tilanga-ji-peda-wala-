@@ -10,9 +10,7 @@ const columns = [
     title: "Products",
     links: [
       { href: "/product/classic-khoya-peda", label: "Classic Khoya Peda" },
-      { href: "/menu?category=Peda", label: "All peda" },
-      { href: "/menu?category=Sweets", label: "Sweets" },
-      { href: "/menu", label: "Full menu" },
+      { href: "/menu", label: "Order online" },
     ],
   },
   {
@@ -57,7 +55,7 @@ export default async function Footer() {
           </div>
           <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.2em] text-mustard">Mashahur Peda · Since 1975</p>
           <p className="mt-5 max-w-xs text-[15px] font-semibold text-ink/75">
-            Bihar&apos;s mashahur peda from the Ara–Patna highway — pure khoya, hand-shaped daily, shipped fresh across India.
+            Bihar&apos;s mashahur peda from the Ara–Patna highway — pure khoya, hand-shaped daily, delivered fresh across Bihar.
           </p>
         </div>
 

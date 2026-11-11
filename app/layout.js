@@ -16,11 +16,11 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
   description:
-    "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, shipped fresh pan-India. Visit the shop for litti-chokha, sweets and chai.",
+    "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, delivered fresh across Bihar.",
   openGraph: {
     title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
     description:
-      "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, shipped fresh pan-India.",
+      "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, delivered fresh across Bihar.",
     siteName: "Tilanga Ji Ka Mashahur Peda Dukan",
     type: "website",
   },

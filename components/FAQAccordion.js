@@ -4,12 +4,12 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "Can I get any sweet delivered?",
-    a: "Only our Classic Khoya Peda ships — we keep delivery to this one item so it always travels well and arrives fresh. Every other peda flavour, our gift boxes, litti-chokha, fresh sweets and chai are made through the day and served at the shop — do visit us for those.",
+    q: "What can I order online?",
+    a: "Our Classic Khoya Peda — the shop's founding recipe. We keep delivery to this one item so it always travels well and arrives fresh.",
   },
   {
     q: "Do you deliver outside Bihar?",
-    a: "Yes. The Classic Khoya Peda ships pan-India by courier. Local Bhojpur orders arrive same day to next day; the rest of India takes a few days longer.",
+    a: "Not yet — we deliver within Bihar only. Ara / Bhojpur orders arrive same day to next day; the rest of Bihar takes 1-2 days.",
   },
   {
     q: "What payment methods do you accept?",

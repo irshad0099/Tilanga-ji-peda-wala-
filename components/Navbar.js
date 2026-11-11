@@ -6,15 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import LogoBadge from "@/components/LogoBadge";
 
-// Categories in the "Products" dropdown — they open the menu page filtered.
+// The "Products" dropdown. The site sells the Classic Khoya Peda only,
+// delivered within Bihar.
 const productLinks = [
-  { href: "/menu?deliver=1", label: "Order online (ships pan-India)" },
-  { href: "/menu?category=Peda", label: "Peda" },
-  { href: "/menu?category=Gift%20Boxes", label: "Gift Boxes" },
-  { href: "/menu?category=Sweets", label: "Sweets" },
-  { href: "/menu?category=Dhaba%20Kitchen", label: "Litti-chokha" },
-  { href: "/menu?category=Beverages", label: "Kulhad chai" },
-  { href: "/menu", label: "All products" },
+  { href: "/product/classic-khoya-peda", label: "Classic Khoya Peda" },
+  { href: "/menu", label: "Order online (Bihar delivery)" },
 ];
 
 const pageLinks = [

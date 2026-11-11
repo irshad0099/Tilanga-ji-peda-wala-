@@ -67,6 +67,7 @@ export default function CheckoutPage() {
     if (!/^[6-9]\d{9}$/.test(form.phone)) next.phone = "Enter a valid 10-digit mobile number.";
     if (form.address.trim().length < 10) next.address = "Enter your full address — house, street, area, city.";
     if (!/^[1-9]\d{5}$/.test(form.pincode)) next.pincode = "Enter a valid 6-digit pincode.";
+    else if (!estimateDelivery(form.pincode)) next.pincode = "Sorry — we deliver within Bihar only for now.";
     setErrors(next);
     const firstBad = Object.keys(next)[0];
     if (firstBad) {
@@ -243,6 +244,9 @@ export default function CheckoutPage() {
                     <span className="font-semibold">{estimate.days}</span>
                     <span className="text-ink/60"> · {estimate.zone}</span>
                   </p>
+                )}
+                {form.pincode.length === 6 && !estimate && !errors.pincode && (
+                  <p className="font-semibold text-mustard">We deliver within Bihar only.</p>
                 )}
               </div>
             </fieldset>

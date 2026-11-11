@@ -15,7 +15,7 @@ export default function CartPage() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
         <h1 className="font-display text-3xl text-leaf">Your cart is empty</h1>
-        <p className="mt-3 text-[15px] text-ink/70">Add a few sweets from the menu and they will show up here.</p>
+        <p className="mt-3 text-[15px] text-ink/70">Add our peda from the menu and it will show up here.</p>
         <Link href="/menu" className="mt-6 inline-block rounded-lg bg-leaf px-6 py-3 text-[15px] font-semibold text-cream hover:bg-leaf-dark">
           Browse the menu
         </Link>

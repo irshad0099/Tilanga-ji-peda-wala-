@@ -23,7 +23,7 @@ export default function TermsPage() {
         <section>
           <h2 className="font-display text-xl text-leaf">Shipping</h2>
           <p className="mt-2">
-            We ship across India by courier. Delivery windows shown at
+            We deliver within Bihar only, by courier. Delivery windows shown at
             checkout are estimates and can vary with courier availability
             and local conditions.
           </p>

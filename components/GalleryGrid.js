@@ -1,8 +1,8 @@
 import ZoomableImage from "@/components/ZoomableImage";
 
-// The shop's peda photos live in /public/images/peda/, the rest of the menu
-// in /public/images/photos/. Most are 4:5 portraits with text near the top,
-// so the tiles keep that shape instead of cropping it off.
+// The shop's peda photos, in /public/images/peda/. They're 4:5 portraits,
+// mostly with text near the top, so the tiles keep that shape instead of
+// cropping it off.
 const galleryImages = [
   { src: "/images/peda/team-making-pedas.jpg", caption: "Our team, hand-rolling pedas for you" },
   { src: "/images/peda/handcrafted-fresh.jpg", caption: "Handcrafted fresh, every single day" },
@@ -13,9 +13,6 @@ const galleryImages = [
   { src: "/images/peda/festive-gifting-tray.jpg", caption: "Perfect for festivals and gifting" },
   { src: "/images/peda/khoya-goodness.jpg", caption: "Traditional taste, premium quality" },
   { src: "/images/peda/hand-placing-peda.jpg", caption: "Every peda pressed by hand" },
-  { src: "/images/photos/kulhad-chai.jpg", caption: "Kulhad chai — where the shop began in 1975" },
-  { src: "/images/photos/litti-chokha.jpg", caption: "Litti-chokha with ghugni, straight off the coals" },
-  { src: "/images/photos/shop-display.jpg", caption: "Fresh peda, milk cake and mithai every morning" },
 ];
 
 export default function GalleryGrid() {

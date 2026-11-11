@@ -2,7 +2,7 @@ export default function manifest() {
   return {
     name: "Tilanga Ji Ka Mashahur Peda Dukan",
     short_name: "Tilanga Ji",
-    description: "Bihar's famous peda since 1975 — order online, shipped fresh pan-India.",
+    description: "Bihar's famous peda since 1975 — order online, delivered fresh across Bihar.",
     start_url: "/",
     display: "standalone",
     background_color: "#FBF6E4",

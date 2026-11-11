@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { products as defaultProducts } from "@/lib/products";
-import { getAllProducts, getProductBySlug } from "@/lib/db/products.server";
+import { getMenuProducts, getMenuProductBySlug } from "@/lib/db/products.server";
 import { getSettings } from "@/lib/db/settings.server";
 import { certifications, fssaiLicence, productDetails } from "@/lib/content";
 import ProductHero from "@/components/product/ProductHero";
@@ -16,16 +16,16 @@ import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 // Pre-render the default menu's slugs at build time; any DB-only product
 // (created later from /admin) still renders fine on first request.
 export function generateStaticParams() {
-  return defaultProducts.map((p) => ({ slug: p.slug }));
+  return defaultProducts.filter((p) => p.deliverable).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await getMenuProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} - Tilanga Ji Ka Mashahur Peda Dukan`,
-    description: product.description,
+    description: productDetails[product.slug]?.about || product.description,
   };
 }
 
@@ -40,14 +40,14 @@ function SectionHeading({ children, sub, light = false }) {
 
 export default async function ProductPage({ params }) {
   const { slug } = await params;
-  const [product, settings, all] = await Promise.all([getProductBySlug(slug), getSettings(), getAllProducts()]);
+  const [product, settings, all] = await Promise.all([getMenuProductBySlug(slug), getSettings(), getMenuProducts()]);
   if (!product) notFound();
   const { shop } = settings;
 
   const canBuy = product.deliverable && product.inStock !== false;
   const details = productDetails[product.slug] || {};
   const tabs = [
-    { id: "about", label: "Description", content: product.description },
+    { id: "about", label: "Description", content: details.about || product.description },
     { id: "making", label: "Kaise banta hai", content: details.making },
     { id: "ingredients", label: "Ingredients", content: details.ingredients },
     { id: "serve", label: "Kaise khayein", content: details.serve },
@@ -82,21 +82,23 @@ export default async function ProductPage({ params }) {
         </div>
       </section>
 
-      {/* ---- Related -------------------------------------------------------- */}
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading sub="Some of it ships, the rest is waiting at the shop.">Related Products</SectionHeading>
-          </Reveal>
-          <div className="no-scrollbar mt-10 flex snap-x gap-4 overflow-x-auto pb-4">
-            {related.map((p) => (
-              <div key={p.slug} className="w-60 shrink-0 snap-start sm:w-72">
-                <ProductCard product={p} />
-              </div>
-            ))}
+      {/* ---- Related (only once there's more than one product) ------------- */}
+      {related.length > 0 && (
+        <section className="py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <Reveal>
+              <SectionHeading sub="More from the shop, delivered across Bihar.">Related Products</SectionHeading>
+            </Reveal>
+            <div className="no-scrollbar mt-10 flex snap-x gap-4 overflow-x-auto pb-4">
+              {related.map((p) => (
+                <div key={p.slug} className="w-60 shrink-0 snap-start sm:w-72">
+                  <ProductCard product={p} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ---- Certifications ------------------------------------------------- */}
       <section className="py-16">

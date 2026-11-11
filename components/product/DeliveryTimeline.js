@@ -29,11 +29,13 @@ function addDays(date, n) {
 const fmt = (d) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
 // Order → Ships → Delivered, with real calendar dates for the customer's
-// pincode (defaults to "rest of India" until they enter one).
+// pincode (defaults to "rest of Bihar" until they enter one). We deliver
+// within Bihar only, so a pincode outside it gets a note instead.
 export default function DeliveryTimeline() {
   const snap = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
   const [pin, setPin] = useState("");
-  const zone = estimateDelivery(pin) || { zone: "Rest of India", minDays: 3, maxDays: 5 };
+  const outside = pin.length === 6 && !estimateDelivery(pin);
+  const zone = estimateDelivery(pin) || { zone: "Rest of Bihar", minDays: 1, maxDays: 2 };
 
   let steps = null;
   if (snap) {
@@ -72,7 +74,11 @@ export default function DeliveryTimeline() {
           placeholder="______"
           className="w-20 rounded-md border border-olive/40 bg-cream-dark/40 px-2 py-1 text-center font-semibold tracking-widest text-ink outline-none focus:border-leaf"
         />
-        <span className="font-semibold text-leaf">{zone.zone}</span>
+        {outside ? (
+          <span className="font-semibold text-mustard">Delivery within Bihar only</span>
+        ) : (
+          <span className="font-semibold text-leaf">{zone.zone}</span>
+        )}
       </label>
     </div>
   );
