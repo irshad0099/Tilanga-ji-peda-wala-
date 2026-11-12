@@ -1493,12 +1493,220 @@ a:hover > .ft-up {
   }
 }
 
+/* Mouse parallax: SceneParallax.js sets --sx/--sy (−1…1) on the footer and
+   each layer moves against the pointer by its --depth. */
+.pl-layer {
+  transform: translate(calc(var(--sx, 0) * var(--depth, 0) * -1px), calc(var(--sy, 0) * var(--depth, 0) * -0.4px));
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.vs-rays,
+.vs-mustard,
+.vs-cwheel,
+.vs-crank {
+  transform-box: view-box;
+}
+
+.vs-rays {
+  animation: hero-spin 90s linear infinite;
+}
+
+.vs-mustard {
+  animation: vs-mustard 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes vs-mustard {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+
+.vs-shimmer {
+  animation: vs-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes vs-shimmer {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(6px);
+  }
+}
+
+/* The boat drifts downstream, smaller in the distance. */
+.vs-boat {
+  animation: vs-boat 80s linear infinite;
+}
+
+@keyframes vs-boat {
+  0% {
+    opacity: 0;
+    transform: translate(1290px, 212px) scale(0.75);
+  }
+  5%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(420px, 222px) scale(0.85);
+  }
+}
+
+.vs-boat-bob {
+  animation: vs-boat-bob 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes vs-boat-bob {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+.vs-flock {
+  animation: vs-flock 46s linear infinite;
+  animation-delay: -12s;
+}
+
+@keyframes vs-flock {
+  from {
+    transform: translate(1520px, 40px);
+  }
+  to {
+    transform: translate(-120px, 10px);
+  }
+}
+
+/* Delivery cyclist: rides across, wheels and pedals turning, bell ringing. */
+.vs-cycle {
+  animation: vs-cycle 22s linear infinite;
+}
+
+@keyframes vs-cycle {
+  from {
+    transform: translateX(-80px);
+  }
+  to {
+    transform: translateX(1520px);
+  }
+}
+
+.vs-cwheel,
+.vs-crank {
+  animation: hero-spin 0.9s linear infinite;
+}
+
+.vs-tring {
+  opacity: 0;
+  animation: vs-tring 3.4s ease-out infinite;
+}
+
+@keyframes vs-tring {
+  0%,
+  55% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  62%,
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.vs-butterfly {
+  animation: vs-butterfly 9s ease-in-out infinite;
+}
+
+@keyframes vs-butterfly {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(18px, -16px);
+  }
+  50% {
+    transform: translate(36px, 2px);
+  }
+  75% {
+    transform: translate(14px, 12px);
+  }
+}
+
+.vs-wing {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vs-wing 0.22s ease-in-out infinite alternate;
+}
+
+@keyframes vs-wing {
+  to {
+    transform: scaleX(0.25);
+  }
+}
+
+.vs-leaf {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: vs-leaf 7.8s ease-in infinite;
+}
+
+@keyframes vs-leaf {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    transform: translate(22px, 40px) rotate(120deg);
+  }
+  70% {
+    transform: translate(-6px, 78px) rotate(220deg);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(16px, 110px) rotate(320deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ft-heading::after {
     transform: scaleX(1);
   }
   .vs-firefly {
     opacity: 0.8;
+  }
+  .vs-boat {
+    opacity: 1;
+    transform: translate(860px, 216px) scale(0.8);
+  }
+  .vs-cycle {
+    transform: translateX(300px);
+  }
+  .vs-tring,
+  .vs-leaf {
+    opacity: 0;
   }
 }
 

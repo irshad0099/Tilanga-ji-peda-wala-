@@ -2,12 +2,31 @@ import { useId } from "react";
 
 // Original animated footer scene: a village at golden hour. A cow is being
 // milked into a pail, a man carries the milk along the path to a house and
-// hands it to the woman at the door, then walks back for more. Smoke rises
-// from the chimney, clouds and birds drift, the tree and grass sway.
-// Motion is CSS (globals.css, "Village scene"); prefers-reduced-motion stops it.
+// hands it to the woman at the door, then walks back for more. Behind them a
+// boat drifts down the Ganga, mustard fields wave, and a delivery cyclist
+// rings past with a box of pedas; butterflies and falling leaves fill the
+// gaps. Motion is CSS (globals.css, "Village scene" and "Footer"), and the
+// .pl-layer groups also shift with the mouse (SceneParallax.js).
+// prefers-reduced-motion stops it.
 //
 // The story happens between x≈420 and x≈1000. `compact` (phones) frames
 // just that stretch so the house, the man and the cow all fit.
+
+// Mustard plants on the middle hill: [x, y] of each flower head.
+const mustard = [
+  ...Array.from({ length: 30 }, (_, i) => [10 + i * 9.5 + (i % 3) * 2, 258 + ((i * 7) % 5) * 8]),
+  ...Array.from({ length: 34 }, (_, i) => [1090 + i * 10.5 + (i % 2) * 3, 250 + ((i * 7) % 5) * 9]),
+];
+
+// A parallax layer: shifts with the pointer by up to `depth` px.
+function Layer({ depth, children }) {
+  return (
+    <g className="pl-layer" style={{ "--depth": depth }}>
+      {children}
+    </g>
+  );
+}
+
 export default function VillageScene({ className = "", compact = false }) {
   // Two copies render in the footer (wide + compact) — keep gradient ids unique.
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
@@ -28,6 +47,10 @@ export default function VillageScene({ className = "", compact = false }) {
           <stop offset="0.6" stopColor="#FFC65C" stopOpacity="0.9" />
           <stop offset="1" stopColor="#FFC65C" stopOpacity="0" />
         </radialGradient>
+        <linearGradient id={`${uid}river`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#BFE0DC" />
+          <stop offset="1" stopColor="#8FC3C2" />
+        </linearGradient>
         <linearGradient id={`${uid}milk`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#FFFFFF" />
           <stop offset="1" stopColor="#F3EEE2" />
@@ -35,7 +58,14 @@ export default function VillageScene({ className = "", compact = false }) {
       </defs>
 
       {/* sky, sun, clouds */}
-      <rect width="1440" height="360" fill={`url(#${uid}sky)`} />
+      <rect x="-80" width="1600" height="360" fill={`url(#${uid}sky)`} />
+      <Layer depth={4}>
+      {/* slowly turning sun rays */}
+      <g className="vs-rays" style={{ transformOrigin: "1210px 118px" }}>
+        {Array.from({ length: 12 }, (_, i) => (
+          <path key={i} d="M1210 118 L1202 -40 L1218 -40 Z" fill="#FFE08A" opacity="0.28" transform={`rotate(${i * 30} 1210 118)`} />
+        ))}
+      </g>
       <circle className="vs-sun" cx="1210" cy="118" r="78" fill={`url(#${uid}sun)`} />
       <circle cx="1210" cy="118" r="38" fill="#FFD77A" />
       <g className="vs-cloud" style={{ animationDuration: "70s" }}>
@@ -56,6 +86,14 @@ export default function VillageScene({ className = "", compact = false }) {
         </g>
       ))}
 
+      {/* a flock far off, crossing the other way */}
+      <g className="vs-flock">
+        {[[0, 0], [14, -6], [14, 6], [28, -11], [28, 11]].map(([x, y], i) => (
+          <path key={i} className="vs-bird-flap" d={`M${x} ${60 + y} q4 -4 8 0 q4 -4 8 0`} fill="none" stroke="#8A7650" strokeWidth="1.6" strokeLinecap="round" style={{ animationDelay: `${i * 0.15}s` }} />
+        ))}
+      </g>
+      </Layer>
+
       {/* kite tugging on its string above the house */}
       <g className="vs-kite" style={{ transformOrigin: "640px 250px" }}>
         <path className="vs-kite-string" d="M688 104 C660 150 610 190 600 250" fill="none" stroke="#8A6A3A" strokeWidth="1.2" />
@@ -68,10 +106,34 @@ export default function VillageScene({ className = "", compact = false }) {
         </g>
       </g>
 
-      {/* hills */}
-      <path d="M0 214 C180 156 330 176 480 200 C640 226 760 156 930 166 C1100 176 1250 214 1440 176 V360 H0Z" fill="#CBC76E" />
-      <path d="M0 262 C200 214 380 244 560 254 C760 266 900 224 1080 232 C1240 240 1340 262 1440 252 V360 H0Z" fill="#AEB44E" />
-      <path d="M0 312 C240 290 520 300 760 310 C1000 320 1220 296 1440 300 V360 H0Z" fill="#919C3C" />
+      {/* far hills, with the Ganga winding between them and a boat on it */}
+      <Layer depth={8}>
+      <path d="M-80 222 L0 214 C180 156 330 176 480 200 C640 226 760 156 930 166 C1100 176 1250 214 1440 176 L1520 172 V360 H-80Z" fill="#CBC76E" />
+      <path d="M370 226 C520 206 700 212 900 204 C1060 198 1200 206 1330 210 C1200 222 1060 214 900 222 C720 230 540 224 370 226 Z" fill={`url(#${uid}river)`} />
+      {[[470, 218], [640, 214], [820, 212], [990, 208], [1150, 210]].map(([x, y], i) => (
+        <path key={i} className="vs-shimmer" d={`M${x} ${y} h22`} stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" style={{ animationDelay: `${i * 0.5}s` }} />
+      ))}
+      <g className="vs-boat">
+        <g className="vs-boat-bob">
+          <path d="M-18 0 Q0 7 18 0 L14 -4 H-14 Z" fill="#7A4A1E" />
+          <path d="M0 -4 V-26" stroke="#6B3F1D" strokeWidth="1.6" />
+          <path d="M1 -25 Q12 -16 1 -6 Z" fill="#FFF4D6" stroke="#D9B98A" strokeWidth="0.8" />
+          <circle cx="-8" cy="-8" r="2.4" fill="#5A3A20" />
+          <path d="M-8 -6 V-4" stroke="#5A3A20" strokeWidth="2" />
+        </g>
+      </g>
+      </Layer>
+
+      {/* middle hill, mustard fields and the whole village */}
+      <Layer depth={13}>
+      <path d="M-80 268 L0 262 C200 214 380 244 560 254 C760 266 900 224 1080 232 C1240 240 1340 262 1440 252 L1520 252 V360 H-80Z" fill="#AEB44E" />
+      {mustard.map(([x, y], i) => (
+        <g key={`m${i}`} className="vs-mustard" style={{ transformOrigin: `${x}px ${y + 14}px`, animationDelay: `${(i % 5) * 0.3}s` }}>
+          <path d={`M${x} ${y + 14} V${y + 2}`} stroke="#7E9550" strokeWidth="1.6" />
+          <circle cx={x} cy={y} r="3.4" fill="#F2C230" />
+          <circle cx={x - 2.4} cy={y + 3} r="2.2" fill="#F7D65A" />
+        </g>
+      ))}
 
       {/* path from the house to the cow */}
       <path d="M560 360 C600 330 640 318 700 314 C780 308 850 312 930 318" fill="none" stroke="#E2C596" strokeWidth="22" strokeLinecap="round" opacity="0.9" />
@@ -202,6 +264,58 @@ export default function VillageScene({ className = "", compact = false }) {
         </g>
       </g>
 
+      {/* butterflies around the tulsi pot and the tree */}
+      {[[610, 268, 0], [250, 214, -3]].map(([x, y, d], i) => (
+        <g key={`bf${i}`} className="vs-butterfly" style={{ animationDelay: `${d}s` }}>
+          <g transform={`translate(${x} ${y})`}>
+            <g className="vs-wing" style={{ animationDelay: `${d}s` }}>
+              <path d="M0 0 C-8 -10 -12 -2 -6 3 C-10 6 -6 10 0 4 Z" fill={i ? "#E3672B" : "#C23B5A"} />
+              <path d="M0 0 C8 -10 12 -2 6 3 C10 6 6 10 0 4 Z" fill={i ? "#F2A93B" : "#E3672B"} />
+            </g>
+            <path d="M0 -3 V6" stroke="#3A2412" strokeWidth="1.4" strokeLinecap="round" />
+          </g>
+        </g>
+      ))}
+
+      {/* leaves drifting down from the big tree */}
+      {[0, 1, 2].map((i) => (
+        <path key={`lf${i}`} className="vs-leaf" d={`M${150 + i * 28} 190 q5 -5 10 0 q-5 5 -10 0 Z`} fill={i === 1 ? "#A9B84A" : "#7E9550"} style={{ animationDelay: `${i * 2.6}s` }} />
+      ))}
+      </Layer>
+
+      {/* near hill, the delivery cyclist and the grass */}
+      <Layer depth={20}>
+      <path d="M-80 316 L0 312 C240 290 520 300 760 310 C1000 320 1220 296 1440 300 L1520 304 V360 H-80Z" fill="#919C3C" />
+
+      {/* delivery cyclist with a box of pedas, ringing the bell */}
+      <g className="vs-cycle">
+        <g transform="translate(0 330)">
+          <ellipse cx="0" cy="1" rx="30" ry="3" fill="#000" opacity="0.12" />
+          {[-19, 19].map((cx) => (
+            <g key={cx} className="vs-cwheel" style={{ transformOrigin: `${cx}px -11px` }}>
+              <circle cx={cx} cy="-11" r="11" fill="none" stroke="#26261A" strokeWidth="2.6" />
+              <path d={`M${cx - 10} -11 H${cx + 10} M${cx} -21 V-1 M${cx - 7} -18 L${cx + 7} -4 M${cx + 7} -18 L${cx - 7} -4`} stroke="#8E979E" strokeWidth="1" />
+            </g>
+          ))}
+          <path d="M-19 -11 L-4 -11 L8 -28 L-10 -28 Z M8 -28 L19 -11 M-4 -11 L-10 -28" fill="none" stroke="#C23B5A" strokeWidth="2.6" strokeLinejoin="round" />
+          <path d="M8 -28 L10 -36 H16" stroke="#26261A" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+          {/* peda box on the carrier */}
+          <rect x="-34" y="-46" width="24" height="16" rx="2" fill="#9E1F2E" />
+          <rect x="-34" y="-46" width="24" height="4" fill="#EBC64C" />
+          <text x="-22" y="-34" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="900" fontSize="6" fill="#FFF4D6">PEDA</text>
+          {/* rider */}
+          <path d="M-8 -30 L0 -52 L8 -50 L6 -30 Z" fill="#F2A93B" />
+          <path d="M2 -48 L14 -36" stroke="#A86B3E" strokeWidth="3.4" strokeLinecap="round" />
+          <circle cx="3" cy="-58" r="6.5" fill="#A86B3E" />
+          <path d="M-4 -60 C-3 -68 10 -68 10 -60 Z" fill="#FFFFFF" />
+          <g className="vs-crank" style={{ transformOrigin: "-4px -11px" }}>
+            <path d="M-4 -11 L2 -4 M-4 -11 L-10 -18" stroke="#3A2412" strokeWidth="3.2" strokeLinecap="round" />
+          </g>
+          <path d="M-2 -32 L-4 -11" stroke="#3A2412" strokeWidth="3.4" strokeLinecap="round" />
+          <text className="vs-tring" x="18" y="-46" fontFamily="var(--font-display)" fontWeight="900" fontSize="9" fill="#8A6410">tring!</text>
+        </g>
+      </g>
+
       {/* fireflies blinking over the fields */}
       {[
         [240, 236], [380, 222], [660, 286], [800, 248], [1060, 214], [1180, 262], [1330, 230], [520, 300],
@@ -215,6 +329,7 @@ export default function VillageScene({ className = "", compact = false }) {
           <path d={`M${x} 340 q-4 -14 -10 -18 M${x} 340 q0 -16 2 -22 M${x} 340 q5 -12 12 -16`} stroke="#6F8A2C" strokeWidth="3" fill="none" strokeLinecap="round" />
         </g>
       ))}
+      </Layer>
     </svg>
   );
 }

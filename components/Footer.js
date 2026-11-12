@@ -3,6 +3,7 @@ import Image from "next/image";
 import LogoBadge from "@/components/LogoBadge";
 import Reveal from "@/components/Reveal";
 import VillageScene from "@/components/brand/VillageScene";
+import SceneParallax from "@/components/brand/SceneParallax";
 import HomeIllustration from "@/components/brand/HomeIllustration";
 import { getSettings } from "@/lib/db/settings.server";
 import { fssaiLicence } from "@/lib/content";
@@ -55,6 +56,7 @@ export default async function Footer() {
       </div>
       <VillageScene className="absolute inset-x-0 bottom-9 hidden h-80 w-full sm:block" />
       <VillageScene compact className="absolute inset-x-0 bottom-9 aspect-[600/320] w-full sm:hidden" />
+      <SceneParallax />
       <div className="absolute inset-x-0 bottom-[290px] top-0 bg-gradient-to-b from-cream to-[#FFF4D6] sm:bottom-[350px]" />
 
       <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-64 pt-14 sm:px-6 sm:pb-80 lg:grid-cols-[1fr_1.4fr_1fr]">
