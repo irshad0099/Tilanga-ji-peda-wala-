@@ -873,6 +873,8 @@ textarea:focus-visible {
 .ja-sun,
 .ja-lota,
 .ja-stir,
+.ja-ball,
+.ja-pop,
 .ja-lid,
 .ja-tick,
 .ja-wheel,
@@ -1005,6 +1007,73 @@ textarea:focus-visible {
 
 /* Packing: one 3.2s loop — peda drops (0–35%), lid shuts (38–52%), tick
    pops (52–85%), lid reopens (88–100%). */
+/* Rolling: the palm circles, the ball squashes under it, pedas pop onto
+   the thali one after another. */
+.ja-hand {
+  animation: ja-hand 1.6s ease-in-out infinite;
+}
+
+@keyframes ja-hand {
+  0%,
+  100% {
+    transform: translate(-5px, 0);
+  }
+  25% {
+    transform: translate(0, 3px);
+  }
+  50% {
+    transform: translate(5px, 0);
+  }
+  75% {
+    transform: translate(0, -1px);
+  }
+}
+
+.ja-ball {
+  animation: ja-ball 1.6s ease-in-out infinite;
+}
+
+@keyframes ja-ball {
+  0%,
+  100% {
+    transform: translateX(-4px) scale(1, 1);
+  }
+  25% {
+    transform: translateX(0) scale(1.12, 0.84);
+  }
+  50% {
+    transform: translateX(4px) scale(1, 1);
+  }
+  75% {
+    transform: translateX(0) scale(1.06, 0.92);
+  }
+}
+
+.ja-pop {
+  animation: ja-pop 3.6s ease-out infinite;
+}
+
+@keyframes ja-pop {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.4);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(1px) scale(1.15);
+  }
+  28%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
 .ja-drop {
   animation: ja-drop 3.2s ease-in infinite;
 }
@@ -1162,6 +1231,9 @@ textarea:focus-visible {
   .ja-drop,
   .ja-tick {
     opacity: 0;
+  }
+  .ja-pop {
+    opacity: 1;
   }
   .ja-lid {
     transform: none;

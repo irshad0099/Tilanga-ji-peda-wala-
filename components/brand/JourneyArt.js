@@ -79,6 +79,57 @@ function KadhaiArt() {
   );
 }
 
+// 3 · Hand-made pedas: a hand rolls a ball of khoya on the wooden patta,
+// squashing it as it goes, while finished pedas pop onto the brass thali.
+function RollingArt() {
+  return (
+    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
+      <rect width="120" height="120" fill="#FDF3C4" />
+      {[[18, 24], [100, 30]].map(([x, y], i) => (
+        <path key={i} className="ja-twinkle" d={`M${x} ${y - 6} L${x + 2} ${y - 2} L${x + 6} ${y} L${x + 2} ${y + 2} L${x} ${y + 6} L${x - 2} ${y + 2} L${x - 6} ${y} L${x - 2} ${y - 2} Z`} fill="#EBC64C" style={{ animationDelay: `${i * 0.9}s` }} />
+      ))}
+
+      {/* wooden patta */}
+      <path d="M8 86 H112 L106 106 H14 Z" fill="#B87A3E" />
+      <path d="M8 86 H112 L110 92 H10 Z" fill="#D39A5A" />
+      <path d="M24 98 h20 M60 100 h28" stroke="#9A5E2A" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+
+      {/* brass thali with finished pedas popping on */}
+      <ellipse cx="88" cy="84" rx="21" ry="6" fill="#B8892E" />
+      <ellipse cx="88" cy="83" rx="18" ry="4.5" fill="#E2B355" />
+      {[[80, 80], [89, 82], [97, 79]].map(([x, y], i) => (
+        <g key={i} className="ja-pop" style={{ transformOrigin: `${x}px ${y + 3}px`, animationDelay: `${i * 0.6}s` }}>
+          <ellipse cx={x} cy={y} rx="6" ry="3.6" fill="#B8742E" />
+          <ellipse cx={x} cy={y - 1} rx="4" ry="2" fill="#D39A52" />
+          <circle cx={x} cy={y - 1.4} r="0.9" fill="#57703B" />
+        </g>
+      ))}
+
+      {/* khoya ball, squashed and rolled under the palm */}
+      <g className="ja-ball" style={{ transformOrigin: "44px 86px" }}>
+        <ellipse cx="44" cy="79" rx="12" ry="7" fill="#C98A3E" />
+        <ellipse cx="41" cy="76" rx="6" ry="2.6" fill="#E3A859" />
+      </g>
+
+      {/* hand + kurta sleeve */}
+      <g className="ja-hand">
+        <path d="M26 0 H52 L54 36 L28 40 Z" fill="#E3672B" />
+        <path d="M27 34 L54 30" stroke="#EBC64C" strokeWidth="3.5" />
+        {/* palm, cupped over the ball, with four fingers and a thumb */}
+        <path
+          d="M28 40 Q22 50 26 60 Q30 68 44 70 Q58 70 62 62 Q66 54 60 44 Q54 37 42 37 Q32 37 28 40 Z"
+          fill="#D9A06B"
+          stroke="#8A5A34"
+          strokeWidth="1.6"
+        />
+        <path d="M33 66 q-2 -6 1 -12 M40 69 q-2 -7 1 -14 M48 69 q-1 -7 2 -14 M55 66 q0 -6 3 -11" stroke="#8A5A34" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+        <path d="M60 46 Q70 46 70 54 Q70 60 64 60 Q61 56 60 52 Z" fill="#D9A06B" stroke="#8A5A34" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M34 44 q8 -3 18 -1" stroke="#F0C595" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.8" />
+      </g>
+    </svg>
+  );
+}
+
 // 4 · Same-day packing: a peda drops into the box, the lid swings shut and a
 // tick pops up.
 function PackingArt() {
@@ -170,7 +221,7 @@ function DeliveryArt() {
   );
 }
 
-const art = { milk: MilkArt, kadhai: KadhaiArt, packing: PackingArt, delivery: DeliveryArt };
+const art = { milk: MilkArt, kadhai: KadhaiArt, rolling: RollingArt, packing: PackingArt, delivery: DeliveryArt };
 
 export default function JourneyArt({ name }) {
   const Art = art[name];
