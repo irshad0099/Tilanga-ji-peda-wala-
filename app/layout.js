@@ -7,7 +7,6 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 import MobileOrderBar from "@/components/MobileOrderBar";
 import PauseOffscreen from "@/components/PauseOffscreen";
-import FestivalBanner from "@/components/FestivalBanner";
 import Splash from "@/components/Splash";
 
 // Footer (and several pages) read live product/settings data from MongoDB
@@ -54,7 +53,6 @@ export default function RootLayout({ children }) {
       <body className="flex min-h-full flex-col">
         <Splash />
         <CartProvider>
-          <FestivalBanner />
           <AnnouncementBar />
           <Navbar />
           <main className="flex-1">{children}</main>
