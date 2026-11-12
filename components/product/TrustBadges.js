@@ -51,6 +51,7 @@ export default function TrustBadges() {
               {b.label}
             </span>
             {pending && <span className="mt-1 text-[10px] text-ink/45">add licence no.</span>}
+            {!pending && b.id === "fssai" && <span className="mt-1 font-mono text-[9px] text-ink/55 sm:text-[10px]">{fssaiLicence}</span>}
           </li>
         );
       })}

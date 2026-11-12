@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import VillageScene from "@/components/brand/VillageScene";
 import HomeIllustration from "@/components/brand/HomeIllustration";
 import { getSettings } from "@/lib/db/settings.server";
+import { fssaiLicence } from "@/lib/content";
 
 const columns = [
   {
@@ -117,6 +118,7 @@ export default async function Footer() {
           ) : (
             <p className="mt-2 w-fit rounded border border-dashed border-leaf/40 px-2 py-0.5 text-xs text-ink/50">GSTIN — add in /admin → Settings</p>
           )}
+          {fssaiLicence && <p className="mt-1">FSSAI Lic. No.: {fssaiLicence}</p>}
           <p className="mt-2">{shop.address}</p>
           <p className="mt-2">{shop.hours}</p>
           <p className="mt-4 font-black text-ink">For any query:</p>
