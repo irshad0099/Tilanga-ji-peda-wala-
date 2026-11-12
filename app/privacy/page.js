@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2 className="font-display text-xl text-leaf">Contact us</h2>
-          <p className="mt-2">Questions about this policy can be sent to +91 94310 55263.</p>
+          <p className="mt-2">Questions about this policy can be sent to +91 91234 14885.</p>
         </section>
       </div>
     </div>
