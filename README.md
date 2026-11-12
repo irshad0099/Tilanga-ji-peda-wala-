@@ -9,7 +9,7 @@ champagne-sand / maroon / saffron palette.
 
 - Home, Menu (search + category filter), Product detail, Cart, Checkout,
   Track Order, **Invoice**, Gallery, Login,
-  Privacy/Terms/Refund pages
+  Privacy/Terms pages
 - **Real HD photos** in `public/images/photos/` (Indian-mithai stock
   photography). Swap any file — keep the filename — with the shop's own
   photo and it updates everywhere.
@@ -162,7 +162,7 @@ npm run start
    WhatsApp number and shop hours from `/admin` → Settings, and add the
    Razorpay keys (above)
 2. Replace the stock photos in `public/images/photos/` with real ones
-3. Finalise the Privacy / Terms / Refund policy placeholder text
+3. Finalise the Privacy / Terms placeholder text
 4. Optionally get a real logo and replace `LogoBadge.js` + `app/icon.svg`
 5. Product photo upload isn't built into `/admin` yet — a new menu item
    still needs its photo added to `public/images/photos/` by hand

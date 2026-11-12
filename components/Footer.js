@@ -28,7 +28,6 @@ const columns = [
     links: [
       { href: "/privacy", label: "Privacy policy" },
       { href: "/terms", label: "Terms" },
-      { href: "/refund-policy", label: "Refund policy" },
     ],
   },
 ];
