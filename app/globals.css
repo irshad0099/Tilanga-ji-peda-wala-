@@ -1429,3 +1429,162 @@ a:hover > .ft-up {
     opacity: 0.8;
   }
 }
+
+/* ------------------------------------------------------------------------
+   Gallery (components/GalleryGrid.js). Each card tilts toward the pointer
+   (--rx/--ry set from JS), the photo drifts the other way (--px/--py), a
+   glare follows the cursor (--gx/--gy), and the number, zoom button and
+   caption sit at different depths above the surface. Touch devices never
+   set the variables, so they get the flat card with its caption showing.
+   ------------------------------------------------------------------------ */
+.gx-stage {
+  perspective: 1100px;
+}
+
+.gx-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: 0 16px 32px -20px rgba(107, 63, 29, 0.5);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.gx-card:hover {
+  transition: transform 0.15s linear, box-shadow 0.4s ease;
+  box-shadow: 0 0 0 2px var(--haldi), 0 44px 60px -30px rgba(47, 74, 29, 0.7);
+}
+
+.gx-card:focus-visible {
+  outline: 3px solid var(--haldi);
+  outline-offset: 4px;
+}
+
+.gx-frame {
+  position: relative;
+}
+
+.gx-photo {
+  transform: scale(1.04) translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gx-card:hover .gx-photo {
+  transform: scale(1.14) translate(var(--px, 0px), var(--py, 0px));
+}
+
+.gx-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(38, 38, 26, 0.88));
+  opacity: 0.75;
+  transition: opacity 0.4s;
+}
+
+.gx-card:hover .gx-shade {
+  opacity: 1;
+}
+
+.gx-glare {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 246, 214, 0.42), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+.gx-card:hover .gx-glare {
+  opacity: 1;
+}
+
+/* Depth (translateZ) also enlarges an element toward the card's edge under
+   perspective, so the badge and caption rest flat and lift only on hover. */
+.gx-num {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  border-radius: 9999px;
+  background: rgba(255, 252, 239, 0.92);
+  padding: 2px 11px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--leaf-dark);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gx-card:hover .gx-num {
+  transform: translateZ(30px);
+}
+
+.gx-zoom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  height: 58px;
+  width: 58px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(255, 252, 239, 0.94);
+  color: var(--leaf);
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translate(-50%, -50%) translateZ(80px) scale(0.4);
+  transition: opacity 0.3s, transform 0.45s cubic-bezier(0.34, 1.6, 0.5, 1);
+}
+
+.gx-card:hover .gx-zoom {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateZ(80px) scale(1);
+}
+
+.gx-caption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  transform: translateY(4px);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gx-card:hover .gx-caption {
+  transform: translateZ(30px) translateY(-2px);
+}
+
+.gx-rule {
+  display: block;
+  margin-top: 8px;
+  height: 3px;
+  width: 22px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--haldi), #ffd77a);
+  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gx-card:hover .gx-rule {
+  width: 64px;
+}
+
+.gx-lightbox {
+  animation: fadeIn 0.25s ease;
+}
+
+.gx-lb-photo {
+  animation: gx-pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+}
+
+@keyframes gx-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gx-card,
+  .gx-card:hover {
+    transform: none;
+  }
+}
