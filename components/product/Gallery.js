@@ -25,10 +25,10 @@ export default function Gallery({ images, name, savePct }) {
         aria-current={i === active}
         className={`shrink-0 overflow-hidden border-2 transition ${i === active ? "border-cream opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
       >
-        <Image src={src} alt="" width={128} height={160} className="h-[70px] w-14 object-cover lg:h-[75px] lg:w-[60px]" />
+        <Image src={src} alt="" width={128} height={160} className="h-[70px] w-14 object-cover lg:h-20 lg:w-16" />
       </button>
     ) : (
-      <Placeholder key={`ph-${i}`} label="Photo" className="h-[70px] w-14 shrink-0 !gap-0 !rounded-none !border-cream/30 !bg-none !bg-leaf/40 !p-1 !text-[10px] !text-cream/60 lg:h-[75px] lg:w-[60px]" />
+      <Placeholder key={`ph-${i}`} label="Photo" className="h-[70px] w-14 shrink-0 !gap-0 !rounded-none !border-cream/30 !bg-none !bg-leaf/40 !p-1 !text-[10px] !text-cream/60 lg:h-20 lg:w-16" />
     );
 
   return (
@@ -47,7 +47,7 @@ export default function Gallery({ images, name, savePct }) {
       {/* Main photo */}
       {/* Never taller than the screen below the header, so the whole photo
           shows on laptop screens too. */}
-      <Tilt3D max={5} className="w-full lg:max-w-[min(560px,calc((100vh-230px)*0.8))]">
+      <Tilt3D max={5} className="w-full lg:max-w-[min(720px,calc((100vh-210px)*0.8))]">
         <div className="relative overflow-hidden border-[3px] border-cream bg-cream shadow-[0_30px_60px_-25px_rgba(0,0,0,0.6)]">
           {/* Every photo is stacked and loaded up front, so picking a
               thumbnail crossfades straight away instead of waiting. */}
@@ -62,7 +62,7 @@ export default function Gallery({ images, name, savePct }) {
                 height={1250}
                 priority={i === 0}
                 loading={i === 0 ? undefined : "eager"}
-                sizes="(min-width: 1024px) 560px, 100vw"
+                sizes="(min-width: 1024px) 720px, 100vw"
                 className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}
               />
             ))}

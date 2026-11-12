@@ -18,7 +18,7 @@ export default function ProductHero({ product, shop, onHome = false }) {
     <section className="grid lg:min-h-[calc(100vh-124px)] lg:grid-cols-[1.4fr_1fr]">
       {/* overflow-clip (not -hidden): hidden would make this the sticky
           photo's scroll container and push it 132px down the panel. */}
-      <div data-anim className="relative flex justify-center overflow-clip bg-leaf-dark px-4 pb-8 pt-6 sm:px-8 lg:items-start lg:px-12 lg:py-8">
+      <div data-anim className="relative flex justify-center overflow-clip bg-leaf-dark px-4 pb-8 pt-6 sm:px-8 lg:items-start lg:px-8 lg:py-6">
         <Branch className="absolute -bottom-2 -left-6 hidden w-72 rotate-[-18deg] opacity-90 lg:block" />
         <div className="relative w-full lg:sticky lg:top-[132px]">
           <Gallery images={images} name={product.name} savePct={canBuy ? savePct : 0} />
