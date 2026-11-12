@@ -5,6 +5,7 @@ import { getMenuProducts, getMenuProductBySlug } from "@/lib/db/products.server"
 import { getSettings } from "@/lib/db/settings.server";
 import { certifications, fssaiLicence, productDetails } from "@/lib/content";
 import ProductHero from "@/components/product/ProductHero";
+import BoxContents from "@/components/product/BoxContents";
 import ProductTabs from "@/components/product/ProductTabs";
 import ProductCard from "@/components/ProductCard";
 import Placeholder from "@/components/Placeholder";
@@ -58,6 +59,7 @@ export default async function ProductPage({ params }) {
   return (
     <div className="overflow-x-clip">
       <ProductHero product={product} shop={shop} />
+      <BoxContents product={product} />
 
       {/* ---- Details tabs on a haldi band ------------------------------- */}
       <section className="relative bg-haldi pb-20 pt-16">

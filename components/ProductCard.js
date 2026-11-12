@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
+import { flyToCart } from "@/lib/flyToCart";
 
 // Shop-grid card: photo with a "Sale" ribbon and size pill, name, struck MRP,
 // price and % off, then one full-width action button.
@@ -15,8 +16,9 @@ export default function ProductCard({ product }) {
   const soldOut = product.inStock === false;
   const off = product.mrp > product.price ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
 
-  function handleAdd() {
+  function handleAdd(e) {
     addItem(product, 1);
+    flyToCart(e.currentTarget, product.image);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   }

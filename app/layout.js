@@ -7,6 +7,8 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 import MobileOrderBar from "@/components/MobileOrderBar";
 import PauseOffscreen from "@/components/PauseOffscreen";
+import FestivalBanner from "@/components/FestivalBanner";
+import Splash from "@/components/Splash";
 
 // Footer (and several pages) read live product/settings data from MongoDB
 // on every render. Force the whole app to render per-request rather than
@@ -47,9 +49,12 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`h-full antialiased ${nunito.variable} ${hind.variable} ${rozha.variable}`}>
+    // suppressHydrationWarning: the splash script tags <html> before React loads.
+    <html lang="en" suppressHydrationWarning className={`h-full antialiased ${nunito.variable} ${hind.variable} ${rozha.variable}`}>
       <body className="flex min-h-full flex-col">
+        <Splash />
         <CartProvider>
+          <FestivalBanner />
           <AnnouncementBar />
           <Navbar />
           <main className="flex-1">{children}</main>

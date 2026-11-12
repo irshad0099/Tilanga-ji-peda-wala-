@@ -2,6 +2,7 @@ import { getMenuProducts } from "@/lib/db/products.server";
 import { getSettings } from "@/lib/db/settings.server";
 import Reveal from "@/components/Reveal";
 import ProductHero from "@/components/product/ProductHero";
+import BoxContents from "@/components/product/BoxContents";
 import JourneyTimeline from "@/components/brand/JourneyTimeline";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
@@ -19,12 +20,13 @@ export default async function HomePage() {
     <div className="overflow-x-clip">
       {/* Hero: the peda we deliver, ready to buy straight from the home page. */}
       {heroItem && <ProductHero product={heroItem} shop={shop} onHome />}
+      {heroItem && <BoxContents product={heroItem} />}
 
       <JourneyTimeline story={STORY} />
       <FaqFounder />
 
       {/* Reviews */}
-      <section className="bg-cream pb-6 pt-4">
+      <section id="reviews" className="scroll-mt-24 bg-cream pb-6 pt-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
             <h2 className="text-center font-display text-4xl font-black text-leaf-dark sm:text-5xl">Customer Reviews</h2>

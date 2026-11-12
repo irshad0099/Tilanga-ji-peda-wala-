@@ -55,6 +55,7 @@ export default function Navbar() {
   const cart = (
     <Link
       href="/cart"
+      data-cart-target
       aria-label={`Cart, ${totalItems} item${totalItems === 1 ? "" : "s"}`}
       className="flex h-12 min-w-14 items-center justify-center gap-1.5 rounded-2xl bg-leaf px-3.5 text-cream shadow-[0_6px_14px_-4px_rgba(47,74,29,0.5)] transition hover:-translate-y-0.5 hover:bg-leaf-dark"
     >

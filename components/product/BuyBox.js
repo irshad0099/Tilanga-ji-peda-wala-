@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
 import { packLabel } from "@/lib/packs";
+import { flyToCart } from "@/lib/flyToCart";
 import DeliveryTimeline from "@/components/product/DeliveryTimeline";
 
 // Price, pack picker, quantity, add-to-cart / buy-now, delivery dates and the
@@ -31,8 +32,9 @@ export default function BuyBox({ product, packs, badges }) {
     return () => io.disconnect();
   }, []);
 
-  function handleAdd() {
+  function handleAdd(e) {
     addItem(product, qty, boxes);
+    flyToCart(e.currentTarget, product.image);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   }
@@ -122,9 +124,9 @@ export default function BuyBox({ product, packs, badges }) {
       </div>
       <button
         onClick={handleBuy}
-        className="mt-3 w-full rounded-lg bg-leaf-dark py-3.5 text-[15px] font-extrabold uppercase tracking-wider text-cream shadow-[0_4px_0_#1c2f10] transition hover:-translate-y-0.5 hover:bg-leaf active:translate-y-1 active:shadow-none"
+        className="buy-pulse shine mt-3 w-full [--pulse-base:0_4px_0_#1c2f10] rounded-lg bg-leaf-dark py-3.5 text-[15px] font-extrabold uppercase tracking-wider text-cream shadow-[0_4px_0_#1c2f10] transition hover:-translate-y-0.5 hover:bg-leaf active:translate-y-1 active:shadow-none"
       >
-        Buy it now · {formatRupees(pack.price * qty)}
+        Abhi order karein · {formatRupees(pack.price * qty)}
       </button>
       <p className="mt-3 text-center text-[13px] font-semibold text-ink">
         Since 1975 | Secure checkout | UPI, cards or cash on delivery
@@ -155,8 +157,22 @@ export default function BuyBox({ product, packs, badges }) {
           </select>
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-cream">▲</span>
         </label>
-        <button onClick={handleAdd} className="flex-1 rounded-xl bg-cream py-3 text-sm font-extrabold uppercase tracking-wide text-leaf">
-          {added ? "✓ Added" : `Add to cart · ${formatRupees(pack.price * qty)}`}
+        <button
+          onClick={handleAdd}
+          aria-label={added ? "Added to cart" : "Add to cart"}
+          className="flex h-[46px] w-12 shrink-0 items-center justify-center rounded-xl bg-leaf-dark text-cream"
+        >
+          {added ? (
+            <span className="text-lg font-black">✓</span>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5.5 8h13l-1 12.5h-11z" />
+              <path d="M9 8V6.5a3 3 0 0 1 6 0V8M12 12v5M9.5 14.5h5" />
+            </svg>
+          )}
+        </button>
+        <button onClick={handleBuy} className="buy-pulse flex-1 rounded-xl bg-haldi py-3 text-sm font-extrabold uppercase tracking-wide text-leaf-dark">
+          Order now · {formatRupees(pack.price * qty)}
         </button>
       </div>
     </div>
