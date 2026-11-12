@@ -25,10 +25,10 @@ export default function Gallery({ images, name, savePct }) {
         aria-current={i === active}
         className={`shrink-0 overflow-hidden border-2 transition ${i === active ? "border-cream opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
       >
-        <Image src={src} alt="" width={160} height={160} className="h-16 w-16 object-cover lg:h-[74px] lg:w-[74px]" />
+        <Image src={src} alt="" width={128} height={160} className="h-[70px] w-14 object-cover lg:h-[75px] lg:w-[60px]" />
       </button>
     ) : (
-      <Placeholder key={`ph-${i}`} label="Photo" className="h-16 w-16 shrink-0 !gap-0 !rounded-none !border-cream/30 !bg-none !bg-leaf/40 !p-1 !text-[10px] !text-cream/60 lg:h-[74px] lg:w-[74px]" />
+      <Placeholder key={`ph-${i}`} label="Photo" className="h-[70px] w-14 shrink-0 !gap-0 !rounded-none !border-cream/30 !bg-none !bg-leaf/40 !p-1 !text-[10px] !text-cream/60 lg:h-[75px] lg:w-[60px]" />
     );
 
   return (
@@ -47,18 +47,25 @@ export default function Gallery({ images, name, savePct }) {
       {/* Main photo */}
       {/* Never taller than the screen below the header, so the whole photo
           shows on laptop screens too. */}
-      <Tilt3D max={5} className="w-full lg:max-w-[min(640px,calc(100vh-180px))]">
+      <Tilt3D max={5} className="w-full lg:max-w-[min(560px,calc((100vh-230px)*0.8))]">
         <div className="relative overflow-hidden border-[3px] border-cream bg-cream shadow-[0_30px_60px_-25px_rgba(0,0,0,0.6)]">
-          <div className="hero-breathe">
-            <Image
-              key={images[active]}
-              src={images[active]}
-              alt={name}
-              width={1000}
-              height={1000}
-              priority
-              className="aspect-square w-full animate-[fadeIn_.5s_ease] object-cover"
-            />
+          {/* Every photo is stacked and loaded up front, so picking a
+              thumbnail crossfades straight away instead of waiting. */}
+          <div className="hero-breathe relative aspect-[4/5]">
+            {images.map((src, i) => (
+              <Image
+                key={src}
+                src={src}
+                alt={i === active ? name : ""}
+                aria-hidden={i !== active || undefined}
+                width={1000}
+                height={1250}
+                priority={i === 0}
+                loading={i === 0 ? undefined : "eager"}
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
           </div>
           {/* Ghee-gloss sweep and a slowly turning "since 1975" seal. */}
           <span aria-hidden="true" className="hero-sheen" />
@@ -78,7 +85,7 @@ export default function Gallery({ images, name, savePct }) {
             <text x="50" y="59" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="900" fontSize="13" fill="#2F4A1D">1975</text>
           </svg>
           {savePct > 0 && (
-            <span className="absolute left-4 top-4 rounded-xl bg-[#8DB33A] px-3.5 py-2 text-sm font-extrabold tracking-wide text-cream shadow-lg [transform:translateZ(40px)]">
+            <span className="absolute bottom-4 left-4 rounded-xl bg-[#8DB33A] px-3.5 py-2 text-sm font-extrabold tracking-wide text-cream shadow-lg [transform:translateZ(40px)]">
               SAVE {savePct}%
             </span>
           )}
