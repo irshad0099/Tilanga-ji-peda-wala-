@@ -66,7 +66,7 @@ export default function Navbar() {
 
   const logo = (
     // The logo carries the shop name itself, so no text beside it.
-    <Link href="/" aria-label="Telangaji Peda — home" className="flex items-center transition-transform hover:scale-105" onClick={() => setDrawer(false)}>
+    <Link href="/" aria-label="Tilangaji Peda — home" className="flex items-center transition-transform hover:scale-105" onClick={() => setDrawer(false)}>
       <LogoBadge size={64} priority className="h-[60px] w-auto lg:h-[76px]" />
     </Link>
   );
