@@ -22,7 +22,7 @@ export default function FaqFounder() {
           {founder.photo ? (
             <Image
               src={founder.photo}
-              alt={`${founder.name} — ${founder.title}`}
+              alt={`${founder.title} ${founder.name}`}
               width={836}
               height={900}
               className="float relative mx-auto w-[82%] drop-shadow-[0_24px_30px_rgba(120,60,10,0.35)]"
@@ -30,8 +30,8 @@ export default function FaqFounder() {
           ) : (
             <Placeholder label="Founder ki photo / illustration" hint="lib/content.js → founder.photo" className="float relative aspect-[6/7] w-full !rounded-[40px] !bg-none !bg-transparent" />
           )}
-          <p className="relative mt-4 text-center font-display text-2xl font-black text-leaf-dark">{founder.name}</p>
-          <p className="relative text-center text-sm font-bold text-ink/60">{founder.title}</p>
+          <p className="relative mt-4 text-center text-sm font-extrabold uppercase tracking-[0.2em] text-mustard">{founder.title}</p>
+          <p className="relative text-center font-display text-3xl font-black text-leaf-dark">{founder.name}</p>
         </Reveal>
       </div>
     </section>
