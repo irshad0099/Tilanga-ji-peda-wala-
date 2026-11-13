@@ -102,11 +102,7 @@ export default function BoxContents({ product }) {
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
             <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">{product.weight || "500g box"}</span>
-            {box.pieces ? (
-              <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">Lagbhag {box.pieces} pede</span>
-            ) : (
-              <span className="rounded-full border-2 border-dashed border-leaf/40 px-4 py-1.5 text-sm font-bold text-ink/50">Pedon ki ginti — add</span>
-            )}
+            {box.pieces && <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">Lagbhag {box.pieces} pede</span>}
           </div>
         </Reveal>
 

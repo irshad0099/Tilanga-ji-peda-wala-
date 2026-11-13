@@ -8,7 +8,6 @@ import ProductHero from "@/components/product/ProductHero";
 import BoxContents from "@/components/product/BoxContents";
 import ProductTabs from "@/components/product/ProductTabs";
 import ProductCard from "@/components/ProductCard";
-import Placeholder from "@/components/Placeholder";
 import Reveal from "@/components/Reveal";
 import Branch from "@/components/Branch";
 import FaqFounder from "@/components/brand/FaqFounder";
@@ -53,7 +52,8 @@ export default async function ProductPage({ params }) {
     { id: "ingredients", label: "Ingredients", content: details.ingredients },
     { id: "serve", label: "Kaise khayein", content: details.serve },
     { id: "storage", label: "Storage", content: details.storage },
-  ];
+  ].filter((t) => t.content);
+  const hasCerts = Boolean(fssaiLicence) || certifications.length > 0;
   const related = all.filter((p) => p.slug !== product.slug).slice(0, 8);
 
   return (
@@ -102,33 +102,29 @@ export default async function ProductPage({ params }) {
         </section>
       )}
 
-      {/* ---- Certifications ------------------------------------------------- */}
+      {/* ---- Certifications (only once there are real ones) ------------------ */}
+      {hasCerts && (
       <section className="py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <Reveal>
             <SectionHeading>Certifications &amp; trust marks</SectionHeading>
           </Reveal>
           <Reveal delay={100} className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-olive/30 bg-cream p-4 text-center">
-              <span className="font-display text-xl font-extrabold text-leaf">FSSAI</span>
-              {fssaiLicence ? (
+            {fssaiLicence && (
+              <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-olive/30 bg-cream p-4 text-center">
+                <span className="font-display text-xl font-extrabold text-leaf">FSSAI</span>
                 <span className="mt-1 font-mono text-xs text-ink/70">Lic. {fssaiLicence}</span>
-              ) : (
-                <span className="mt-1 rounded border border-dashed border-leaf/40 px-2 py-0.5 text-[11px] font-semibold text-ink/50">Licence no. — add</span>
-              )}
-            </div>
-            {(certifications.length ? certifications : [null, null, null]).map((c, i) =>
-              c ? (
-                <div key={c.name} className="flex items-center justify-center rounded-2xl border-2 border-olive/30 bg-cream p-4">
-                  <Image src={c.logo} alt={c.name} width={120} height={60} className="h-12 w-auto object-contain" />
-                </div>
-              ) : (
-                <Placeholder key={i} label="Certificate" className="min-h-24 !rounded-2xl" />
-              )
+              </div>
             )}
+            {certifications.map((c) => (
+              <div key={c.name} className="flex items-center justify-center rounded-2xl border-2 border-olive/30 bg-cream p-4">
+                <Image src={c.logo} alt={c.name} width={120} height={60} className="h-12 w-auto object-contain" />
+              </div>
+            ))}
           </Reveal>
         </div>
       </section>
+      )}
     </div>
   );
 }

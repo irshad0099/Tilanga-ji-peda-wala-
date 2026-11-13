@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Placeholder from "@/components/Placeholder";
 
 // Pill tabs over a white card — Description / Making / Ingredients / Serve /
-// Storage. `null` content (not supplied yet in lib/content.js) shows a
-// placeholder box instead.
+// Storage. The product page leaves out tabs with no text yet.
 export default function ProductTabs({ tabs }) {
   const [active, setActive] = useState(tabs[0].id);
   const current = tabs.find((t) => t.id === active);
@@ -31,17 +29,13 @@ export default function ProductTabs({ tabs }) {
       </div>
 
       <div key={active} role="tabpanel" className="mt-6 animate-[fadeIn_.35s_ease] rounded-3xl bg-cream p-6 shadow-[0_18px_40px_-20px_rgba(40,61,16,0.45)] sm:p-9">
-        {current.content ? (
-          <div className="mx-auto max-w-2xl space-y-4 text-[16px] leading-relaxed text-ink/85">
-            {String(current.content)
-              .split(/\n\n+/)
-              .map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-          </div>
-        ) : (
-          <Placeholder icon="text" label={`${current.label} — text coming soon`} hint="Fill in lib/content.js → productDetails" className="min-h-40" />
-        )}
+        <div className="mx-auto max-w-2xl space-y-4 text-[16px] leading-relaxed text-ink/85">
+          {String(current.content)
+            .split(/\n\n+/)
+            .map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+        </div>
       </div>
     </div>
   );

@@ -33,25 +33,24 @@ function Laurel() {
   );
 }
 
-// Laurel-framed trust marks under the price. Unconfirmed ones (e.g. the
-// FSSAI badge before the licence number is added) render as placeholders.
+// Laurel-framed trust marks under the price. Only confirmed ones show: the
+// FSSAI badge appears once lib/content.js has the licence number.
 export default function TrustBadges() {
+  const shown = trustBadges.filter((b) => b.verified && (b.id !== "fssai" || fssaiLicence));
   return (
-    <ul className="grid grid-cols-4 gap-2 sm:gap-4">
-      {trustBadges.map((b, i) => {
-        const pending = !b.verified || (b.id === "fssai" && !fssaiLicence);
+    <ul className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: `repeat(${shown.length}, minmax(0, 1fr))` }}>
+      {shown.map((b, i) => {
         return (
           <li key={b.id} className="float flex flex-col items-center text-center" style={{ "--float-delay": `${i * 0.4}s` }}>
-            <svg viewBox="0 0 64 64" className={`h-16 w-16 sm:h-20 sm:w-20 ${pending ? "opacity-40" : ""}`} aria-hidden="true">
-              <circle cx="32" cy="32" r="21" fill="#FBF6E4" stroke="#B8892E" strokeWidth="1.5" strokeDasharray={pending ? "3 3" : undefined} />
+            <svg viewBox="0 0 64 64" className="h-16 w-16 sm:h-20 sm:w-20" aria-hidden="true">
+              <circle cx="32" cy="32" r="21" fill="#FBF6E4" stroke="#B8892E" strokeWidth="1.5" />
               <Laurel />
               <g className="text-leaf" color="#57703B">{icons[b.id]}</g>
             </svg>
-            <span className={`-mt-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:text-[11px] ${pending ? "border border-dashed border-leaf/40 text-ink/50" : "bg-leaf text-cream"}`}>
+            <span className="-mt-1 rounded-full bg-leaf px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-cream sm:text-[11px]">
               {b.label}
             </span>
-            {pending && <span className="mt-1 text-[10px] text-ink/45">add licence no.</span>}
-            {!pending && b.id === "fssai" && <span className="mt-1 font-mono text-[9px] text-ink/55 sm:text-[10px]">{fssaiLicence}</span>}
+            {b.id === "fssai" && <span className="mt-1 font-mono text-[9px] text-ink/55 sm:text-[10px]">{fssaiLicence}</span>}
           </li>
         );
       })}
