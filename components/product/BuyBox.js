@@ -12,7 +12,7 @@ import DeliveryTimeline from "@/components/product/DeliveryTimeline";
 // sticky mobile bar for one deliverable product. `packs` comes from
 // lib/packs.js on the server so the numbers match what checkout charges.
 export default function BuyBox({ product, packs, badges }) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const router = useRouter();
   const [boxes, setBoxes] = useState(packs[0].boxes);
   const [qty, setQty] = useState(1);
@@ -35,6 +35,8 @@ export default function BuyBox({ product, packs, badges }) {
   function handleAdd(e) {
     addItem(product, qty, boxes);
     flyToCart(e.currentTarget, product.image);
+    // Let the photo land in the cart icon, then slide the cart open.
+    setTimeout(openCart, 750);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   }

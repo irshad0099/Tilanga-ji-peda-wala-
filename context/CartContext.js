@@ -9,6 +9,8 @@ const STORAGE_KEY = "tilanga_cart_v1";
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [hydrated, setHydrated] = useState(false);
+  // The slide-in cart (components/CartDrawer.js).
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -90,6 +92,9 @@ export function CartProvider({ children }) {
     clearCart,
     totalItems,
     subtotal,
+    drawerOpen,
+    openCart: () => setDrawerOpen(true),
+    closeCart: () => setDrawerOpen(false),
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

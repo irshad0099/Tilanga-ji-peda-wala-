@@ -8,6 +8,7 @@ import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 import MobileOrderBar from "@/components/MobileOrderBar";
 import PauseOffscreen from "@/components/PauseOffscreen";
 import Splash from "@/components/Splash";
+import CartDrawer from "@/components/CartDrawer";
 
 // Footer (and several pages) read live product/settings data from MongoDB
 // on every render. Force the whole app to render per-request rather than
@@ -59,6 +60,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <WhatsAppFloatButton />
           <MobileOrderBar />
+          <CartDrawer />
           <PauseOffscreen />
         </CartProvider>
       </body>

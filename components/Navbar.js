@@ -35,7 +35,7 @@ export default function Navbar() {
   const [q, setQ] = useState("");
   const pathname = usePathname();
   const router = useRouter();
-  const { totalItems } = useCart();
+  const { totalItems, openCart } = useCart();
   const dropRef = useRef(null);
 
   useEffect(() => {
@@ -56,6 +56,12 @@ export default function Navbar() {
     <Link
       href="/cart"
       data-cart-target
+      // A plain click opens the slide-in cart; ctrl/cmd-click still opens /cart.
+      onClick={(e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        openCart();
+      }}
       aria-label={`Cart, ${totalItems} item${totalItems === 1 ? "" : "s"}`}
       className="flex h-12 min-w-14 items-center justify-center gap-1.5 rounded-2xl bg-leaf px-3.5 text-cream shadow-[0_6px_14px_-4px_rgba(47,74,29,0.5)] transition hover:-translate-y-0.5 hover:bg-leaf-dark"
     >

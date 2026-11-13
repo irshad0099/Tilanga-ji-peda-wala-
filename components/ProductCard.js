@@ -10,7 +10,7 @@ import { flyToCart } from "@/lib/flyToCart";
 // Shop-grid card: photo with a "Sale" ribbon and size pill, name, struck MRP,
 // price and % off, then one full-width action button.
 export default function ProductCard({ product }) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const [added, setAdded] = useState(false);
   const dineIn = product.deliverable === false;
   const soldOut = product.inStock === false;
@@ -19,6 +19,7 @@ export default function ProductCard({ product }) {
   function handleAdd(e) {
     addItem(product, 1);
     flyToCart(e.currentTarget, product.image);
+    setTimeout(openCart, 750);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   }

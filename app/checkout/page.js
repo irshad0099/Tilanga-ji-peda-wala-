@@ -11,6 +11,7 @@ import { useSettings } from "@/lib/useSettings";
 import { retailOrderWhatsappLink } from "@/lib/whatsapp";
 import PaymentLogos from "@/components/PaymentLogos";
 import InvoicePreview from "@/components/InvoicePreview";
+import Confetti from "@/components/Confetti";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -520,18 +521,20 @@ function OrderPlaced({ order, whatsapp }) {
   const estimate = estimateDelivery(order.customer?.pincode || "");
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
+      <Confetti />
       <Steps current={2} />
 
       <div className="mt-10 text-center">
-        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-leaf text-cream shadow-[0_0_0_8px_var(--cream-dark)]">
+        <span className="op-check mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-leaf text-cream shadow-[0_0_0_8px_var(--cream-dark)]">
           <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12.5l4.5 4.5L19 7.5" />
           </svg>
         </span>
         <h1 className="mt-6 font-display text-4xl text-leaf sm:text-5xl">ऑर्डर हो गया!</h1>
-        <p className="mt-3 text-[16px] text-ink/75">
-          Thank you, {order.customer?.name?.split(" ")[0]}. Your peda is in good hands.
+        <p className="op-thanks mt-3 font-display text-2xl font-black text-leaf-dark">
+          Dhanyavaad{order.customer?.name ? `, ${order.customer.name.split(" ")[0]}` : ""}! Aapke pede jaldi pahunchenge 🙏
         </p>
+        <p className="mt-2 text-[15px] text-ink/65">Your peda is in good hands.</p>
 
         <div className="mx-auto mt-8 max-w-md rounded-md border-2 border-dashed border-gold bg-cream px-6 py-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-ink/50">Order ID</p>
