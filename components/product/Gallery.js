@@ -67,23 +67,8 @@ export default function Gallery({ images, name, savePct }) {
               />
             ))}
           </div>
-          {/* Ghee-gloss sweep and a slowly turning "since 1975" seal. */}
+          {/* Ghee-gloss sweep. */}
           <span aria-hidden="true" className="hero-sheen" />
-          <svg viewBox="0 0 100 100" aria-hidden="true" className="hero-seal absolute bottom-4 right-4 h-20 w-20 sm:h-24 sm:w-24 lg:bottom-5 lg:right-5">
-            <defs>
-              <path id="seal-ring" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0" />
-            </defs>
-            <circle cx="50" cy="50" r="48" fill="#2F4A1D" />
-            <circle cx="50" cy="50" r="44" fill="none" stroke="#EBC64C" strokeWidth="1" strokeDasharray="2 3" />
-            <g className="hero-seal-text">
-              <text fontFamily="var(--font-display)" fontWeight="800" fontSize="9.5" fill="#FFFCEF">
-                <textPath href="#seal-ring" textLength="224" lengthAdjust="spacing">FRESH · HANDMADE · PURE KHOYA ·</textPath>
-              </text>
-            </g>
-            <circle cx="50" cy="50" r="22" fill="#EBC64C" />
-            <text x="50" y="47" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="900" fontSize="8" fill="#2F4A1D">SINCE</text>
-            <text x="50" y="59" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="900" fontSize="13" fill="#2F4A1D">1975</text>
-          </svg>
           {savePct > 0 && (
             <span className="absolute bottom-4 left-4 rounded-xl bg-[#8DB33A] px-3.5 py-2 text-sm font-extrabold tracking-wide text-cream shadow-lg [transform:translateZ(40px)]">
               SAVE {savePct}%
