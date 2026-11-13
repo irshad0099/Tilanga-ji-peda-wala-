@@ -9,6 +9,7 @@ import BoxContents from "@/components/product/BoxContents";
 import ProductTabs from "@/components/product/ProductTabs";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
+import PromiseBand from "@/components/product/PromiseBand";
 import Branch from "@/components/Branch";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
@@ -101,6 +102,8 @@ export default async function ProductPage({ params }) {
           </div>
         </section>
       )}
+
+      <PromiseBand />
 
       {/* ---- Certifications (only once there are real ones) ------------------ */}
       {hasCerts && (

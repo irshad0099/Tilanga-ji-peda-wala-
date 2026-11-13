@@ -1997,3 +1997,68 @@ html[data-splash-seen] .splash {
     display: none;
   }
 }
+
+/* ------------------------------------------------------------------------
+   Hamara Vaada (components/product/PromiseBand.js) — glowing blobs drift
+   behind glassy cards; icons float, cards lift and light up on hover.
+   ------------------------------------------------------------------------ */
+.pv-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.pv-glow-a {
+  left: -120px;
+  top: -140px;
+  background: #ebc64c;
+  animation: pv-drift 14s ease-in-out infinite alternate;
+}
+
+.pv-glow-b {
+  right: -140px;
+  bottom: -160px;
+  background: #7e9550;
+  animation: pv-drift 17s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pv-drift {
+  to {
+    transform: translate(80px, 50px) scale(1.15);
+  }
+}
+
+.pv-rule {
+  width: 72px;
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, var(--haldi), transparent);
+}
+
+.pv-card {
+  backdrop-filter: blur(2px);
+  transition: transform 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.pv-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(235, 198, 76, 0.7);
+  background-color: rgba(255, 252, 239, 0.1);
+  box-shadow: 0 24px 40px -22px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(235, 198, 76, 0.25);
+}
+
+.pv-icon {
+  animation: float 4s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  box-shadow: 0 10px 22px -10px rgba(235, 198, 76, 0.8);
+  transition: transform 0.35s ease;
+}
+
+.pv-card:hover .pv-icon {
+  animation-play-state: paused;
+  transform: rotate(-8deg) scale(1.1);
+}
