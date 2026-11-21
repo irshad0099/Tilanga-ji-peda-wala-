@@ -19,6 +19,10 @@ const faqs = [
     q: "How long does the peda stay fresh?",
     a: "Best enjoyed within 4-5 days of dispatch, kept in a cool, dry place. Refrigerate in humid weather for a slightly longer shelf life.",
   },
+  {
+    q: "Can I return or get a refund?",
+    a: "Pedas are fresh food, so we can't take returns or give refunds once a box has been dispatched. If we have to cancel your order ourselves, you get a full refund. If your box arrives broken or spoiled, WhatsApp us a photo within 24 hours and we'll send a replacement.",
+  },
 ];
 
 export default function FAQAccordion() {

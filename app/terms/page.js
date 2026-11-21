@@ -29,6 +29,25 @@ export default function TermsPage() {
           </p>
         </section>
         <section>
+          <h2 className="font-display text-xl text-leaf">Returns &amp; refunds</h2>
+          <p className="mt-2">
+            Our pedas are fresh food, so orders cannot be returned or refunded
+            once they have been dispatched.
+          </p>
+          <ul className="mt-2 list-disc space-y-1.5 pl-5">
+            <li>
+              If we cancel your order ourselves — for example because the day&apos;s
+              batch has sold out — any amount you paid online is refunded in
+              full to the original payment method.
+            </li>
+            <li>
+              If your box arrives broken or spoiled, send us a photo on WhatsApp
+              at +91 91234 14885 within 24 hours of delivery and we will send a
+              replacement.
+            </li>
+          </ul>
+        </section>
+        <section>
           <h2 className="font-display text-xl text-leaf">Pricing</h2>
           <p className="mt-2">
             Prices shown on the site are current at the time of browsing and
