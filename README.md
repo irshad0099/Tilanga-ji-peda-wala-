@@ -44,9 +44,9 @@ champagne-sand / maroon / saffron palette.
     number, phones, shop address/hours/GSTIN and the retail shipping rule,
     also editable from the admin dashboard.
 
-  All of it is managed from the separate **admin dashboard**
-  ([`admin-dashboard/`](admin-dashboard/README.md), its own Vercel project at
-  admin.tilangaji.com). `lib/products.js` and `lib/config.js` are now only the
+  All of it is managed from the separate **Telanga Admin Dashboard** — its
+  own repo/folder (`Telanga-admin-dashboard`) and Vercel project, at
+  admin.tilangaji.com. `lib/products.js` and `lib/config.js` are now only the
   *offline fallback* (used automatically if Atlas is unreachable) and the
   *seed data* (`scripts/seed-db.mjs`) — not the live source of truth anymore.
   Cart still lives in the browser's localStorage, with a local copy of orders
@@ -120,7 +120,7 @@ are still empty, never overwrites edits already made from the admin dashboard.
 
 Then open the admin dashboard to see every order, edit the menu and shop
 settings, and move orders through Placed → Preparing → Out for Delivery →
-Delivered. See [`admin-dashboard/README.md`](admin-dashboard/README.md).
+Delivered.
 
 ## Set up Razorpay (online payments)
 
