@@ -39,22 +39,23 @@ champagne-sand / maroon / saffron palette.
     `lib/db/orders.server.js`); Track Order / Invoice work from any device.
   - Products: `/api/products` (`lib/db/products.server.js`) — every price,
     MRP, badge, category, `deliverable` flag and `inStock` flag ("Sold out
-    today") is editable from `/admin` with no redeploy.
+    today") is editable from the admin dashboard with no redeploy.
   - Settings: `/api/settings` (`lib/db/settings.server.js`) — WhatsApp
     number, phones, shop address/hours/GSTIN and the retail shipping rule,
-    also editable from `/admin`.
+    also editable from the admin dashboard.
 
-  `/admin` (password = `ADMIN_KEY`) has three tabs: **Orders**, **Products**,
-  **Settings**. `lib/products.js` and `lib/config.js` are now only the
+  All of it is managed from the separate **admin dashboard**
+  ([`admin-dashboard/`](admin-dashboard/README.md), its own Vercel project at
+  admin.tilangaji.com). `lib/products.js` and `lib/config.js` are now only the
   *offline fallback* (used automatically if Atlas is unreachable) and the
   *seed data* (`scripts/seed-db.mjs`) — not the live source of truth anymore.
   Cart still lives in the browser's localStorage, with a local copy of orders
   kept too as an instant/offline mirror.
 
-## Set it up for the real shop — from `/admin`, no code needed
+## Set it up for the real shop — from the admin dashboard, no code needed
 
-Once MongoDB Atlas is configured (below), log into **`/admin`** → **Settings**
-tab and fill in:
+Once MongoDB Atlas is configured (below), sign into the **admin dashboard** →
+**Settings** and fill in:
 
 | Field | What to put |
 |---|---|
@@ -65,7 +66,7 @@ Retail shipping rules are editable there too — changes are live immediately,
 no redeploy. Razorpay keys are secrets, so they are set as environment
 variables instead (see "Set up Razorpay").
 
-Before Atlas is set up (or if you'd rather edit code than use `/admin`), the
+Before Atlas is set up (or if you'd rather edit code than use the admin dashboard), the
 same fields live in [`lib/config.js`](lib/config.js) (settings) and
 [`lib/products.js`](lib/products.js) (menu) as the fallback/seed data.
 
@@ -84,7 +85,7 @@ Drop the shop's own photos into `public/images/photos/` using these names:
 
 Roughly square or portrait, ideally 1200px+ on the short side.
 
-## Set up MongoDB Atlas (so orders sync across devices + `/admin` works)
+## Set up MongoDB Atlas (so orders sync across devices + the admin dashboard works)
 
 1. **Create a free cluster** — [mongodb.com/cloud/atlas/register](https://www.mongodb.com/cloud/atlas/register) →
    create a project → "Build a Database" → the free **M0** tier → pick any
@@ -99,28 +100,27 @@ Roughly square or portrait, ideally 1200px+ on the short side.
    username/password into it.
 5. **Set the environment variables**:
    - Locally: copy [`.env.local.example`](.env.local.example) to `.env.local`
-     and fill in `MONGODB_URI` (and pick your own `ADMIN_KEY` password).
+     and fill in `MONGODB_URI`.
    - On Vercel: Project → Settings → Environment Variables → add `MONGODB_URI`
-     and `ADMIN_KEY` (Production + Preview + Development) → redeploy.
+     and `REVALIDATE_SECRET` (any long random string — the admin dashboard
+     sends the same value) → redeploy.
 
 Until this is done, the menu and pages still work, but checkout can't place
-orders and `/admin` shows an "admin access isn't configured" message.
+orders.
 
-Once it's set, run the one-time seed so `/admin` has the current menu and
-settings to edit:
+Once it's set, run the one-time seed so the admin dashboard has the current
+menu and settings to edit:
 
 ```bash
 node scripts/seed-db.mjs
 ```
 
 It's idempotent — safe to re-run any time; it only fills in collections that
-are still empty, never overwrites edits already made from `/admin`.
+are still empty, never overwrites edits already made from the admin dashboard.
 
-Then visit **`/admin`** and log in with your `ADMIN_KEY` to see every order,
-edit the menu, edit shop settings, and move orders through Placed →
-Preparing → Out for Delivery → Delivered. Online payments are confirmed
-automatically; orders whose online payment was never completed are greyed
-out as "payment pending".
+Then open the admin dashboard to see every order, edit the menu and shop
+settings, and move orders through Placed → Preparing → Out for Delivery →
+Delivered. See [`admin-dashboard/README.md`](admin-dashboard/README.md).
 
 ## Set up Razorpay (online payments)
 
@@ -159,10 +159,10 @@ npm run start
 ## Aage kya karna hai (Next steps before going fully live)
 
 1. Set up MongoDB Atlas (above), run the seed script, then set the real
-   WhatsApp number and shop hours from `/admin` → Settings, and add the
+   WhatsApp number and shop hours from the admin dashboard → Settings, and add the
    Razorpay keys (above)
 2. Replace the stock photos in `public/images/photos/` with real ones
 3. Finalise the Privacy / Terms placeholder text
 4. Optionally get a real logo and replace `LogoBadge.js` + `app/icon.svg`
-5. Product photo upload isn't built into `/admin` yet — a new menu item
+5. Product photo upload isn't built into the admin dashboard yet — a new menu item
    still needs its photo added to `public/images/photos/` by hand

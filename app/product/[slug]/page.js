@@ -15,7 +15,7 @@ import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 
 // Pre-render the default menu's slugs at build time; any DB-only product
-// (created later from /admin) still renders fine on first request.
+// (created later from the admin dashboard) still renders fine on first request.
 export function generateStaticParams() {
   return defaultProducts.filter((p) => p.deliverable).map((p) => ({ slug: p.slug }));
 }

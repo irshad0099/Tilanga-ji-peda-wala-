@@ -111,7 +111,7 @@ export default async function Footer() {
           {shop.gstin ? (
             <p className="mt-2">GST: {shop.gstin}</p>
           ) : (
-            <p className="mt-2 w-fit rounded border border-dashed border-leaf/40 px-2 py-0.5 text-xs text-ink/50">GSTIN — add in /admin → Settings</p>
+            <p className="mt-2 w-fit rounded border border-dashed border-leaf/40 px-2 py-0.5 text-xs text-ink/50">GSTIN — add in admin → Settings</p>
           )}
           {fssaiLicence && <p className="mt-1">FSSAI Lic. No.: {fssaiLicence}</p>}
           <p className="mt-2">{shop.address}</p>

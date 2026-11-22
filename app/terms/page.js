@@ -13,7 +13,7 @@ function Section({ title, children }) {
   );
 }
 
-// The shop's name, address and phone come from /admin → Settings, so they
+// The shop's name, address and phone come from the admin dashboard → Settings, so they
 // always match what the shop has registered (e.g. with Razorpay).
 export default async function TermsPage() {
   const { shop, phones } = await getSettings();

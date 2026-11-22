@@ -66,7 +66,13 @@ export default function TrackOrderPage() {
             </span>
           </div>
 
-          {unpaid ? (
+          {order.status === "Cancelled" ? (
+            <p className="mt-6 rounded-lg border border-[#C23B5A]/30 bg-[#C23B5A]/5 p-4 text-sm text-ink/80">
+              This order has been cancelled.
+              {order.paymentStatus === "paid" && " Your online payment will be refunded in full to the original payment method."}{" "}
+              Please call or WhatsApp the shop if you have any questions.
+            </p>
+          ) : unpaid ? (
             <p className="mt-6 rounded-lg border border-mustard/40 bg-mustard/5 p-4 text-sm text-ink/80">
               The online payment for this order wasn&apos;t completed, so it hasn&apos;t been placed.
               Please order again from the menu, or call the shop if money was deducted.

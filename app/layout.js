@@ -12,7 +12,7 @@ import CartDrawer from "@/components/CartDrawer";
 
 // Footer (and several pages) read live product/settings data from MongoDB
 // on every render. Force the whole app to render per-request rather than
-// being statically prerendered at build time, so /admin edits (price,
+// being statically prerendered at build time, so admin dashboard edits (price,
 // stock, UPI ID, WhatsApp number, ...) show up immediately everywhere
 // instead of only after the next deploy.
 export const dynamic = "force-dynamic";

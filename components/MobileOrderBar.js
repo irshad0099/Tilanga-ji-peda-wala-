@@ -7,10 +7,10 @@ import { useCart } from "@/context/CartContext";
 import { formatRupees } from "@/lib/format";
 
 // Pages where a sticky "Order Now" bar would just be clutter — already
-// mid-checkout, already in the cart, or an internal/admin view.
+// mid-checkout, already in the cart, or an internal view.
 // Product pages (and the home hero) have their own sticky buy bar
 // (components/product/BuyBox.js).
-const HIDDEN_PREFIXES = ["/cart", "/checkout", "/admin", "/login", "/track-order", "/invoice", "/product"];
+const HIDDEN_PREFIXES = ["/cart", "/checkout", "/login", "/track-order", "/invoice", "/product"];
 
 export default function MobileOrderBar() {
   const pathname = usePathname();
