@@ -29,7 +29,7 @@ export default function ProductHero({ product, shop, onHome = false }) {
         {onHome ? (
           <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.16em] text-mustard">Sakaddi ka mashahur · Since 1975</p>
         ) : (
-          <nav className="mb-2 text-xs font-semibold text-ink/50">
+          <nav aria-label="Breadcrumb" className="mb-2 text-xs font-semibold text-ink/70">
             <Link href="/menu" className="hover:text-leaf">Menu</Link>
             <span className="mx-1.5">/</span>
             <span>{product.name}</span>
@@ -39,7 +39,7 @@ export default function ProductHero({ product, shop, onHome = false }) {
           {product.name}
           {product.weight && <span className="font-semibold"> – {product.weight}</span>}
         </h1>
-        {product.hindiName && <p className="mt-0.5 text-[17px] font-bold text-olive">{product.hindiName}</p>}
+        {product.hindiName && <p className="mt-0.5 text-[17px] font-bold text-leaf">{product.hindiName}</p>}
         <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1">
           {shop.googleMapsUrl && (
             <a href={shop.googleMapsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink hover:text-leaf">

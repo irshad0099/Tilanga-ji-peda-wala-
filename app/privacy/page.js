@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/db/settings.server";
 
-export const metadata = { title: "Privacy Policy - Tilanga Ji Ka Mashahur Peda Dukan" };
+export const metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };
 
 const UPDATED = "21 November 2026";
 

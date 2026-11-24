@@ -1,6 +1,10 @@
 import GalleryGrid from "@/components/GalleryGrid";
 
-export const metadata = { title: "Gallery - Tilanga Ji Ka Mashahur Peda Dukan" };
+export const metadata = {
+  title: "Gallery",
+  description: "Photos from the Tilangaji shop in Sakaddi — pedas being made by hand, fresh trays and festive boxes.",
+  alternates: { canonical: "/gallery" },
+};
 
 export default function GalleryPage() {
   return (

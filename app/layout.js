@@ -25,17 +25,29 @@ const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: 
 const hind = Hind({ subsets: ["latin", "devanagari"], weight: ["400", "500", "600", "700"], variable: "--font-hind", display: "swap", preload: false });
 const rozha = Rozha_One({ subsets: ["latin"], weight: "400", variable: "--font-rozha", display: "swap", preload: false });
 
+const SITE_DESCRIPTION =
+  "Sakaddi ka mashahur peda since 1975 — pure khoya and desi ghee, hand-made daily on the Ara–Patna highway. Order the Classic Khoya Peda online, delivered fresh across Bihar.";
+
+// metadataBase makes every image/canonical URL absolute — WhatsApp and
+// Facebook need that to show the link preview (app/opengraph-image.jpg).
 export const metadata = {
-  title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
-  description:
-    "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, delivered fresh across Bihar.",
+  metadataBase: new URL("https://tilangaji.com"),
+  title: {
+    default: "Tilangaji Peda — Sakaddi ka Mashahur Peda since 1975",
+    template: "%s | Tilangaji Peda, Sakaddi",
+  },
+  description: SITE_DESCRIPTION,
+  keywords: ["Sakaddi peda", "Tilanga Ji peda", "Tilangaji", "khoya peda", "desi ghee peda", "Bhojpur peda", "Ara peda", "Bihar sweets online", "peda delivery Bihar"],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Tilanga Ji Ka Mashahur Peda Dukan - Since 1975",
-    description:
-      "Bihar's famous peda since 1975, from Sakaddi on the Ara-Patna highway. Order our Classic Khoya Peda online, delivered fresh across Bihar.",
-    siteName: "Tilanga Ji Ka Mashahur Peda Dukan",
+    title: "Tilangaji Peda — Sakaddi ka Mashahur Peda since 1975",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: "Tilangaji Peda",
+    locale: "en_IN",
     type: "website",
   },
+  twitter: { card: "summary_large_image" },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

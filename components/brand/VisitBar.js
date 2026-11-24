@@ -13,8 +13,8 @@ export default async function VisitBar() {
       <div className="grid items-center gap-8 rounded-[32px] bg-leaf px-6 py-10 sm:px-12 lg:grid-cols-[1fr_1.6fr]">
         <div>
           <h2 className="font-display text-4xl font-black text-cream sm:text-5xl">Dukaan Par Aaiye</h2>
-          <p className="mt-3 max-w-sm text-[15px] font-semibold text-cream/80">{shop.address}</p>
-          <p className="mt-1 text-sm font-bold text-haldi">{shop.hours}</p>
+          <p className="mt-3 max-w-sm text-[15px] font-semibold text-cream/95">{shop.address}</p>
+          <p className="mt-1 text-sm font-bold text-[#FFE9A8]">{shop.hours}</p>
         </div>
         <div className="grid grid-cols-3 gap-3 sm:gap-5">
           {tiles.map((t) => (

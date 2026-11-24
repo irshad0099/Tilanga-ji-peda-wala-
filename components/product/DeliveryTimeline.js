@@ -61,7 +61,7 @@ export default function DeliveryTimeline() {
               <StepIcon name={["cart", "truck", "box"][i]} />
             </span>
             <span className="mt-2 text-sm font-bold text-ink">{s.date || "…"}</span>
-            <span className="text-xs text-ink/60">{s.label}</span>
+            <span className="text-xs text-ink/70">{s.label}</span>
           </li>
         ))}
       </ol>

@@ -51,7 +51,7 @@ export default function BuyBox({ product, packs, badges }) {
       {/* Price */}
       <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3">
         {pack.mrp > pack.price && (
-          <span className="text-[15px] font-semibold text-ink/45 line-through">{formatRupees(pack.mrp)}</span>
+          <span className="text-[15px] font-semibold text-ink/65 line-through">{formatRupees(pack.mrp)}</span>
         )}
         <span key={pack.price} className="animate-[fadeIn_.35s_ease] font-display text-[34px] font-extrabold leading-none text-[#6E9A2A]">
           {formatRupees(pack.price)}
@@ -89,14 +89,14 @@ export default function BuyBox({ product, packs, badges }) {
               )}
               {/* The shine sweep lives on the strip, not the card — the card
                   must not clip the tag that sits over its top edge. */}
-              <span className={`block rounded-t-[5px] px-3 py-1.5 text-[15px] font-extrabold text-cream ${selected ? "shine bg-leaf-dark" : "bg-olive/80"}`}>
+              <span className={`block rounded-t-[5px] px-3 py-1.5 text-[15px] font-extrabold text-cream ${selected ? "shine bg-leaf-dark" : "bg-[#637842]"}`}>
                 {packLabel(p.boxes)}
               </span>
               <span className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-b-[5px] bg-cream px-3 py-2.5">
                 <span className="whitespace-nowrap text-[13px] font-bold text-ink">{formatRupees(p.price)}</span>
-                {p.mrp > p.price && <span className="whitespace-nowrap text-[11px] text-ink/45 line-through">{formatRupees(p.mrp)}</span>}
+                {p.mrp > p.price && <span className="whitespace-nowrap text-[11px] text-ink/65 line-through">{formatRupees(p.mrp)}</span>}
                 {off > 0 && (
-                  <span className="whitespace-nowrap rounded-full bg-[#6E9A2A] px-2 py-0.5 text-[10px] font-extrabold text-cream sm:ml-auto">{off}% Off</span>
+                  <span className="whitespace-nowrap rounded-full bg-[#4F7A1C] px-2 py-0.5 text-[10px] font-extrabold text-cream sm:ml-auto">{off}% Off</span>
                 )}
               </span>
             </button>

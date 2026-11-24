@@ -62,14 +62,14 @@ export default function InvoicePreview({ order }) {
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-gold/30 bg-cream-dark/40 p-6">
           <div>
             <p className="font-display text-xl text-mustard">{shop.shortName}</p>
-            <p className="mt-1 text-xs text-ink/60">{shop.legalName}</p>
-            <p className="max-w-[16rem] text-xs text-ink/60">{shop.address}</p>
-            {shop.gstin && <p className="text-xs text-ink/60">GSTIN: {shop.gstin}</p>}
+            <p className="mt-1 text-xs text-ink/70">{shop.legalName}</p>
+            <p className="max-w-[16rem] text-xs text-ink/70">{shop.address}</p>
+            {shop.gstin && <p className="text-xs text-ink/70">GSTIN: {shop.gstin}</p>}
           </div>
           <div className="text-right text-sm">
             <p className="font-display text-lg text-ink">{inv.type}</p>
-            <p className="mt-1 text-xs text-ink/60">Invoice No: {inv.number}</p>
-            <p className="text-xs text-ink/60">Date: {fmtDate(inv.date)}</p>
+            <p className="mt-1 text-xs text-ink/70">Invoice No: {inv.number}</p>
+            <p className="text-xs text-ink/70">Date: {fmtDate(inv.date)}</p>
           </div>
         </div>
 

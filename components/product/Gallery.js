@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Tilt3D from "@/components/Tilt3D";
 import Placeholder from "@/components/Placeholder";
@@ -14,7 +14,18 @@ const SLOTS = 5;
 export default function Gallery({ images, name, savePct }) {
   const slots = [...images, ...Array(Math.max(0, SLOTS - images.length)).fill(null)];
   const [active, setActive] = useState(0);
+  const [restReady, setRestReady] = useState(false);
   const step = (dir) => setActive((i) => (i + dir + images.length) % images.length);
+
+  useEffect(() => {
+    const go = () => setRestReady(true);
+    if (document.readyState === "complete") {
+      const t = setTimeout(go, 300);
+      return () => clearTimeout(t);
+    }
+    window.addEventListener("load", go, { once: true });
+    return () => window.removeEventListener("load", go);
+  }, []);
 
   const thumb = (src, i) =>
     src ? (
@@ -49,28 +60,32 @@ export default function Gallery({ images, name, savePct }) {
           shows on laptop screens too. */}
       <Tilt3D max={5} className="w-full lg:max-w-[min(720px,calc((100vh-210px)*0.8))]">
         <div className="relative overflow-hidden border-[3px] border-cream bg-cream shadow-[0_30px_60px_-25px_rgba(0,0,0,0.6)]">
-          {/* Every photo is stacked and loaded up front, so picking a
-              thumbnail crossfades straight away instead of waiting. */}
+          {/* Photos are stacked so picking a thumbnail crossfades straight
+              away. Only the first loads with the page; the rest join once the
+              page has finished loading (or as soon as one is picked), so they
+              don't slow down the first photo on phones. */}
           <div className="hero-breathe relative aspect-[4/5]">
-            {images.map((src, i) => (
-              <Image
-                key={src}
-                src={src}
-                alt={i === active ? name : ""}
-                aria-hidden={i !== active || undefined}
-                width={1000}
-                height={1250}
-                priority={i === 0}
-                loading={i === 0 ? undefined : "eager"}
-                sizes="(min-width: 1024px) 720px, 100vw"
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}
-              />
-            ))}
+            {images.map((src, i) =>
+              i === 0 || restReady || i === active ? (
+                <Image
+                  key={src}
+                  src={src}
+                  alt={i === active ? name : ""}
+                  aria-hidden={i !== active || undefined}
+                  width={1000}
+                  height={1250}
+                  priority={i === 0}
+                  loading={i === 0 ? undefined : "eager"}
+                  sizes="(min-width: 1024px) 720px, 100vw"
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}
+                />
+              ) : null
+            )}
           </div>
           {/* Ghee-gloss sweep. */}
           <span aria-hidden="true" className="hero-sheen" />
           {savePct > 0 && (
-            <span className="absolute bottom-4 left-4 rounded-xl bg-[#8DB33A] px-3.5 py-2 text-sm font-extrabold tracking-wide text-cream shadow-lg [transform:translateZ(40px)]">
+            <span className="absolute bottom-4 left-4 rounded-xl bg-[#4F7A1C] px-3.5 py-2 text-sm font-extrabold tracking-wide text-cream shadow-lg [transform:translateZ(40px)]">
               SAVE {savePct}%
             </span>
           )}

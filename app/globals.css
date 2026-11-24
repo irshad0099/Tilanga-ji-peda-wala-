@@ -2131,3 +2131,18 @@ html[data-splash-seen] .splash {
 .op-thanks {
   animation: riseIn 0.6s ease 0.35s both;
 }
+
+/* 404 page — the peda in "4 0 4" turns slowly and bobs. */
+.nf-peda {
+  animation: nf-peda 8s ease-in-out infinite;
+}
+
+@keyframes nf-peda {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(180deg) translateY(-8px);
+  }
+}

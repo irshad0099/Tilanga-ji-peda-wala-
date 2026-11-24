@@ -13,6 +13,7 @@ import PromiseBand from "@/components/product/PromiseBand";
 import Branch from "@/components/Branch";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
+import { JsonLd, productJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
 // Pre-render the default menu's slugs at build time; any DB-only product
 // (created later from the admin dashboard) still renders fine on first request.
@@ -24,9 +25,22 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const product = await getMenuProductBySlug(slug);
   if (!product) return {};
+  // The price leads the description so WhatsApp / Google previews show it.
+  const price = `₹${product.price}${product.weight ? ` · ${product.weight}` : ""}`;
+  const title = `${product.name} — ${price}`;
+  const description = `${price} · ${productDetails[product.slug]?.about || product.description}`;
   return {
-    title: `${product.name} - Tilanga Ji Ka Mashahur Peda Dukan`,
-    description: productDetails[product.slug]?.about || product.description,
+    title,
+    description,
+    alternates: { canonical: `/product/${product.slug}` },
+    // A page-level openGraph replaces the root one, so name the share card again.
+    openGraph: {
+      title: `${title} | Tilangaji Peda`,
+      description,
+      url: `/product/${product.slug}`,
+      type: "website",
+      images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: `${product.name} from Tilangaji, Sakaddi` }],
+    },
   };
 }
 
@@ -59,6 +73,8 @@ export default async function ProductPage({ params }) {
 
   return (
     <div className="overflow-x-clip">
+      <JsonLd data={productJsonLd(product, settings)} />
+      <JsonLd data={breadcrumbJsonLd([["Home", "/"], ["Menu", "/menu"], [product.name, `/product/${product.slug}`]])} />
       <ProductHero product={product} shop={shop} />
       <BoxContents product={product} />
 

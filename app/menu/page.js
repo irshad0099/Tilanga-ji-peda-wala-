@@ -4,8 +4,9 @@ import MenuGrid from "@/components/MenuGrid";
 import { getMenuProducts } from "@/lib/db/products.server";
 
 export const metadata = {
-  title: "Menu - Tilanga Ji Ka Mashahur Peda Dukan",
-  description: "Order our Classic Khoya Peda online — delivered fresh across Bihar.",
+  title: "Order Peda Online",
+  description: "Order the Classic Khoya Peda from Sakaddi online — pure khoya and desi ghee, delivered fresh across Bihar.",
+  alternates: { canonical: "/menu" },
 };
 
 export default async function MenuPage({ searchParams }) {

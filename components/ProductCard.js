@@ -50,12 +50,12 @@ export default function ProductCard({ product }) {
       </Link>
 
       <div className="flex flex-1 flex-col items-center px-1 pt-3 text-center">
-        {product.hindiName && <p className="text-[13px] font-semibold text-olive">{product.hindiName}</p>}
+        {product.hindiName && <p className="text-[13px] font-semibold text-leaf">{product.hindiName}</p>}
         <Link href={`/product/${product.slug}`} className="mt-0.5 text-[14px] font-extrabold uppercase leading-snug tracking-wide text-ink transition-colors hover:text-leaf sm:text-[15px]">
           {product.name}
         </Link>
         <div className="mt-auto flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-3">
-          {off > 0 && <span className="text-[13px] font-semibold text-ink/45 line-through">{formatRupees(product.mrp)}</span>}
+          {off > 0 && <span className="text-[13px] font-semibold text-ink/65 line-through">{formatRupees(product.mrp)}</span>}
           <span className="text-[17px] font-extrabold text-ink">{formatRupees(product.price)}/-</span>
           {off > 0 && <span className="rounded-full bg-leaf px-2 py-0.5 text-[11px] font-extrabold text-cream">-{off}% OFF</span>}
         </div>

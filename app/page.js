@@ -7,17 +7,21 @@ import JourneyTimeline from "@/components/brand/JourneyTimeline";
 import FaqFounder from "@/components/brand/FaqFounder";
 import ReviewsCarousel from "@/components/brand/ReviewsCarousel";
 import VisitBar from "@/components/brand/VisitBar";
+import { JsonLd, shopJsonLd, productJsonLd } from "@/lib/seo";
 
 const STORY =
   "Tilanga Ji started this shop as a small tea stall on the Ara–Patna highway in 1975. The peda became so popular that the shop grew around it, purely on word of mouth from one traveller to the next — and the recipe hasn't changed since.";
 
 export default async function HomePage() {
-  const [products, { shop }] = await Promise.all([getMenuProducts(), getSettings()]);
+  const [products, settings] = await Promise.all([getMenuProducts(), getSettings()]);
+  const { shop } = settings;
   // The hero shows the peda even on a sold-out day (it then says so).
   const heroItem = products.find((p) => p.inStock !== false) || products[0];
 
   return (
     <div className="overflow-x-clip">
+      <JsonLd data={shopJsonLd(settings)} />
+      {heroItem && <JsonLd data={productJsonLd(heroItem, settings)} />}
       {/* Hero: the peda we deliver, ready to buy straight from the home page. */}
       {heroItem && <ProductHero product={heroItem} shop={shop} onHome />}
       {heroItem && <BoxContents product={heroItem} />}

@@ -160,6 +160,7 @@ export default function Navbar() {
       <aside
         className={`fixed inset-y-0 left-0 z-50 flex w-[82%] max-w-sm flex-col bg-cream shadow-2xl transition-transform duration-300 lg:hidden ${drawer ? "translate-x-0" : "-translate-x-full"}`}
         aria-hidden={!drawer}
+        inert={!drawer}
       >
         <div className="flex items-center justify-between bg-leaf-dark px-5 py-4 text-cream">
           <span className="font-display text-xl font-black">Menu</span>

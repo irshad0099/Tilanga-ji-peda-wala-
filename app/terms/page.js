@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/db/settings.server";
 
-export const metadata = { title: "Terms & Conditions - Tilanga Ji Ka Mashahur Peda Dukan" };
+export const metadata = { title: "Terms & Conditions", alternates: { canonical: "/terms" } };
 
 const UPDATED = "21 November 2026";
 
