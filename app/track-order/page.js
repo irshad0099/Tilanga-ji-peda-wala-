@@ -117,6 +117,29 @@ export default function TrackOrderPage() {
             )}
           </dl>
 
+          {/* Set by the admin dashboard when a courier is booked or the shop's
+              own delivery person takes the box. */}
+          {order.status !== "Cancelled" && order.shipping?.awb && (
+            <div className="mt-5 rounded-lg border border-leaf/20 bg-cream p-4 text-sm">
+              <p className="font-semibold text-leaf">Shipped with {order.shipping.courier}</p>
+              <p className="mt-0.5 font-mono text-[13px] text-ink/70">AWB {order.shipping.awb}</p>
+              {order.shipping.trackStatus && <p className="mt-1 text-ink/70">Latest: {order.shipping.trackStatus}</p>}
+              <a
+                href={order.shipping.trackingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-block rounded-md bg-leaf px-4 py-2 text-sm font-semibold text-cream hover:bg-leaf-dark"
+              >
+                Track with the courier →
+              </a>
+            </div>
+          )}
+          {order.status !== "Cancelled" && order.shipping?.provider === "local" && order.status !== "Delivered" && (
+            <p className="mt-5 rounded-lg border border-leaf/20 bg-cream p-4 text-sm text-ink/80">
+              🛵 Our own delivery person is bringing your order today.
+            </p>
+          )}
+
           <p className="mt-4 text-sm text-ink/60">
             Delivering to {order.customer?.address} — {order.customer?.pincode}
           </p>
