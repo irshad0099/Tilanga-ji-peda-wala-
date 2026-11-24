@@ -32,9 +32,9 @@ const icons = {
   ),
 };
 
-// The 500g box opening on a loop: the lid lifts and tips back, the pedas
+// The box opening on a loop: the lid lifts and tips back, the pedas
 // inside bob up and a few sparkles twinkle. Styles: globals.css, "Box".
-function BoxArt() {
+function BoxArt({ weight }) {
   const pedas = [
     [62, 96], [92, 96], [122, 96], [152, 96],
     [77, 84], [107, 84], [137, 84],
@@ -63,7 +63,7 @@ function BoxArt() {
         Tilanga Ji Peda
       </text>
       <text x="107" y="136" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="700" fontSize="7.5" letterSpacing="1.5" fill="#EBC64C">
-        SINCE 1975 · 500 G
+        SINCE 1975{weight ? ` · ${weight.replace(/s*box$/i, "").toUpperCase()}` : ""}
       </text>
       {/* Lid */}
       <g className="bx-lid">
@@ -98,10 +98,10 @@ export default function BoxContents({ product }) {
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-mustard">Har box mein</p>
           <h2 className="mt-1 font-display text-4xl font-black text-leaf-dark sm:text-5xl">Box ke andar kya hai?</h2>
           <div className="mt-8 flex w-full justify-center lg:justify-start">
-            <BoxArt />
+            <BoxArt weight={product.weight} />
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
-            <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">{product.weight || "500g box"}</span>
+            <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">{product.weight || "1 kg Box"}</span>
             {box.pieces && <span className="rounded-full bg-leaf-dark px-4 py-2 text-sm font-extrabold text-cream">Lagbhag {box.pieces} pede</span>}
           </div>
         </Reveal>

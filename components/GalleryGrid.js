@@ -13,7 +13,7 @@ const galleryImages = [
   { src: "/images/peda/khoya-desi-ghee.jpg", caption: "Khoya and pure desi ghee — nothing else" },
   { src: "/images/peda/sakaddi-ka-mashahur.jpg", caption: "Sakaddi ka mashahur taste, since 1975" },
   { src: "/images/peda/peda-highlights.jpg", caption: "Rich khoya, melt-in-mouth texture" },
-  { src: "/images/peda/peda-box-diya.jpg", caption: "The Classic Khoya Peda 500g box" },
+  { src: "/images/peda/peda-box-diya.jpg", caption: "The Classic Khoya Peda box" },
   { src: "/images/peda/festive-gifting-tray.jpg", caption: "Perfect for festivals and gifting" },
   { src: "/images/peda/khoya-goodness.jpg", caption: "Traditional taste, premium quality" },
   { src: "/images/peda/hand-placing-peda.jpg", caption: "Every peda pressed by hand" },

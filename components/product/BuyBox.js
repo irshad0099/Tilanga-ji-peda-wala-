@@ -90,7 +90,7 @@ export default function BuyBox({ product, packs, badges }) {
               {/* The shine sweep lives on the strip, not the card — the card
                   must not clip the tag that sits over its top edge. */}
               <span className={`block rounded-t-[5px] px-3 py-1.5 text-[15px] font-extrabold text-cream ${selected ? "shine bg-leaf-dark" : "bg-[#637842]"}`}>
-                {packLabel(p.boxes)}
+                {packLabel(p.boxes, product.weight)}
               </span>
               <span className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-b-[5px] bg-cream px-3 py-2.5">
                 <span className="whitespace-nowrap text-[13px] font-bold text-ink">{formatRupees(p.price)}</span>
@@ -153,7 +153,7 @@ export default function BuyBox({ product, packs, badges }) {
           >
             {packs.map((p) => (
               <option key={p.boxes} value={p.boxes}>
-                {packLabel(p.boxes)}
+                {packLabel(p.boxes, product.weight)}
               </option>
             ))}
           </select>
